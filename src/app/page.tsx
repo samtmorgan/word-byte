@@ -2,6 +2,7 @@
 
 import React from 'react';
 
+export const testStr = 'this is a test';
 export default function Home() {
   const speak = () => {
     const msg = new SpeechSynthesisUtterance();
