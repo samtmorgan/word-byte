@@ -8,7 +8,9 @@
     "start": "next start",
     "prepare": "husky install",
     "lint": "eslint \"./src/**/*.{ts,tsx}\"",
-    "autofix": "eslint \"./src/**/*.{ts,tsx}\" --fix"
+    "autofix": "eslint \"./src/**/*.{ts,tsx}\" --fix",
+    "test": "jest",
+    "test-watch": "jest --watch"
   },
   "dependencies": {
     "next": "latest",
@@ -16,12 +18,18 @@
     "react-dom": "latest"
   },
   "devDependencies": {
+    "@testing-library/dom": "^9.3.3",
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.5.1",
+    "@types/jest": "^29.5.6",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
     "autoprefixer": "latest",
+    "babel-jest": "^29.7.0",
     "eslint": "latest",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-base": "^15.0.0",
@@ -29,6 +37,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "husky": "^8.0.0",
+    "jest": "^29.7.0",
     "lint-staged": "^15.0.2",
     "postcss": "latest",
     "prettier": "^3.0.3",

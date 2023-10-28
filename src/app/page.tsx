@@ -5,7 +5,9 @@ import React from 'react';
 export default function Home() {
   const speak = () => {
     const msg = new SpeechSynthesisUtterance();
-    msg.text = 'Hello World';
+    // msg.text = 'Hello World';
+    msg.text = 'Well done Paula';
+
     window.speechSynthesis.speak(msg);
   };
 
