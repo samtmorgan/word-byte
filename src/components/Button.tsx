@@ -1,4 +1,4 @@
-import { ButtonType } from '@/app/types/types';
+import { ButtonType } from '@/types/types';
 import React, { ReactElement } from 'react';
 
 // const style = `
