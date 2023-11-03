@@ -26,8 +26,9 @@ main {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  min-height: 100vh;
-  padding-top: var(--header-height);
+  min-height: calc(100vh - var(--header-height));
+  margin-top: var(--header-height);
+  box-sizing: border-box;
 }
 
 body {
@@ -89,7 +90,7 @@ h1 {
   text-align: center;
 }
 
-/* CSS */
+/* start button */
 .button {
   box-shadow: var(--box-shadow);
   cursor: pointer;
@@ -117,6 +118,16 @@ h1 {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.correct-word {
+  background-color: rgb(43, 252, 183);
+}
+
+.correct-word:hover {
+  background-color: rgb(43, 252, 183, 0.5);
+}
+
+/* end button */
 
 @media (min-width: 768px) {
   .button {
