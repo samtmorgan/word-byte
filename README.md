@@ -1,4 +1,4 @@
-# 🥔 Super Potato is a simple weather app
+# 🦫 Word Byte is an app to help with spellings practice
 
 ## 🎯 Goal
 

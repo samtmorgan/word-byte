@@ -36,6 +36,21 @@ export default function TestWordsPage() {
     [testIndex],
   );
 
+  //   useEffect(() => {
+  //     const words = [
+  //       'automatic',
+  //       'automatically',
+  //       'automobile',
+  //       'autograph',
+  //       'autocue',
+  //       'autopilot',
+  //       'autobiography',
+  //       'autobiographies',
+  //     ].map(word => generateWordObject(word, 'user'));
+
+  //     console.log(words);
+  //   }, []);
+
   useEffect(() => {
     if (testIndex + 1 === sessionWordsCount) {
       setHasSeenAllWords(true);
