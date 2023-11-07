@@ -1,6 +1,7 @@
 'use client';
 
-import LinkButton from '@/components/LinkButton';
+// import LinkButton from '@/components/LinkButton';
+// import Select from '@/components/Select';
 import React from 'react';
 
 export default function Home() {
@@ -21,7 +22,8 @@ export default function Home() {
           test
         </Link>
       </span> */}
-      <LinkButton label="test" href="/test" />
+      {/* <LinkButton label="test" href="/test" /> */}
+      {/* <Select /> */}
     </>
   );
 }
