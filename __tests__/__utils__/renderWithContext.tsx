@@ -10,15 +10,3 @@ import { ContextType } from '../../src/types/types';
 export function renderWithContext(ui: ReactElement, providerProps: ContextType): any {
   return render(<AppContext.Provider value={providerProps}>{ui}</AppContext.Provider>);
 }
-
-// Provider props as initial state
-export const initProviderProps = {
-  loading: true,
-  setLoading: () => {},
-  error: false,
-  setError: () => {},
-  user: null,
-  setUser: () => {},
-  sessionWords: null,
-  setSessionWords: () => {},
-};

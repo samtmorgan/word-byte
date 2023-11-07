@@ -2,10 +2,10 @@
 
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { mockUser } from '../mockData/user';
-import { ContextType, SessionWordType, UserType } from '../types/types';
+import { ContextType, SessionWordType, TestLifecycleType, UserType } from '../types/types';
 import { buildSessionWords } from '../utils/wordUtils';
 
-const AppContext = createContext<ContextType>({
+export const initProviderState = {
   loading: true,
   setLoading: () => {},
   error: false,
@@ -14,7 +14,11 @@ const AppContext = createContext<ContextType>({
   setUser: () => {},
   sessionWords: null,
   setSessionWords: () => {},
-});
+  testLifecycle: null,
+  setTestLifecycle: () => {},
+};
+
+const AppContext = createContext<ContextType>(initProviderState);
 
 const useAppContext = () => {
   const context = useContext(AppContext);
@@ -29,6 +33,8 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState<boolean>(false);
   const [user, setUser] = useState<UserType>(null);
   const [sessionWords, setSessionWords] = useState<SessionWordType[] | null>(null);
+  //   const [testLifecycle, setTestLifecycle] = useState<TestLifecycleType | null>(null);
+  const [testLifecycle, setTestLifecycle] = useState<TestLifecycleType | null>('notStarted');
 
   const contextValue = useMemo(
     () => ({
@@ -40,8 +46,21 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
       setUser,
       sessionWords,
       setSessionWords,
+      testLifecycle,
+      setTestLifecycle,
     }),
-    [loading, error, user, setLoading, setError, setUser, sessionWords, setSessionWords],
+    [
+      loading,
+      error,
+      user,
+      setLoading,
+      setError,
+      setUser,
+      sessionWords,
+      setSessionWords,
+      testLifecycle,
+      setTestLifecycle,
+    ],
   );
 
   useEffect(() => {

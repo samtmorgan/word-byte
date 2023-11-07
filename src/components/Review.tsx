@@ -1,25 +1,11 @@
 'use client';
 
-import { useAppContext } from '@/context/AppContext';
-// import { speak } from '@/utils/wordUtils';
 import React, { useCallback } from 'react';
+import { useAppContext } from '../context/AppContext';
+// import { speak } from '@/utils/wordUtils';
 
-export default function CheckWordsPage() {
+export default function Review() {
   const { sessionWords, setSessionWords, loading } = useAppContext();
-  //   const [hasSeenAllWords, setHasSeenAllWords] = useState<boolean>(false);
-  //   const [testIndex, setTestIndex] = useState<number>(0);
-
-  //   const handleIndexChange = useCallback(
-  //     (direction: 'increment' | 'decrement') => {
-  //       if (direction === 'increment') {
-  //         setTestIndex(testIndex + 1);
-  //       }
-  //       if (direction === 'decrement') {
-  //         setTestIndex(testIndex - 1);
-  //       }
-  //     },
-  //     [testIndex],
-  //   );
 
   const handleWordClick = useCallback(
     (index: number) => {

@@ -9,19 +9,19 @@ import React, { ReactElement } from 'react';
 //           m-1
 //           `;
 
-const style = ``;
+// const style = ``;
 
 export function Button({ type = 'button', label, onClick, disabled }: ButtonType): ReactElement {
   if (type === 'submit') {
     return (
-      <button className={style} type="submit" onClick={onClick} disabled={disabled}>
+      <button className="button cool-border-with-shadow" type="submit" onClick={onClick} disabled={disabled}>
         {label}
       </button>
     );
   }
 
   return (
-    <button className={style} type="button" onClick={onClick} disabled={disabled}>
+    <button className="button cool-border-with-shadow" type="button" onClick={onClick} disabled={disabled}>
       {label}
     </button>
   );

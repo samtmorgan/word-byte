@@ -11,6 +11,8 @@ export type UserType = {
   words: UserWordType[];
 } | null;
 
+export type TestLifecycleType = 'notStarted' | 'test' | 'review' | 'revise' | 'finished' | 'cancelled';
+
 export type ContextType = {
   loading: boolean;
   setLoading: (loading: boolean) => void;
@@ -19,7 +21,9 @@ export type ContextType = {
   user: UserType;
   setUser: (user: UserType) => void;
   sessionWords: SessionWordType[] | null;
-  setSessionWords: (sessionWords: SessionWordType[]) => void;
+  setSessionWords: (sessionWords: SessionWordType[] | null) => void;
+  testLifecycle: string | null;
+  setTestLifecycle: (testLifecycle: TestLifecycleType | null) => void;
 };
 
 export type UserWordType = {
