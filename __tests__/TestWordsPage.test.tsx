@@ -10,7 +10,8 @@ import { initProviderState } from '../src/context/AppContext';
 describe('Test that the TestWords page render as expected', () => {
   it('render loading text when context is not initialised', () => {
     renderWithContext(<TestWordsPage />, initProviderState);
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    //   expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(screen.getByLabelText('vortex-loading')).toBeInTheDocument();
   });
   it('render error text when context error === true', () => {
     const providerProps = {
@@ -41,7 +42,7 @@ describe('Test that the TestWords page render as expected', () => {
     renderWithContext(<TestWordsPage />, providerProps);
     expect(screen.getByRole('button', { name: /Start/ })).toBeInTheDocument();
   });
-  it('expected elements are rendered when in testLifecycle === "test"', () => {
+  it('expected elements are rendered when testLifecycle === "test"', () => {
     const sessionWordsArr = buildSessionWords(mockUser?.words || []);
     const providerProps = {
       ...initProviderState,
