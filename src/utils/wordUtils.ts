@@ -15,3 +15,13 @@ export function speak(word: string) {
   msg.text = word;
   window.speechSynthesis.speak(msg);
 }
+
+export function buildSessionWords(words: UserWordType[]) {
+  const currentWords = words
+    .filter(({ current }) => current)
+    .map(word => ({
+      ...word,
+      correct: false,
+    }));
+  return currentWords;
+}

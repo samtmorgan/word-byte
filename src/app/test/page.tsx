@@ -1,12 +1,11 @@
 'use client';
 
-import LinkButton from '@/components/LinkButton';
-import { useAppContext } from '@/context/AppContext';
-import { speak } from '@/utils/wordUtils';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useAppContext } from '../../context/AppContext';
+import { speak } from '../../utils/wordUtils';
 
 export default function TestWordsPage() {
-  const { sessionWords, loading } = useAppContext();
+  const { sessionWords, loading, error } = useAppContext();
   const [hasSeenAllWords, setHasSeenAllWords] = useState<boolean>(false);
   const [testIndex, setTestIndex] = useState<number>(0);
 
@@ -59,6 +58,12 @@ export default function TestWordsPage() {
 
   if (loading) return <div>Loading...</div>;
 
+  if (error) return <div>Error...</div>;
+
+  if (!sessionWords) return <div>No words</div>;
+
+  if (sessionWords.length === 0) return <div>No words</div>;
+
   return (
     <div className="test-page-container">
       <span className="cool-border-with-shadow">{`${testIndex + 1} of ${sessionWordsCount} words`}</span>
@@ -88,15 +93,15 @@ export default function TestWordsPage() {
           Next Word 👉
         </button>
       </div>
-      {/* <button
+      <button
         disabled={!hasSeenAllWords}
         type="button"
         className="button cool-border-with-shadow"
-        onClick={() => setTestIndex(testIndex + 1)}
+        onClick={() => console.log('check answers')}
       >
         Check Answers ✔
-      </button> */}
-      <LinkButton disabled={!hasSeenAllWords} label="Check Answers ✔" href="/check" />
+      </button>
+      {/* <LinkButton disabled={!hasSeenAllWords} label="Check Answers ✔" href="/check" /> */}
       {/* <div className="grid grid-cols-8 gap-4">
         {year3AndYear4StandardWords.map(word => (
           <div key={word}>

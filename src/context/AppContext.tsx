@@ -1,8 +1,9 @@
 'use client';
 
-import { mockUser } from '@/mockData/user';
-import { ContextType, SessionWordType, UserType } from '@/types/types';
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { mockUser } from '../mockData/user';
+import { ContextType, SessionWordType, UserType } from '../types/types';
+import { buildSessionWords } from '../utils/wordUtils';
 
 const AppContext = createContext<ContextType>({
   loading: true,
@@ -46,12 +47,7 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     setUser(mockUser);
     if (mockUser) {
-      const currentWords = mockUser.words
-        .filter(({ current }) => current)
-        .map(word => ({
-          ...word,
-          correct: false,
-        }));
+      const currentWords = buildSessionWords(mockUser.words);
       setSessionWords(currentWords);
     }
 
