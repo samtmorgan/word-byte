@@ -19,6 +19,7 @@
     "react": "latest",
     "react-canvas-confetti": "^1.4.0",
     "react-dom": "latest",
+    "react-loader-spinner": "^5.4.5",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

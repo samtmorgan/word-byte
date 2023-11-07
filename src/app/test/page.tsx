@@ -5,6 +5,7 @@ import { useAppContext } from '../../context/AppContext';
 import { speak } from '../../utils/wordUtils';
 import { Button } from '../../components/Button';
 import Review from '../../components/Review';
+import Loader from '../../components/Loader';
 
 export default function TestWordsPage() {
   const { sessionWords, loading, error, testLifecycle, setTestLifecycle } = useAppContext();
@@ -43,7 +44,8 @@ export default function TestWordsPage() {
     }
   }, [setHasSeenAllWords, testIndex, sessionWordsCount]);
 
-  if (loading) return <div>Loading...</div>;
+  //   if (loading) return <div>Loading...</div>;
+  if (loading) return <Loader />;
 
   if (error) return <div>Error...</div>;
 
