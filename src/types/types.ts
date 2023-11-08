@@ -5,10 +5,20 @@ export type ButtonType = {
   type?: 'button' | 'submit';
 };
 
+// export type UserType = {
+//   name: string;
+//   uuid: string;
+//   words: UserWordType[];
+// } | null;
+
 export type UserType = {
   name: string;
   uuid: string;
-  words: UserWordType[];
+  words: {
+    current: string[] | null;
+    history: object[] | null;
+    customWords: UserWordType[];
+  };
 } | null;
 
 export type TestLifecycleType = 'notStarted' | 'test' | 'review' | 'revise' | 'finished' | 'cancelled';
@@ -29,8 +39,8 @@ export type ContextType = {
 export type UserWordType = {
   word: string;
   uuid: string;
-  owner: 'platform' | 'user';
-  current: boolean;
+  //   owner: 'platform' | 'user';
+  //   current: boolean;
   //   attempts:
   //     | {
   //         timestamp: number;

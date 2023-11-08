@@ -29,58 +29,104 @@
 // };
 
 import { UserType } from '@/types/types';
+import { userWords } from './words';
 
 export const mockUser: UserType = {
   name: 'Ginny',
   uuid: 'b8765153-9c08-4301-869c-d810453408ca',
-  words: [
-    {
-      word: 'automatic',
-      uuid: 'ab7007c1-8a59-470a-84e4-963598f46883',
-      owner: 'user',
-      current: true,
-    },
-    {
-      word: 'automatically',
-      uuid: 'b49e8cf7-6d2c-4c9a-b647-d972cfa7bccc',
-      owner: 'user',
-      current: true,
-    },
-    {
-      word: 'automobile',
-      uuid: 'f4d0b83a-f573-4eb0-b30b-1297f6ab6685',
-      owner: 'user',
-      current: true,
-    },
-    {
-      word: 'autograph',
-      uuid: '63e248a4-56df-49ba-8e9d-eeca69ee21cc',
-      owner: 'user',
-      current: true,
-    },
-    {
-      word: 'autocue',
-      uuid: '051290e6-4e83-4a2e-8f5f-4648e024dc9a',
-      owner: 'user',
-      current: true,
-    },
-    {
-      word: 'autopilot',
-      uuid: 'c642fef7-c799-4f50-9f95-2590c8755d46',
-      owner: 'user',
-      current: true,
-    },
-    {
-      word: 'autobiography',
-      uuid: 'c3b68ff9-c87a-4c51-ae72-2d04ca7e3eff',
-      owner: 'user',
-      current: true,
-    },
-    {
-      word: 'autobiographies',
-      uuid: '14016951-2a10-49a5-b733-aedf027755fc',
-      owner: 'user',
-      current: true,
-    },
-  ],
+  words: {
+    current: [
+      'ab7007c1-8a59-470a-84e4-963598f46883',
+      'b49e8cf7-6d2c-4c9a-b647-d972cfa7bccc',
+      'f4d0b83a-f573-4eb0-b30b-1297f6ab6685',
+      '63e248a4-56df-49ba-8e9d-eeca69ee21cc',
+      '051290e6-4e83-4a2e-8f5f-4648e024dc9a',
+      'c642fef7-c799-4f50-9f95-2590c8755d46',
+      'c3b68ff9-c87a-4c51-ae72-2d04ca7e3eff',
+      '14016951-2a10-49a5-b733-aedf027755fc',
+    ],
+    history: [],
+    customWords: userWords,
+  },
 };
+
+//   words: [
+//     {
+//       word: 'automatic',
+//       uuid: 'ab7007c1-8a59-470a-84e4-963598f46883',
+//       owner: 'user',
+//       current: true,
+//     },
+//     {
+//       word: 'automatically',
+//       uuid: 'b49e8cf7-6d2c-4c9a-b647-d972cfa7bccc',
+//       owner: 'user',
+//       current: true,
+//     },
+//     {
+//       word: 'automobile',
+//       uuid: 'f4d0b83a-f573-4eb0-b30b-1297f6ab6685',
+//       owner: 'user',
+//       current: true,
+//     },
+//     {
+//       word: 'autograph',
+//       uuid: '63e248a4-56df-49ba-8e9d-eeca69ee21cc',
+//       owner: 'user',
+//       current: true,
+//     },
+//     {
+//       word: 'autocue',
+//       uuid: '051290e6-4e83-4a2e-8f5f-4648e024dc9a',
+//       owner: 'user',
+//       current: true,
+//     },
+//     {
+//       word: 'autopilot',
+//       uuid: 'c642fef7-c799-4f50-9f95-2590c8755d46',
+//       owner: 'user',
+//       current: true,
+//     },
+//     {
+//       word: 'autobiography',
+//       uuid: 'c3b68ff9-c87a-4c51-ae72-2d04ca7e3eff',
+//       owner: 'user',
+//       current: true,
+//     },
+//     {
+//       word: 'autobiographies',
+//       uuid: '14016951-2a10-49a5-b733-aedf027755fc',
+//       owner: 'user',
+//       current: true,
+//     },
+//   ],
+
+/**
+words pool - the standard words that are available to all users
+    {
+        word: 'autobiographies',
+        uuid: '14016951-2a10-49a5-b733-aedf027755fc',
+        owner: 'pool',
+    }[]
+
+user.words.customWords - the words that the user has added
+    {
+        word: 'autobiographies',
+        uuid: '14016951-2a10-49a5-b733-aedf027755fc',
+        owner: 'user',
+    }[]
+
+user.words.current - the words that the user is currently learning
+    uuid[]
+
+user.words.history - the words that the user has already learnt
+    {
+        uuid: '14016951-2a10-49a5-b733-aedf027755fc',
+        attempts: [
+            {
+                timestamp: 0,
+                pass: true,
+            },
+        ],
+    }[]
+*/

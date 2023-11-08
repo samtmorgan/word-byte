@@ -33,7 +33,6 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState<boolean>(false);
   const [user, setUser] = useState<UserType>(null);
   const [sessionWords, setSessionWords] = useState<SessionWordType[] | null>(null);
-  //   const [testLifecycle, setTestLifecycle] = useState<TestLifecycleType | null>(null);
   const [testLifecycle, setTestLifecycle] = useState<TestLifecycleType | null>('notStarted');
 
   const contextValue = useMemo(
@@ -63,13 +62,26 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
     ],
   );
 
-  useEffect(() => {
-    setUser(mockUser);
-    if (mockUser) {
-      const currentWords = buildSessionWords(mockUser.words);
-      setSessionWords(currentWords);
-    }
+  //   useEffect(() => {
+  //     setUser(mockUser);
+  //     if (mockUser) {
+  //       const currentWords = buildSessionWords(mockUser.words);
+  //       setSessionWords(currentWords);
+  //     }
 
+  //     setLoading(false);
+  //   }, []);
+
+  useEffect(() => {
+    if (!mockUser) {
+      setError(true);
+      setLoading(false);
+    } else if (mockUser.words.current && mockUser.words.current.length > 0) {
+      const currentWords = buildSessionWords(mockUser.words.current);
+      setSessionWords(currentWords);
+      setLoading(false);
+    }
+    setUser(mockUser);
     setLoading(false);
   }, []);
 

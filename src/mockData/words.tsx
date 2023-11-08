@@ -540,3 +540,46 @@ export const year3AndYear4StandardWords = [
     owner: 'platform',
   },
 ];
+
+export const userWords = [
+  {
+    word: 'automatic',
+    uuid: 'ab7007c1-8a59-470a-84e4-963598f46883',
+    owner: 'user',
+  },
+  {
+    word: 'automatically',
+    uuid: 'b49e8cf7-6d2c-4c9a-b647-d972cfa7bccc',
+    owner: 'user',
+  },
+  {
+    word: 'automobile',
+    uuid: 'f4d0b83a-f573-4eb0-b30b-1297f6ab6685',
+    owner: 'user',
+  },
+  {
+    word: 'autograph',
+    uuid: '63e248a4-56df-49ba-8e9d-eeca69ee21cc',
+    owner: 'user',
+  },
+  {
+    word: 'autocue',
+    uuid: '051290e6-4e83-4a2e-8f5f-4648e024dc9a',
+    owner: 'user',
+  },
+  {
+    word: 'autopilot',
+    uuid: 'c642fef7-c799-4f50-9f95-2590c8755d46',
+    owner: 'user',
+  },
+  {
+    word: 'autobiography',
+    uuid: 'c3b68ff9-c87a-4c51-ae72-2d04ca7e3eff',
+    owner: 'user',
+  },
+  {
+    word: 'autobiographies',
+    uuid: '14016951-2a10-49a5-b733-aedf027755fc',
+    owner: 'user',
+  },
+];

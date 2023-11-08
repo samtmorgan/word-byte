@@ -56,7 +56,10 @@
     "import/no-extraneous-dependencies": [
       "error",
       {
-        "devDependencies": true
+        "devDependencies": true,
+        "optionalDependencies": false,
+        "peerDependencies": false,
+        "packageDir": "./"
       }
     ],
     "max-len": ["warn", 120],
