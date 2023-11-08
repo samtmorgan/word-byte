@@ -32,7 +32,7 @@ describe('Test that the TestWords page render as expected', () => {
     expect(screen.getByText('No words')).toBeInTheDocument();
   });
   it('render button "Start" when words array.length > 0 && !testLifeCycle', () => {
-    const sessionWordsArr = buildSessionWords(mockUser?.words || []);
+    const sessionWordsArr = buildSessionWords(mockUser?.words.current || []);
     const providerProps = {
       ...initProviderState,
       loading: false,
@@ -43,7 +43,7 @@ describe('Test that the TestWords page render as expected', () => {
     expect(screen.getByRole('button', { name: /Start/ })).toBeInTheDocument();
   });
   it('expected elements are rendered when testLifecycle === "test"', () => {
-    const sessionWordsArr = buildSessionWords(mockUser?.words || []);
+    const sessionWordsArr = buildSessionWords(mockUser?.words.current || []);
     const providerProps = {
       ...initProviderState,
       loading: false,
