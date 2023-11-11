@@ -3,6 +3,7 @@ export type ButtonType = {
   label: string;
   disabled?: boolean;
   type?: 'button' | 'submit';
+  iconButton?: boolean;
 };
 
 // export type UserType = {
@@ -11,12 +12,22 @@ export type ButtonType = {
 //   words: UserWordType[];
 // } | null;
 
+// export type UserType = {
+//   name: string;
+//   uuid: string;
+//   words: {
+//     current: string[] | null;
+//     history: object[] | null;
+//     customWords: UserWordType[];
+//   };
+// } | null;
+
 export type UserType = {
   name: string;
   uuid: string;
   words: {
-    current: string[] | null;
-    history: object[] | null;
+    wordSets: string[][];
+    attempts: object[];
     customWords: UserWordType[];
   };
 } | null;
@@ -30,8 +41,8 @@ export type ContextType = {
   setError: (error: boolean) => void;
   user: UserType;
   setUser: (user: UserType) => void;
-  sessionWords: SessionWordType[] | null;
-  setSessionWords: (sessionWords: SessionWordType[] | null) => void;
+  sessionWords: SessionWordType[];
+  setSessionWords: (sessionWords: SessionWordType[]) => void;
   testLifecycle: string | null;
   setTestLifecycle: (testLifecycle: TestLifecycleType | null) => void;
 };

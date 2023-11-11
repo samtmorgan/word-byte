@@ -57,7 +57,7 @@ export default function TestWordsPage() {
 
   if (testLifecycle === 'notStarted' || testLifecycle === 'finished' || testLifecycle === 'cancelled') {
     return (
-      <div className="test-page-container">
+      <div className="page-container">
         <Button label="Start 🟢" onClick={() => setTestLifecycle('test')} />
       </div>
     );
@@ -68,7 +68,7 @@ export default function TestWordsPage() {
   }
 
   return (
-    <div className="test-page-container">
+    <div className="page-container">
       <span className="cool-border-with-shadow">{`${testIndex + 1} of ${sessionWordsCount} words`}</span>
 
       <Button disabled={testIndex === sessionWordsCount} label="Say word 🔈" onClick={handleSpeak} />

@@ -89,17 +89,28 @@ h1 {
   font-size: larger;
 }
 
+input:focus {
+  outline: none;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+}
+
 /* start checkbox */
 
 /* end checkbox */
 
-.test-page-container {
+.page-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 1rem;
+  padding: 1rem;
   gap: 1rem;
+  box-sizing: border-box;
+  width: 100vw;
 }
 
 .test-page-current-word-control {
@@ -116,9 +127,21 @@ h1 {
   /* box-shadow: var(--box-shadow); */
   color: var(--color-main);
   display: inline-block;
-  padding: 0 18px;
-  line-height: 50px;
+  padding: 0 1rem;
+  line-height: 2rem;
   text-align: center;
+}
+
+.iconButton {
+  padding: 0px;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 1rem;
+  /* background-color: yellow; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px;
 }
 
 /* start button */
@@ -129,6 +152,7 @@ h1 {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  /* align-self: start; */
 }
 .button:hover {
   background-color: var(--button-hover-background-color);
@@ -153,21 +177,42 @@ h1 {
 }
 /* end button */
 
-.wordList {
-  flex-wrap: wrap;
-  width: 100vw;
+/* .page-container .current-words {
+  list-style-type: decimal;
+} */
+
+.page-container .word-list {
+  list-style-type: decimal;
+  margin: 1rem 2rem;
+}
+
+/* .page-container .current-words .wordItem {
+  display: inline-block;
+  padding: 0 1rem;
+  line-height: 2rem;
+  text-align: center;
+} */
+
+.page-container.settings {
+  align-items: flex-start;
+  /* justify-content: center; */
+  gap: 1rem;
+  /* background-color: aqua; */
+}
+
+.page-container .controls {
   display: flex;
-  flex-direction: row;
-  /* align-items: center;
-    justify-content: center; */
-  /* gap: 1rem; */
+  gap: 1rem;
+  align-items: flex-end;
+  /* background-color: aqua; */
 }
 
 .wordItem {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
   padding: 0.5rem;
   border: var(--border);
   background-color: var(--color-main-background);
@@ -177,5 +222,9 @@ h1 {
   .button {
     min-width: 120px;
     padding: 0 25px;
+  }
+  .iconButton {
+    padding: 0px;
+    min-width: 2rem;
   }
 }

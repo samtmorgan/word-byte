@@ -6,7 +6,7 @@ import React from 'react';
 
 export default function SettingsAccount() {
   return (
-    <div className="test-page-container">
+    <div className="page-container">
       <h1>Account settings</h1>
       {/* <div style={{ gap: '1rem' }}>
         <LinkButton href="/settingsAccount" label="Account settings" />

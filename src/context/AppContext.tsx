@@ -12,7 +12,7 @@ export const initProviderState = {
   setError: () => {},
   user: null,
   setUser: () => {},
-  sessionWords: null,
+  sessionWords: [],
   setSessionWords: () => {},
   testLifecycle: null,
   setTestLifecycle: () => {},
@@ -32,7 +32,7 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
   const [user, setUser] = useState<UserType>(null);
-  const [sessionWords, setSessionWords] = useState<SessionWordType[] | null>(null);
+  const [sessionWords, setSessionWords] = useState<SessionWordType[]>([]);
   const [testLifecycle, setTestLifecycle] = useState<TestLifecycleType | null>('notStarted');
 
   const contextValue = useMemo(
@@ -76,14 +76,18 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
     if (!mockUser) {
       setError(true);
       setLoading(false);
-    } else if (mockUser.words.current && mockUser.words.current.length > 0) {
-      const currentWords = buildSessionWords(mockUser.words.current);
-      setSessionWords(currentWords);
-      setLoading(false);
     }
     setUser(mockUser);
-    setLoading(false);
   }, []);
+
+  useEffect(() => {
+    if (!user) return;
+    if (user.words.wordSets.length > 0) {
+      const currentWords = buildSessionWords(user.words.wordSets[0]);
+      setSessionWords(currentWords);
+    }
+    setLoading(false);
+  }, [user]);
 
   return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>;
 }
