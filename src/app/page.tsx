@@ -1,5 +1,6 @@
 'use client';
 
+// import { generateWordList } from '@/utils/wordUtils';
 // import LinkButton from '@/components/LinkButton';
 // import Select from '@/components/Select';
 import React from 'react';
@@ -12,6 +13,24 @@ export default function Home() {
 
   //     window.speechSynthesis.speak(msg);
   //   };
+
+  //   console.log(
+  //     generateWordList(
+  //       [
+  //         'cheekily',
+  //         'angrily',
+  //         'heavily',
+  //         'heroically',
+  //         'magically',
+  //         'automatically',
+  //         'bossily',
+  //         'comically',
+  //         'physically',
+  //         'finally',
+  //       ],
+  //       'user',
+  //     ),
+  //   );
 
   return (
     <>

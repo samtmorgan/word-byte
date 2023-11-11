@@ -6,8 +6,12 @@ export function generateWordObject(newWord: string, ownerType: 'platform' | 'use
     word: newWord,
     uuid: uuidv4(),
     owner: ownerType,
-    current: false,
+    current: true,
   };
+}
+
+export function generateWordList(words: string[], ownerType: 'platform' | 'user'): UserWordType[] {
+  return words.map(word => generateWordObject(word, ownerType));
 }
 
 export function speak(word: string) {
