@@ -1,9 +1,9 @@
 export type ButtonType = {
-  onClick: () => void;
   label: string;
   disabled?: boolean;
   type?: 'button' | 'submit';
   iconButton?: boolean;
+  onClick?: () => void;
 };
 
 // export type UserType = {
@@ -58,6 +58,14 @@ export type UserWordType = {
   //         pass: boolean;
   //       }[]
   //     | null;
+};
+
+export type InputType = {
+  value: string;
+  onChange: (value: string) => void;
+  name: string;
+  placeholder?: string;
+  label?: string;
 };
 
 export interface SessionWordType extends UserWordType {

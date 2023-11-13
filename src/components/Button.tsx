@@ -1,5 +1,5 @@
-import { ButtonType } from '@/types/types';
 import React, { ReactElement, useMemo } from 'react';
+import { ButtonType } from '../types/types';
 
 const styles = {
   default: 'button cool-border-with-shadow',

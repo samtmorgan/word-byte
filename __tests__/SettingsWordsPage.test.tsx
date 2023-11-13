@@ -20,7 +20,7 @@ describe('Test the SettingsWords page renders as expected', () => {
     renderWithContext(<SettingsWords />, providerProps);
     expect(screen.getByText(/🙁 No words here yet, add words below../)).toBeInTheDocument();
   });
-  it('renders an input, label and button when there are words in the set', () => {
+  it('renders an input, label and button for adding words', () => {
     const providerProps = { ...initProviderState };
     const user = { words: { wordSets: [[]] } };
     Object.defineProperty(providerProps, 'user', { value: user });
@@ -29,6 +29,15 @@ describe('Test the SettingsWords page renders as expected', () => {
     expect(screen.getByRole('button')).toBeInTheDocument();
     expect(screen.getByLabelText('Add new word')).toBeInTheDocument();
   });
+  //   it('renders a button for removing words', () => {
+  //     const providerProps = { ...initProviderState };
+  //     const user = { words: { wordSets: [[]] } };
+  //     Object.defineProperty(providerProps, 'user', { value: user });
+  //     renderWithContext(<SettingsWords />, providerProps);
+  //     expect(screen.getByRole('textbox', { name: 'Add new word' })).toBeInTheDocument();
+  //     expect(screen.getByRole('button')).toBeInTheDocument();
+  //     expect(screen.getByLabelText('Add new word')).toBeInTheDocument();
+  //   });
 
   //   it('render error text when context error === true', () => {
   //     const providerProps = {

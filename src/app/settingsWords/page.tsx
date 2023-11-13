@@ -1,11 +1,10 @@
 'use client';
 
 import React from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAppContext } from '../../context/AppContext';
-// import { year3AndYear4StandardWords } from '../../mockData/words';
-import { Button } from '../../components/Button';
-import Input from '../../components/Input';
 import Loader from '../../components/Loader';
+// import { Button } from '../../components/Button';
 
 // import LinkButton from '../../components/LinkButton';
 
@@ -30,9 +29,28 @@ import Loader from '../../components/Loader';
 //   );
 // }
 
+interface IFormInput {
+  word: string;
+}
+
 export default function SettingsWords() {
   const { user, sessionWords } = useAppContext();
   //   const [editMode, setEditMode] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormInput>();
+  //   const onSubmit: SubmitHandler<IFormInput> = data => console.log(data);
+
+  const onSubmit: SubmitHandler<IFormInput> = data => {
+    console.log(data);
+  };
+
+  //   const handleEditState = useCallback(() => {
+  //     setEditMode(!editMode);
+  //   }, [editMode]);
 
   //   const handleEmptyCurrent = useCallback(() => {
   //     if (!user) return;
@@ -82,14 +100,25 @@ export default function SettingsWords() {
             ))}
           </ol>
         ) : (
-          <p>🙁 No words here yet, add words below..</p>
+          <p>🙁 No words here yet</p>
         )}
-        <div>
-          <Input label="Add new word" name="add-word" placeholder="New word..." />
-          <span>
-            <Button label="Add" onClick={() => {}} />
+        {/* 
+        <Button label="Edit" onClick={handleEditState} />
+        <Button label="Edit" onClick={handleEditState} />
+        <Button label="Edit" onClick={handleEditState} /> */}
+
+        <p>*Capitalisation matters</p>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <span className="add-word-form">
+            <span className="add-word-input">
+              <input {...register('word', { required: true, pattern: /^[A-Za-z]+$/i })} />
+              {errors.word?.type === 'required' && <p role="alert">Word needs ome letters</p>}
+              {errors.word?.type === 'pattern' && <p role="alert">Word must have letters only</p>}
+            </span>
+
+            <input className="button cool-border-with-shadow" type="submit" />
           </span>
-        </div>
+        </form>
 
         {/* // <ol>
         //   {sessionWords.length > 0 ? (

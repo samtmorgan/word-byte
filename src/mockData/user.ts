@@ -28,7 +28,7 @@
 //   ],
 // };
 
-import { UserType } from '@/types/types';
+import { UserType } from '../types/types';
 import { userWords } from './words';
 
 export const mockUser: UserType = {
