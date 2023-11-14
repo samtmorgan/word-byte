@@ -33,16 +33,15 @@ interface IFormInput {
   word: string;
 }
 
-function AddWordForm() {
+function AddWordForm({ handleAddWord }: { handleAddWord: (arg0: string) => void }) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IFormInput>();
-  //   const onSubmit: SubmitHandler<IFormInput> = data => console.log(data);
 
   const onSubmit: SubmitHandler<IFormInput> = data => {
-    console.log(data);
+    handleAddWord(data.word);
   };
   return (
     <form className="add-word-form" onSubmit={handleSubmit(onSubmit)}>
@@ -99,19 +98,17 @@ export default function SettingsWords() {
     [setUser, user],
   );
 
-  //   const handleAddToCurrent = useCallback(
-  //     (uuidToAdd: string) => {
-  //       if (!user) {
-  //         return;
-  //       }
-  //       const userUpdate = { ...user };
-  //       const newCurrentWords = [...userUpdate.words.current, uuidToAdd];
-  //       userUpdate.words.current = newCurrentWords;
-  //       setUser(userUpdate);
-  //     },
-
-  //     [setUser, user],
-  //   );
+  const handleAddWord = useCallback(
+    (word: string) => {
+      if (!user) {
+        return;
+      }
+      const userUpdate = { ...user };
+      userUpdate.words.wordSets[0].push(word);
+      setUser(userUpdate);
+    },
+    [setUser, user],
+  );
 
   if (!user) return <Loader />;
 
@@ -122,8 +119,8 @@ export default function SettingsWords() {
         {user.words.wordSets[0].length > 0 ? (
           <ol className="word-list" type="1">
             {user.words.wordSets[0].map(word => (
-              <span className="word-list-item">
-                <li key={word}>{word}</li>
+              <span key={word} className="word-list-item">
+                <li>{word}</li>
                 {editMode && (
                   <button
                     aria-label={`Remove word: ${word}`}
@@ -145,7 +142,7 @@ export default function SettingsWords() {
         <Button label="Edit" onClick={handleEditState} /> */}
         <section className="edit-controls">
           <Button label={editMode ? 'Finish' : 'Edit'} onClick={handleEditState} />
-          {editMode && <AddWordForm />}
+          {editMode && <AddWordForm handleAddWord={handleAddWord} />}
         </section>
         {/* // <ol>
         //   {sessionWords.length > 0 ? (
