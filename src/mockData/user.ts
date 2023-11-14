@@ -1,3 +1,6 @@
+import { MockUserType } from '../types/types';
+import { userWords } from './words';
+
 /**
  * Mock user data for adult user account that can have more than one child account
  * this adds complexity to the app structure and might be implemented later
@@ -28,25 +31,33 @@
 //   ],
 // };
 
-import { UserType } from '../types/types';
-import { userWords } from './words';
+// const wordSetUuids = [
+//   'ab7007c1-8a59-470a-84e4-963598f46883',
+//   'b49e8cf7-6d2c-4c9a-b647-d972cfa7bccc',
+//   'f4d0b83a-f573-4eb0-b30b-1297f6ab6685',
+//   '63e248a4-56df-49ba-8e9d-eeca69ee21cc',
+//   '051290e6-4e83-4a2e-8f5f-4648e024dc9a',
+//   'c642fef7-c799-4f50-9f95-2590c8755d46',
+//   'c3b68ff9-c87a-4c51-ae72-2d04ca7e3eff',
+//   '14016951-2a10-49a5-b733-aedf027755fc',
+// ];
 
-export const mockUser: UserType = {
+const wordSetText = [
+  'automatic',
+  'automatically',
+  'automobile',
+  'autograph',
+  'autocue',
+  'autopilot',
+  'autobiography',
+  'autobiographies',
+];
+
+export const mockUser: MockUserType = {
   name: 'Ginny',
   uuid: 'b8765153-9c08-4301-869c-d810453408ca',
   words: {
-    wordSets: [
-      [
-        'ab7007c1-8a59-470a-84e4-963598f46883',
-        'b49e8cf7-6d2c-4c9a-b647-d972cfa7bccc',
-        'f4d0b83a-f573-4eb0-b30b-1297f6ab6685',
-        '63e248a4-56df-49ba-8e9d-eeca69ee21cc',
-        '051290e6-4e83-4a2e-8f5f-4648e024dc9a',
-        'c642fef7-c799-4f50-9f95-2590c8755d46',
-        'c3b68ff9-c87a-4c51-ae72-2d04ca7e3eff',
-        '14016951-2a10-49a5-b733-aedf027755fc',
-      ],
-    ],
+    wordSets: [wordSetText],
     attempts: [],
     customWords: userWords,
   },

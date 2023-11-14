@@ -1,10 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAppContext } from '../../context/AppContext';
 import Loader from '../../components/Loader';
-// import { Button } from '../../components/Button';
+import { Button } from '../../components/Button';
 
 // import LinkButton from '../../components/LinkButton';
 
@@ -33,10 +33,7 @@ interface IFormInput {
   word: string;
 }
 
-export default function SettingsWords() {
-  const { user, sessionWords } = useAppContext();
-  //   const [editMode, setEditMode] = useState(false);
-
+function AddWordForm() {
   const {
     register,
     handleSubmit,
@@ -47,10 +44,39 @@ export default function SettingsWords() {
   const onSubmit: SubmitHandler<IFormInput> = data => {
     console.log(data);
   };
+  return (
+    <form className="add-word-form" onSubmit={handleSubmit(onSubmit)}>
+      <span className="add-word-input">
+        <label className="add-word-input" htmlFor="word">
+          Add new word *capitalisation matters
+          <input {...register('word', { required: true, pattern: /^[A-Za-z]+$/i })} id="word" />
+        </label>
+        {errors.word?.type === 'required' && <p role="alert">Word needs some letters</p>}
+        {errors.word?.type === 'pattern' && <p role="alert">Word must have letters only</p>}
+      </span>
+      <Button label="Add" type="submit" />
+    </form>
+  );
+}
 
-  //   const handleEditState = useCallback(() => {
-  //     setEditMode(!editMode);
-  //   }, [editMode]);
+export default function SettingsWords() {
+  const { user, setUser } = useAppContext();
+  const [editMode, setEditMode] = useState(false);
+
+  //   const {
+  //     register,
+  //     handleSubmit,
+  //     formState: { errors },
+  //   } = useForm<IFormInput>();
+  //   //   const onSubmit: SubmitHandler<IFormInput> = data => console.log(data);
+
+  //   const onSubmit: SubmitHandler<IFormInput> = data => {
+  //     console.log(data);
+  //   };
+
+  const handleEditState = useCallback(() => {
+    setEditMode(!editMode);
+  }, [editMode]);
 
   //   const handleEmptyCurrent = useCallback(() => {
   //     if (!user) return;
@@ -59,19 +85,19 @@ export default function SettingsWords() {
   //     setUser(userUpdate);
   //   }, [setUser, user]);
 
-  //   const handleRemoveFromCurrent = useCallback(
-  //     (uuidToRemove: string) => {
-  //       if (!user) {
-  //         return;
-  //       }
-  //       if (user.words.current) {
-  //         const userUpdate = { ...user };
-  //         userUpdate.words.current = user.words.current.filter(word => word !== uuidToRemove);
-  //         setUser(userUpdate);
-  //       }
-  //     },
-  //     [setUser, user],
-  //   );
+  const handleRemoveWord = useCallback(
+    (wordToRemove: string) => {
+      if (!user) {
+        return;
+      }
+      if (user.words.wordSets[0].length > 0) {
+        const userUpdate = { ...user };
+        userUpdate.words.wordSets[0] = user.words.wordSets[0].filter(word => word !== wordToRemove);
+        setUser(userUpdate);
+      }
+    },
+    [setUser, user],
+  );
 
   //   const handleAddToCurrent = useCallback(
   //     (uuidToAdd: string) => {
@@ -95,8 +121,20 @@ export default function SettingsWords() {
         <h1>This is your current set of words</h1>
         {user.words.wordSets[0].length > 0 ? (
           <ol className="word-list" type="1">
-            {sessionWords.map(word => (
-              <li key={word.word}>{word.word}</li>
+            {user.words.wordSets[0].map(word => (
+              <span className="word-list-item">
+                <li key={word}>{word}</li>
+                {editMode && (
+                  <button
+                    aria-label={`Remove word: ${word}`}
+                    className="button cool-border-with-shadow icon-button"
+                    type="button"
+                    onClick={() => handleRemoveWord(word)}
+                  >
+                    ❌
+                  </button>
+                )}
+              </span>
             ))}
           </ol>
         ) : (
@@ -104,22 +142,11 @@ export default function SettingsWords() {
         )}
         {/* 
         <Button label="Edit" onClick={handleEditState} />
-        <Button label="Edit" onClick={handleEditState} />
         <Button label="Edit" onClick={handleEditState} /> */}
-
-        <p>*Capitalisation matters</p>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <span className="add-word-form">
-            <span className="add-word-input">
-              <input {...register('word', { required: true, pattern: /^[A-Za-z]+$/i })} />
-              {errors.word?.type === 'required' && <p role="alert">Word needs ome letters</p>}
-              {errors.word?.type === 'pattern' && <p role="alert">Word must have letters only</p>}
-            </span>
-
-            <input className="button cool-border-with-shadow" type="submit" />
-          </span>
-        </form>
-
+        <section className="edit-controls">
+          <Button label={editMode ? 'Finish' : 'Edit'} onClick={handleEditState} />
+          {editMode && <AddWordForm />}
+        </section>
         {/* // <ol>
         //   {sessionWords.length > 0 ? (
         //     sessionWords.map(word => (

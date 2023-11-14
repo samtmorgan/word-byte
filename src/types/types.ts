@@ -32,6 +32,16 @@ export type UserType = {
   };
 } | null;
 
+export type MockUserType = {
+  name: string;
+  uuid: string;
+  words: {
+    wordSets: string[][];
+    attempts: object[];
+    customWords: UserWordType[];
+  };
+};
+
 export type TestLifecycleType = 'notStarted' | 'test' | 'review' | 'revise' | 'finished' | 'cancelled';
 
 export type ContextType = {
@@ -41,15 +51,17 @@ export type ContextType = {
   setError: (error: boolean) => void;
   user: UserType;
   setUser: (user: UserType) => void;
-  sessionWords: SessionWordType[];
-  setSessionWords: (sessionWords: SessionWordType[]) => void;
+  sessionWords: SessionWordType[] | null;
+  setSessionWords: (sessionWords: SessionWordType[] | null) => void;
+  //   sessionWords: string[] | null;
+  //   setSessionWords: (sessionWords: string[] | null) => void;
   testLifecycle: string | null;
   setTestLifecycle: (testLifecycle: TestLifecycleType | null) => void;
 };
 
 export type UserWordType = {
   word: string;
-  uuid: string;
+  //   uuid: string;
   //   owner: 'platform' | 'user';
   //   current: boolean;
   //   attempts:
@@ -60,6 +72,10 @@ export type UserWordType = {
   //     | null;
 };
 
+export interface SessionWordType extends UserWordType {
+  correct: boolean;
+}
+
 export type InputType = {
   value: string;
   onChange: (value: string) => void;
@@ -67,7 +83,3 @@ export type InputType = {
   placeholder?: string;
   label?: string;
 };
-
-export interface SessionWordType extends UserWordType {
-  correct: boolean;
-}

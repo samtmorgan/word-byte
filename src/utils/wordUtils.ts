@@ -1,6 +1,4 @@
-// import { v4 as uuidv4 } from 'uuid';
-import { userWords, year3AndYear4StandardWords } from '../mockData/words';
-// import { UserWordType } from '../types/types';
+import { SessionWordType } from '../types/types';
 
 // export function generateWordObject(newWord: string, ownerType: 'platform' | 'user'): UserWordType {
 //   return {
@@ -27,11 +25,16 @@ export function speak(word: string) {
 //   return currentWords;
 // }
 
-export function buildSessionWords(currentWords: string[]) {
-  const platformCurrent = year3AndYear4StandardWords.filter(word => currentWords.includes(word.uuid));
-  const userCurrent = userWords.filter(word => currentWords.includes(word.uuid));
-  const sessionWords = [...platformCurrent, ...userCurrent].map(word => ({
-    ...word,
+export function buildSessionWords(currentWords: string[]): SessionWordType[] {
+  //   const platformCurrent = year3AndYear4StandardWords.filter(word => currentWords.includes(word.uuid));
+  //   const userCurrent = userWords.filter(word => currentWords.includes(word.uuid));
+  //   const sessionWords = [...platformCurrent, ...userCurrent].map(word => ({
+  //     ...word,
+  //     correct: false,
+  //   }));
+
+  const sessionWords = currentWords.map(currentWord => ({
+    word: currentWord,
     correct: false,
   }));
 

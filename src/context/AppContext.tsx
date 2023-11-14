@@ -32,7 +32,8 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
   const [user, setUser] = useState<UserType>(null);
-  const [sessionWords, setSessionWords] = useState<SessionWordType[]>([]);
+  //   const [sessionWords, setSessionWords] = useState<string[] | null>([]);
+  const [sessionWords, setSessionWords] = useState<SessionWordType[] | null>([]);
   const [testLifecycle, setTestLifecycle] = useState<TestLifecycleType | null>('notStarted');
 
   const contextValue = useMemo(
@@ -85,6 +86,7 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
     if (user.words.wordSets.length > 0) {
       const currentWords = buildSessionWords(user.words.wordSets[0]);
       setSessionWords(currentWords);
+      //   setSessionWords(user.words.wordSets[0]);
     }
     setLoading(false);
   }, [user]);
