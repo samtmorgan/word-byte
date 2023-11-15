@@ -2,8 +2,8 @@
 
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { mockUser } from '../mockData/user';
-import { ContextType, SessionWordType, TestLifecycleType, UserType } from '../types/types';
-import { buildSessionWords } from '../utils/wordUtils';
+import { ContextType, TestLifecycleType, UserType } from '../types/types';
+// import { buildSessionWords } from '../utils/wordUtils';
 
 export const initProviderState = {
   loading: true,
@@ -33,7 +33,7 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState<boolean>(false);
   const [user, setUser] = useState<UserType>(null);
   //   const [sessionWords, setSessionWords] = useState<string[] | null>([]);
-  const [sessionWords, setSessionWords] = useState<SessionWordType[] | null>([]);
+  const [sessionWords, setSessionWords] = useState<string[] | null>([]);
   const [testLifecycle, setTestLifecycle] = useState<TestLifecycleType | null>('notStarted');
 
   const contextValue = useMemo(
@@ -81,15 +81,16 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
     setUser(mockUser);
   }, []);
 
-  useEffect(() => {
-    if (!user) return;
-    if (user.words.wordSets.length > 0) {
-      const currentWords = buildSessionWords(user.words.wordSets[0]);
-      setSessionWords(currentWords);
-      //   setSessionWords(user.words.wordSets[0]);
-    }
-    setLoading(false);
-  }, [user]);
+  //   useEffect(() => {
+  //     return;
+  //     if (!user) return;
+  //     if (user.words.wordSets.length > 0) {
+  //       const currentWords = buildSessionWords(user.words.wordSets[0]);
+  //       setSessionWords(currentWords);
+  //       //   setSessionWords(user.words.wordSets[0]);
+  //     }
+  //     setLoading(false);
+  //   }, [user]);
 
   return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>;
 }

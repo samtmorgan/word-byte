@@ -8,14 +8,17 @@ import Review from '../../components/Review';
 import Loader from '../../components/Loader';
 
 export default function TestWordsPage() {
-  const { sessionWords, loading, error, testLifecycle, setTestLifecycle } = useAppContext();
+  const { sessionWords, setSessionWords, user, loading, setLoading, error, testLifecycle, setTestLifecycle } =
+    useAppContext();
   const [hasSeenAllWords, setHasSeenAllWords] = useState<boolean>(false);
   const [testIndex, setTestIndex] = useState<number>(0);
 
-  //   const currentWords = useMemo(() => {
-  //     if (!user) return [];
-  //     return user?.words?.filter(({ current }) => current) || [];
-  //   }, [user]);
+  useEffect(() => {
+    if (!user) return;
+    setSessionWords(user.words.wordSets[0]);
+    setLoading(false);
+  }, [setSessionWords, user, setLoading]);
+
   const sessionWordsCount = useMemo(() => {
     if (!sessionWords) return 0;
     return sessionWords.length;
@@ -23,7 +26,7 @@ export default function TestWordsPage() {
 
   const handleSpeak = useCallback(() => {
     if (!sessionWords) return;
-    speak(sessionWords[testIndex].word);
+    speak(sessionWords[testIndex]);
   }, [sessionWords, testIndex]);
 
   const handleIndexChange = useCallback(

@@ -51,10 +51,10 @@ export type ContextType = {
   setError: (error: boolean) => void;
   user: UserType;
   setUser: (user: UserType) => void;
-  sessionWords: SessionWordType[] | null;
-  setSessionWords: (sessionWords: SessionWordType[] | null) => void;
-  //   sessionWords: string[] | null;
-  //   setSessionWords: (sessionWords: string[] | null) => void;
+  //   sessionWords: SessionWordType[] | null;
+  //   setSessionWords: (sessionWords: SessionWordType[] | null) => void;
+  sessionWords: string[] | null;
+  setSessionWords: (sessionWords: string[] | null) => void;
   testLifecycle: string | null;
   setTestLifecycle: (testLifecycle: TestLifecycleType | null) => void;
 };
@@ -82,4 +82,9 @@ export type InputType = {
   name: string;
   placeholder?: string;
   label?: string;
+};
+
+export type ResultType = {
+  word: string;
+  correct: boolean;
 };

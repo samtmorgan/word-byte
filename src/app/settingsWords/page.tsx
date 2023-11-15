@@ -113,7 +113,7 @@ export default function SettingsWords() {
   if (!user) return <Loader />;
 
   return (
-    <div className="page-container settings">
+    <div className="page-container">
       <section>
         <h1>This is your current set of words</h1>
         {user.words.wordSets[0].length > 0 ? (
