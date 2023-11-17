@@ -114,28 +114,4 @@ describe('test the add word input', () => {
     await user.click(addWordButton);
     waitFor(() => expect(screen.getByText(targetWord)).toBeInTheDocument());
   });
-  //   it('when in edit mode, when add word button is clicked, the word is added to the list', async () => {
-  //     const user = userEvent.setup();
-  //     renderWithContextAndInitState();
-  //     const editButton = getEditButton();
-  //     await user.click(editButton);
-  //     const addWordInput = screen.getByRole('textbox', { name: 'Add new word *capitalisation matters' });
-  //     const addWordButton = screen.getByRole('button', { name: /Add/ });
-  //     const targetWord = 'test';
-  //     await user.type(addWordInput, targetWord);
-  //     await user.click(addWordButton);
-  //     expect(screen.getByText(targetWord)).toBeInTheDocument();
-  //   });
-  //   it('when in edit mode, when add word button is clicked, the word is added to the list', async () => {
-  //     const user = userEvent.setup();
-  //     renderWithContextAndInitState();
-  //     const editButton = getEditButton();
-  //     await user.click(editButton);
-  //     const addWordInput = screen.getByRole('textbox', { name: 'Add new word *capitalisation matters' });
-  //     const addWordButton = screen.getByRole('button', { name: /Add/ });
-  //     const targetWord = 'test';
-  //     await user.type(addWordInput, targetWord);
-  //     await user.click(addWordButton);
-  //     expect(screen.getByText(targetWord)).toBeInTheDocument();
-  //   });
 });

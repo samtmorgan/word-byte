@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { mockUser } from '../mockData/user';
-import { ContextType, TestLifecycleType, UserType } from '../types/types';
+import { ContextType, UserType } from '../types/types';
 // import { buildSessionWords } from '../utils/wordUtils';
 
 export const initProviderState = {
@@ -12,10 +12,10 @@ export const initProviderState = {
   setError: () => {},
   user: null,
   setUser: () => {},
-  sessionWords: [],
-  setSessionWords: () => {},
-  testLifecycle: null,
-  setTestLifecycle: () => {},
+  //   sessionWords: null,
+  //   setSessionWords: () => {},
+  //   testLifecycle: null,
+  //   setTestLifecycle: () => {},
 };
 
 const AppContext = createContext<ContextType>(initProviderState);
@@ -33,8 +33,8 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState<boolean>(false);
   const [user, setUser] = useState<UserType>(null);
   //   const [sessionWords, setSessionWords] = useState<string[] | null>([]);
-  const [sessionWords, setSessionWords] = useState<string[] | null>([]);
-  const [testLifecycle, setTestLifecycle] = useState<TestLifecycleType | null>('notStarted');
+  //   const [sessionWords, setSessionWords] = useState<string[] | null>(null);
+  //   const [testLifecycle, setTestLifecycle] = useState<TestLifecycleType | null>('notStarted');
 
   const contextValue = useMemo(
     () => ({
@@ -44,10 +44,10 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
       setLoading,
       setError,
       setUser,
-      sessionWords,
-      setSessionWords,
-      testLifecycle,
-      setTestLifecycle,
+      //   sessionWords,
+      //   setSessionWords,
+      //   testLifecycle,
+      //   setTestLifecycle,
     }),
     [
       loading,
@@ -56,10 +56,10 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
       setLoading,
       setError,
       setUser,
-      sessionWords,
-      setSessionWords,
-      testLifecycle,
-      setTestLifecycle,
+      //   sessionWords,
+      //   setSessionWords,
+      //   testLifecycle,
+      //   setTestLifecycle,
     ],
   );
 
@@ -79,6 +79,7 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
       setLoading(false);
     }
     setUser(mockUser);
+    setLoading(false);
   }, []);
 
   //   useEffect(() => {

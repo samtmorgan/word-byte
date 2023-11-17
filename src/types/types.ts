@@ -53,10 +53,10 @@ export type ContextType = {
   setUser: (user: UserType) => void;
   //   sessionWords: SessionWordType[] | null;
   //   setSessionWords: (sessionWords: SessionWordType[] | null) => void;
-  sessionWords: string[] | null;
-  setSessionWords: (sessionWords: string[] | null) => void;
-  testLifecycle: string | null;
-  setTestLifecycle: (testLifecycle: TestLifecycleType | null) => void;
+  //   sessionWords: string[] | null;
+  //   setSessionWords: (sessionWords: string[] | null) => void;
+  //   testLifecycle: string | null;
+  //   setTestLifecycle: (testLifecycle: TestLifecycleType | null) => void;
 };
 
 export type UserWordType = {
