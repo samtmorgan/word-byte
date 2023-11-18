@@ -54,8 +54,8 @@ describe('Test the Review component elements', () => {
 });
 
 describe('Test the Review component user interaction', () => {
-  beforeAll(() => renderWithContextAndInitState());
   it('when a button is clicked the content changes', async () => {
+    renderWithContextAndInitState();
     const firstWord = mockUser.words.wordSets[0][0];
     const user = userEvent.setup();
     const button = screen.getAllByRole('button')[0];

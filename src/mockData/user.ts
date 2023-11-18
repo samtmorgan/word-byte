@@ -42,15 +42,28 @@ import { userWords } from './words';
 //   '14016951-2a10-49a5-b733-aedf027755fc',
 // ];
 
+// const wordSetText = [
+//   'automatic',
+//   'automatically',
+//   'automobile',
+//   'autograph',
+//   'autocue',
+//   'autopilot',
+//   'autobiography',
+//   'autobiographies',
+// ];
+
 const wordSetText = [
-  'automatic',
-  'automatically',
-  'automobile',
-  'autograph',
-  'autocue',
-  'autopilot',
-  'autobiography',
-  'autobiographies',
+  'adventure',
+  'celebrate',
+  'excellent',
+  'familiar',
+  'hygiene',
+  'leisure',
+  'occasion',
+  'recommend',
+  'temperature',
+  'unusual',
 ];
 
 export const mockUser: MockUserType = {

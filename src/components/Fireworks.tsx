@@ -72,6 +72,7 @@ export default function Fireworks() {
 
   return (
     <ReactCanvasConfetti
+      className="fireworks"
       refConfetti={getInstance}
       style={{
         position: 'fixed',
