@@ -72,21 +72,21 @@ describe('Test the TestWords page user interaction', () => {
     expect(sayWordButton).toBeEnabled();
     expect(cancelButton).toBeEnabled();
     // assert that current test index is as expected
-    expect(screen.getByText(`1 of 8 words`)).toBeInTheDocument();
+    expect(screen.getByText(`1 of 10 words`)).toBeInTheDocument();
     await user.click(nextButton);
     // assert that clicking the next button changes the word
-    expect(screen.queryByText(`1 of 8 words`)).toBeNull();
-    expect(screen.getByText(`2 of 8 words`)).toBeInTheDocument();
+    expect(screen.queryByText(`1 of 10 words`)).toBeNull();
+    expect(screen.getByText(`2 of 10 words`)).toBeInTheDocument();
     // assert that the previous button is now enabled
     expect(previousButton).toBeEnabled();
     // assert that the previous button changes the word
     await user.click(previousButton);
-    expect(screen.getByText(`1 of 8 words`)).toBeInTheDocument();
+    expect(screen.getByText(`1 of 10 words`)).toBeInTheDocument();
     // assert that the cancel button ends the test
     await user.click(cancelButton);
     expect(screen.getByText(/Start/)).toBeInTheDocument();
     // assert that the start button starts the test again, we need to get the button again as it is a new render
     await user.click(screen.getByRole('button', { name: /Start/ }));
-    expect(screen.getByText(`1 of 8 words`)).toBeInTheDocument();
+    expect(screen.getByText(`1 of 10 words`)).toBeInTheDocument();
   });
 });
