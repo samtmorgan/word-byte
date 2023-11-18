@@ -5,8 +5,7 @@ export const navOptions = [
   },
   {
     label: '⚙️ Settings',
-    // href: '/settings',
-    href: '/',
+    href: '/settings',
   },
   {
     label: '✍️ Test',

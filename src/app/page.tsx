@@ -35,14 +35,8 @@ export default function Home() {
   return (
     <>
       <h1>Hi, I am Word Byte</h1>
-      {/* <Button label="speak" onClick={speak} /> */}
-      {/* <span className="button cool-border-with-shadow">
-        <Link type="button" href="/test">
-          test
-        </Link>
-      </span> */}
-      {/* <LinkButton label="test" href="/test" /> */}
-      {/* <Select /> */}
+      {/* display 7 day practice summary starting at beginning of current set 
+        - maybe format of 5/8 for each day  */}
     </>
   );
 }

@@ -16,7 +16,6 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /* --foreground-rgb: 255, 255, 255; */
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
@@ -34,7 +33,6 @@ main {
 
 body {
   color: rgb(var(--foreground-rgb));
-  /* background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb)); */
   background-color: var(--color-main-background);
   font-weight: 600;
   font-size: 18px;
@@ -45,24 +43,14 @@ header {
   right: 0;
   top: 0;
   position: fixed;
-  /* z-index: 1000; */
   background-color: #fbeee0;
-  /* margin: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; */
   height: var(--header-height);
   display: flex;
   gap: 1rem;
   flex-direction: row;
-  /* border-bottom: var(--border); */
 }
 
 nav {
-  /* z-index: 1000; */
-  /* margin-top: var(--header-height); */
-
   padding: 20px;
 }
 nav ul {
@@ -79,7 +67,6 @@ nav ul li {
   padding: 0.5rem;
 }
 nav ul li:hover {
-  /* border-bottom: var(--border); */
   background-color: var(--button-hover-background-color);
 }
 nav ul li.current-location {
@@ -89,16 +76,30 @@ h1 {
   font-size: larger;
 }
 
-/* start checkbox */
+input:focus {
+  outline: none;
+}
 
-/* end checkbox */
+.input-container {
+  display: flex;
+  flex-direction: column;
+}
 
-.test-page-container {
+.page-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 1rem;
+  padding: 1rem;
+  gap: 1rem;
+  box-sizing: border-box;
+  width: 100vw;
+}
+
+.page-container .review {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 1rem;
 }
 
@@ -112,16 +113,26 @@ h1 {
 .cool-border-with-shadow {
   border: var(--border);
   background-color: var(--color-main-background);
-  /* border-radius: 30px; */
-  /* box-shadow: var(--box-shadow); */
   color: var(--color-main);
   display: inline-block;
-  padding: 0 18px;
-  line-height: 50px;
+  padding: 0 1rem;
+  line-height: 2rem;
   text-align: center;
 }
 
-/* start button */
+.icon-button {
+  height: 2rem;
+  width: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px;
+  cursor: pointer;
+  margin-left: 1rem;
+  font-size: 0.5rem;
+}
+
+/* *start* button */
 .button {
   box-shadow: var(--box-shadow);
   cursor: pointer;
@@ -129,40 +140,88 @@ h1 {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  /* align-self: start; */
 }
-
 .button:hover {
   background-color: var(--button-hover-background-color);
 }
-
 .button:active {
   box-shadow: #422800 2px 2px 0 0;
   transform: translate(2px, 2px);
 }
-
 .button:active:disabled {
   box-shadow: var(--box-shadow);
   transform: none;
 }
-
 .button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
-
 .correct-word {
   background-color: rgb(43, 252, 183);
 }
-
 .correct-word:hover {
   background-color: rgb(43, 252, 183, 0.5);
 }
-
 /* end button */
+
+/* .page-container .current-words {
+  list-style-type: decimal;
+} */
+
+.wordItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  border: var(--border);
+  background-color: var(--color-main-background);
+}
+.page-container .word-list {
+  list-style-type: decimal;
+  margin: 1rem 0rem 1rem 2rem;
+  /* max-width: fit-content; */
+}
+.word-list-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 2.5rem;
+}
+
+.page-container .add-word-form {
+  display: flex;
+  flex-direction: column;
+  height: 2rem;
+  gap: 1rem;
+  height: fit-content;
+  margin-top: 2rem;
+}
+.page-container .add-word-input {
+  display: flex;
+  flex-direction: column;
+}
+.page-container .edit-controls {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-container .controls {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+}
 
 @media (min-width: 768px) {
   .button {
     min-width: 120px;
     padding: 0 25px;
+  }
+  .icon-button {
+    padding: 0px;
+    min-width: 2rem;
   }
 }
