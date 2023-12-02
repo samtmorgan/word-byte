@@ -53,17 +53,30 @@ import { userWords } from './words';
 //   'autobiographies',
 // ];
 
+// const wordSetText = [
+//   'adventure',
+//   'celebrate',
+//   'excellent',
+//   'familiar',
+//   'hygiene',
+//   'leisure',
+//   'occasion',
+//   'recommend',
+//   'temperature',
+//   'unusual',
+// ];
+
 const wordSetText = [
-  'adventure',
-  'celebrate',
-  'excellent',
-  'familiar',
-  'hygiene',
-  'leisure',
-  'occasion',
-  'recommend',
-  'temperature',
-  'unusual',
+  'international',
+  'interact',
+  'intermediate',
+  'Internet',
+  'supermarket',
+  'submarine',
+  'antifreeze',
+  'intercity',
+  'intergalactic',
+  'interrelate',
 ];
 
 export const mockUser: MockUserType = {

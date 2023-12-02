@@ -14,7 +14,7 @@ import Main from '../src/app/Main';
 //   });
 // });
 
-describe('test that the navigation page is rendered', () => {
+describe('test that the navigation element is rendered', () => {
   it('renders a <nav />', () => {
     render(<Main />);
     expect(screen.getByRole('navigation')).toBeInTheDocument();
