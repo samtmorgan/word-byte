@@ -66,17 +66,30 @@ import { userWords } from './words';
 //   'unusual',
 // ];
 
+// const wordSetText = [
+//   'international',
+//   'interact',
+//   'intermediate',
+//   'Internet',
+//   'supermarket',
+//   'submarine',
+//   'antifreeze',
+//   'intercity',
+//   'intergalactic',
+//   'interrelate',
+// ];
+
 const wordSetText = [
-  'international',
-  'interact',
-  'intermediate',
-  'Internet',
-  'supermarket',
-  'submarine',
-  'antifreeze',
-  'intercity',
-  'intergalactic',
-  'interrelate',
+  'courageous',
+  'outrageous',
+  'poisonous',
+  'humorous',
+  'glamorous',
+  'mountainous',
+  'obvious',
+  'anxious',
+  'jealous',
+  'serious',
 ];
 
 export const mockUser: MockUserType = {
