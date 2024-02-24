@@ -79,18 +79,20 @@ import { userWords } from './words';
 //   'interrelate',
 // ];
 
-const wordSetText = [
-  'courageous',
-  'outrageous',
-  'poisonous',
-  'humorous',
-  'glamorous',
-  'mountainous',
-  'obvious',
-  'anxious',
-  'jealous',
-  'serious',
-];
+// const wordSetText = [
+//   'courageous',
+//   'outrageous',
+//   'poisonous',
+//   'humorous',
+//   'glamorous',
+//   'mountainous',
+//   'obvious',
+//   'anxious',
+//   'jealous',
+//   'serious',
+// ];
+
+const wordSetText = ['ascend', 'descend', 'scene', 'scent', 'fascinate', 'muscle', 'scissors', 'scientist'];
 
 export const mockUser: MockUserType = {
   name: 'Ginny',
