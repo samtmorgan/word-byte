@@ -539,9 +539,6 @@ export const year3AndYear4StandardWords = [
     uuid: '107995f7-cb2f-4cdc-aff9-a2d981d53f6f',
     owner: 'platform',
   },
-];
-
-export const userWords = [
   {
     word: 'automatic',
     uuid: 'ab7007c1-8a59-470a-84e4-963598f46883',
@@ -581,5 +578,98 @@ export const userWords = [
     word: 'autobiographies',
     uuid: '14016951-2a10-49a5-b733-aedf027755fc',
     owner: 'user',
+  },
+  {
+    word: 'ascend',
+    uuid: '6277ac24-2205-4b03-a871-f12ccd7ea0aa',
+    owner: 'platform',
+  },
+  {
+    word: 'descend',
+    uuid: 'bb126822-d1cf-4628-a8f3-055ba64bd30c',
+    owner: 'platform',
+  },
+  {
+    word: 'scene',
+    uuid: 'ff965e5a-7c77-43d6-9f3b-bea51b1bc782',
+    owner: 'platform',
+  },
+  {
+    word: 'scent',
+    uuid: '8947ddbc-9c6f-4f76-8e68-1fd41711d764',
+    owner: 'platform',
+  },
+  {
+    word: 'fascinate',
+    uuid: 'd6eea725-052d-4a0a-9355-caf1e10d10cb',
+    owner: 'platform',
+  },
+  {
+    word: 'muscle',
+    uuid: 'c8d1fa80-7982-4eb9-b8b2-c1174a69e4ec',
+    owner: 'platform',
+  },
+  {
+    word: 'scissors',
+    uuid: 'bbb51109-fb68-4f77-8df3-34bc5f8bad65',
+    owner: 'platform',
+  },
+  {
+    word: 'scientist',
+    uuid: '2182d4b4-f084-4310-93c1-b36d59a57275',
+    owner: 'platform',
+  },
+];
+
+export const userWords = [
+  {
+    word: 'illogical',
+    uuid: '1d4ce9f5-4a58-48ea-a7fe-4a97dda52601',
+    owner: 'platform',
+  },
+  {
+    word: 'illiterate',
+    uuid: '1c94337d-be0d-409e-a422-5f1576bb9764',
+    owner: 'platform',
+  },
+  {
+    word: 'illegal',
+    uuid: '2c35689c-bbea-45ff-8245-50d6f9e4f105',
+    owner: 'platform',
+  },
+  {
+    word: 'illegible',
+    uuid: 'cd7514c8-f2e3-4c8d-a8d7-d5584ce3ee97',
+    owner: 'platform',
+  },
+  {
+    word: 'impatient',
+    uuid: '583770e4-1356-4639-a17a-342ad43daad9',
+    owner: 'platform',
+  },
+  {
+    word: 'impractical',
+    uuid: 'e768960c-77ab-4212-a8d7-ef426b1e6201',
+    owner: 'platform',
+  },
+  {
+    word: 'disqualify',
+    uuid: '065eeef7-b439-4450-8669-d5afc0daf8de',
+    owner: 'platform',
+  },
+  {
+    word: 'disobey',
+    uuid: '1f6d9fec-f515-448c-b858-564459808183',
+    owner: 'platform',
+  },
+  {
+    word: 'incorrect',
+    uuid: '3c291577-2883-4bb8-abc9-1ced57cc6dbc',
+    owner: 'platform',
+  },
+  {
+    word: 'incomplete',
+    uuid: '8db538e0-a490-4fc9-b45f-b809a19668fc',
+    owner: 'platform',
   },
 ];

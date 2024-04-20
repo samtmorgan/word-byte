@@ -1,9 +1,9 @@
 'use client';
 
-// import { generateWordList } from '@/utils/wordUtils';
 // import LinkButton from '@/components/LinkButton';
 // import Select from '@/components/Select';
 import React from 'react';
+// import { generateWordList } from '../utils/wordUtils';
 
 export default function Home() {
   //   const speak = () => {
@@ -16,19 +16,8 @@ export default function Home() {
 
   //   console.log(
   //     generateWordList(
-  //       [
-  //         'cheekily',
-  //         'angrily',
-  //         'heavily',
-  //         'heroically',
-  //         'magically',
-  //         'automatically',
-  //         'bossily',
-  //         'comically',
-  //         'physically',
-  //         'finally',
-  //       ],
-  //       'user',
+  //       ['ascend', 'descend', 'scene', 'scent', 'fascinate', 'muscle', 'scissors', 'scientist'],
+  //       'platform',
   //     ),
   //   );
 

@@ -61,8 +61,10 @@ export type ContextType = {
 
 export type UserWordType = {
   word: string;
-  //   uuid: string;
+  uuid: string;
   //   owner: 'platform' | 'user';
+  owner: string;
+
   //   current: boolean;
   //   attempts:
   //     | {

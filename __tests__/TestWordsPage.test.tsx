@@ -5,7 +5,7 @@ import { screen } from '@testing-library/react';
 import { renderWithContext } from './__utils__/renderWithContext';
 import TestWordsPage from '../src/app/test/page';
 import { initProviderState } from '../src/context/AppContext';
-import { mockUser } from '../src/mockData/user';
+import { mockUser } from './__utils__/mockData/mockData';
 
 describe('Test that the TestWords page renders expected components', () => {
   it('render loading text when context is not initialised', () => {
@@ -72,21 +72,22 @@ describe('Test the TestWords page user interaction', () => {
     expect(sayWordButton).toBeEnabled();
     expect(cancelButton).toBeEnabled();
     // assert that current test index is as expected
-    expect(screen.getByText(`1 of 8 words`)).toBeInTheDocument();
+    const wordsListLength = mockUser.words.wordSets[0].length;
+    expect(screen.getByText(`1 of ${wordsListLength} words`)).toBeInTheDocument();
     await user.click(nextButton);
     // assert that clicking the next button changes the word
-    expect(screen.queryByText(`1 of 8 words`)).toBeNull();
-    expect(screen.getByText(`2 of 8 words`)).toBeInTheDocument();
+    expect(screen.queryByText(`1 of ${wordsListLength} words`)).toBeNull();
+    expect(screen.getByText(`2 of ${wordsListLength} words`)).toBeInTheDocument();
     // assert that the previous button is now enabled
     expect(previousButton).toBeEnabled();
     // assert that the previous button changes the word
     await user.click(previousButton);
-    expect(screen.getByText(`1 of 8 words`)).toBeInTheDocument();
+    expect(screen.getByText(`1 of ${wordsListLength} words`)).toBeInTheDocument();
     // assert that the cancel button ends the test
     await user.click(cancelButton);
     expect(screen.getByText(/Start/)).toBeInTheDocument();
     // assert that the start button starts the test again, we need to get the button again as it is a new render
     await user.click(screen.getByRole('button', { name: /Start/ }));
-    expect(screen.getByText(`1 of 8 words`)).toBeInTheDocument();
+    expect(screen.getByText(`1 of ${wordsListLength} words`)).toBeInTheDocument();
   });
 });

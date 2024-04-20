@@ -92,7 +92,18 @@ import { userWords } from './words';
 //   'serious',
 // ];
 
-const wordSetText = ['ascend', 'descend', 'scene', 'scent', 'fascinate', 'muscle', 'scissors', 'scientist'];
+const wordSetText = [
+  'illogical',
+  'illiterate',
+  'illegal',
+  'illegible',
+  'impatient',
+  'impractical',
+  'disqualify',
+  'disobey',
+  'incorrect',
+  'incomplete',
+];
 
 export const mockUser: MockUserType = {
   name: 'Ginny',
