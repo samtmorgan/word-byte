@@ -92,17 +92,29 @@ import { userWords } from './words';
 //   'serious',
 // ];
 
+// const wordSetText = [
+//   'illogical',
+//   'illiterate',
+//   'illegal',
+//   'illegible',
+//   'impatient',
+//   'impractical',
+//   'disqualify',
+//   'disobey',
+//   'incorrect',
+//   'incomplete',
+// ];
+
 const wordSetText = [
-  'illogical',
-  'illiterate',
-  'illegal',
-  'illegible',
-  'impatient',
-  'impractical',
-  'disqualify',
-  'disobey',
-  'incorrect',
-  'incomplete',
+  'unique',
+  'cheque',
+  'antique',
+  'grotesque',
+  'fatigue',
+  'colleague',
+  'catalogue',
+  'dialogue',
+  'league',
 ];
 
 export const mockUser: MockUserType = {
