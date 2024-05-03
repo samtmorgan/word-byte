@@ -105,16 +105,29 @@ import { userWords } from './words';
 //   'incomplete',
 // ];
 
+// const wordSetText = [
+//   'unique',
+//   'cheque',
+//   'antique',
+//   'grotesque',
+//   'fatigue',
+//   'colleague',
+//   'catalogue',
+//   'dialogue',
+//   'league',
+// ];
+
 const wordSetText = [
-  'unique',
-  'cheque',
-  'antique',
-  'grotesque',
-  'fatigue',
-  'colleague',
-  'catalogue',
-  'dialogue',
-  'league',
+  'Early',
+  'Particular',
+  'Weight',
+  'Thought',
+  'February',
+  'Knowledge',
+  'Library',
+  'Unfamiliar',
+  'Favourite',
+  'Certain',
 ];
 
 export const mockUser: MockUserType = {
