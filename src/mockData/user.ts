@@ -117,17 +117,28 @@ import { userWords } from './words';
 //   'league',
 // ];
 
+// const wordSetText = [
+//   'Early',
+//   'Particular',
+//   'Weight',
+//   'Thought',
+//   'February',
+//   'Knowledge',
+//   'Library',
+//   'Unfamiliar',
+//   'Favourite',
+//   'Certain',
+// ];
+
 const wordSetText = [
-  'Early',
-  'Particular',
-  'Weight',
-  'Thought',
-  'February',
-  'Knowledge',
-  'Library',
-  'Unfamiliar',
-  'Favourite',
-  'Certain',
+  'relevant',
+  'irrelevant',
+  'regular',
+  'irregular',
+  'resistible',
+  'irresistible',
+  'responsible',
+  'irresponsible',
 ];
 
 export const mockUser: MockUserType = {
