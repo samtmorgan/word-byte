@@ -130,15 +130,28 @@ import { userWords } from './words';
 //   'Certain',
 // ];
 
+// const wordSetText = [
+//   'relevant',
+//   'irrelevant',
+//   'regular',
+//   'irregular',
+//   'resistible',
+//   'irresistible',
+//   'responsible',
+//   'irresponsible',
+// ];
+
 const wordSetText = [
-  'relevant',
-  'irrelevant',
-  'regular',
-  'irregular',
-  'resistible',
-  'irresistible',
-  'responsible',
+  'unfair',
+  'disagree',
+  'impractical',
+  'illogical',
+  'misspell',
+  'impatient',
+  'disappear',
   'irresponsible',
+  'imperfect',
+  'disconnect',
 ];
 
 export const mockUser: MockUserType = {
