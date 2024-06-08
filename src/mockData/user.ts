@@ -141,17 +141,30 @@ import { userWords } from './words';
 //   'irresponsible',
 // ];
 
+// const wordSetText = [
+//   'unfair',
+//   'disagree',
+//   'impractical',
+//   'illogical',
+//   'misspell',
+//   'impatient',
+//   'disappear',
+//   'irresponsible',
+//   'imperfect',
+//   'disconnect',
+// ];
+
 const wordSetText = [
-  'unfair',
-  'disagree',
-  'impractical',
-  'illogical',
-  'misspell',
-  'impatient',
-  'disappear',
-  'irresponsible',
-  'imperfect',
-  'disconnect',
+  'possession',
+  'expression',
+  'confession',
+  'progression',
+  'discussion',
+  'impression',
+  'admission',
+  'permission',
+  'transmission',
+  'submission',
 ];
 
 export const mockUser: MockUserType = {
