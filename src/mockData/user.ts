@@ -154,17 +154,30 @@ import { userWords } from './words';
 //   'disconnect',
 // ];
 
+// const wordSetText = [
+//   'possession',
+//   'expression',
+//   'confession',
+//   'progression',
+//   'discussion',
+//   'impression',
+//   'admission',
+//   'permission',
+//   'transmission',
+//   'submission',
+// ];
+
 const wordSetText = [
-  'possession',
-  'expression',
-  'confession',
-  'progression',
-  'discussion',
-  'impression',
-  'admission',
-  'permission',
-  'transmission',
-  'submission',
+  'accommodate',
+  'accompany',
+  'according',
+  'achieve',
+  'aggressive',
+  'amateur',
+  'ancient',
+  'apparent',
+  'appreciate',
+  'attached',
 ];
 
 export const mockUser: MockUserType = {
