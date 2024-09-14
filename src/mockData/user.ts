@@ -167,17 +167,30 @@ import { userWords } from './words';
 //   'submission',
 // ];
 
+// const wordSetText = [
+//   'accommodate',
+//   'accompany',
+//   'according',
+//   'achieve',
+//   'aggressive',
+//   'amateur',
+//   'ancient',
+//   'apparent',
+//   'appreciate',
+//   'attached',
+// ];
+
 const wordSetText = [
-  'accommodate',
-  'accompany',
-  'according',
-  'achieve',
-  'aggressive',
-  'amateur',
-  'ancient',
-  'apparent',
-  'appreciate',
-  'attached',
+  'available',
+  'average',
+  'awkward',
+  'bargain',
+  'bruise',
+  'category',
+  'cemetery',
+  'committee',
+  'communicate',
+  'community',
 ];
 
 export const mockUser: MockUserType = {
