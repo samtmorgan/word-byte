@@ -180,17 +180,30 @@ import { userWords } from './words';
 //   'attached',
 // ];
 
+// const wordSetText = [
+//   'available',
+//   'average',
+//   'awkward',
+//   'bargain',
+//   'bruise',
+//   'category',
+//   'cemetery',
+//   'committee',
+//   'communicate',
+//   'community',
+// ];
+
 const wordSetText = [
-  'available',
-  'average',
-  'awkward',
-  'bargain',
-  'bruise',
-  'category',
-  'cemetery',
-  'committee',
-  'communicate',
-  'community',
+  'competition',
+  'conscience',
+  'conscious',
+  'controversy',
+  'convenience',
+  'correspond',
+  'criticise',
+  'curiosity',
+  'definite',
+  'desperate',
 ];
 
 export const mockUser: MockUserType = {
