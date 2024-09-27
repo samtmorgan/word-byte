@@ -193,17 +193,30 @@ import { userWords } from './words';
 //   'community',
 // ];
 
+// const wordSetText = [
+//   'competition',
+//   'conscience',
+//   'conscious',
+//   'controversy',
+//   'convenience',
+//   'correspond',
+//   'criticise',
+//   'curiosity',
+//   'definite',
+//   'desperate',
+// ];
+
 const wordSetText = [
-  'competition',
-  'conscience',
-  'conscious',
-  'controversy',
-  'convenience',
-  'correspond',
-  'criticise',
-  'curiosity',
-  'definite',
-  'desperate',
+  'determined',
+  'develop',
+  'dictionary',
+  'disastrous',
+  'embarrass',
+  'environment',
+  'equip',
+  'equipped',
+  'equipment',
+  'especially',
 ];
 
 export const mockUser: MockUserType = {
