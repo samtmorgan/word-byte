@@ -206,17 +206,30 @@ import { userWords } from './words';
 //   'desperate',
 // ];
 
+// const wordSetText = [
+//   'determined',
+//   'develop',
+//   'dictionary',
+//   'disastrous',
+//   'embarrass',
+//   'environment',
+//   'equip',
+//   'equipped',
+//   'equipment',
+//   'especially',
+// ];
+
 const wordSetText = [
-  'determined',
-  'develop',
-  'dictionary',
-  'disastrous',
-  'embarrass',
-  'environment',
-  'equip',
-  'equipped',
-  'equipment',
-  'especially',
+  'Exaggerate',
+  'Excellent',
+  'existence',
+  'explanation',
+  'familiar',
+  'foreign',
+  'forty',
+  'frequently',
+  'government',
+  'guarantee',
 ];
 
 export const mockUser: MockUserType = {
