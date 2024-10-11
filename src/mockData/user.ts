@@ -219,19 +219,31 @@ import { userWords } from './words';
 //   'especially',
 // ];
 
-const wordSetText = [
-  'Exaggerate',
-  'Excellent',
-  'existence',
-  'explanation',
-  'familiar',
-  'foreign',
-  'forty',
-  'frequently',
-  'government',
-  'guarantee',
-];
+// const wordSetText = [
+//   'Exaggerate',
+//   'Excellent',
+//   'existence',
+//   'explanation',
+//   'familiar',
+//   'foreign',
+//   'forty',
+//   'frequently',
+//   'government',
+//   'guarantee',
+// ];
 
+const wordSetText = [
+  'harass',
+  'hindrance',
+  'identity',
+  'immediate',
+  'immediately',
+  'individual',
+  'interfere',
+  'interrupt',
+  'language',
+  'leisure',
+];
 export const mockUser: MockUserType = {
   name: 'Ginny',
   uuid: 'b8765153-9c08-4301-869c-d810453408ca',
