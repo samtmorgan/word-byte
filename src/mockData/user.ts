@@ -232,18 +232,32 @@ import { userWords } from './words';
 //   'guarantee',
 // ];
 
+// const wordSetText = [
+//   'harass',
+//   'hindrance',
+//   'identity',
+//   'immediate',
+//   'immediately',
+//   'individual',
+//   'interfere',
+//   'interrupt',
+//   'language',
+//   'leisure',
+// ];
+
 const wordSetText = [
-  'harass',
-  'hindrance',
-  'identity',
-  'immediate',
-  'immediately',
-  'individual',
-  'interfere',
-  'interrupt',
-  'language',
-  'leisure',
+  'lightning',
+  'marvellous',
+  'mischievous',
+  'muscle',
+  'necessary',
+  'neighbour',
+  'nuisance',
+  'occupy',
+  'occur',
+  'opportunity',
 ];
+
 export const mockUser: MockUserType = {
   name: 'Ginny',
   uuid: 'b8765153-9c08-4301-869c-d810453408ca',
