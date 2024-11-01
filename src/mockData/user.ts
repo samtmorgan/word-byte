@@ -245,17 +245,30 @@ import { userWords } from './words';
 //   'leisure',
 // ];
 
+// const wordSetText = [
+//   'lightning',
+//   'marvellous',
+//   'mischievous',
+//   'muscle',
+//   'necessary',
+//   'neighbour',
+//   'nuisance',
+//   'occupy',
+//   'occur',
+//   'opportunity',
+// ];
+
 const wordSetText = [
-  'lightning',
-  'marvellous',
-  'mischievous',
-  'muscle',
-  'necessary',
-  'neighbour',
-  'nuisance',
-  'occupy',
-  'occur',
-  'opportunity',
+  'parliament',
+  'persuade',
+  'physical',
+  'prejudice',
+  'privilege',
+  'profession',
+  'programme',
+  'pronunciation',
+  'queue',
+  'recognise',
 ];
 
 export const mockUser: MockUserType = {
