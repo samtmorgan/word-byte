@@ -258,19 +258,31 @@ import { userWords } from './words';
 //   'opportunity',
 // ];
 
-const wordSetText = [
-  'parliament',
-  'persuade',
-  'physical',
-  'prejudice',
-  'privilege',
-  'profession',
-  'programme',
-  'pronunciation',
-  'queue',
-  'recognise',
-];
+// const wordSetText = [
+//   'parliament',
+//   'persuade',
+//   'physical',
+//   'prejudice',
+//   'privilege',
+//   'profession',
+//   'programme',
+//   'pronunciation',
+//   'queue',
+//   'recognise',
+// ];
 
+const wordSetText = [
+  'recommend',
+  'relevant',
+  'restaurant',
+  'rhyme',
+  'rhythm',
+  'sacrifice',
+  'secretary',
+  'shoulder',
+  'signature',
+  'sincere',
+];
 export const mockUser: MockUserType = {
   name: 'Ginny',
   uuid: 'b8765153-9c08-4301-869c-d810453408ca',
