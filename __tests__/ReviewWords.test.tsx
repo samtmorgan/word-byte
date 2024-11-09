@@ -6,12 +6,14 @@ import { renderWithContext } from './__utils__/renderWithContext';
 import { initProviderState } from '../src/context/AppContext';
 import { mockUser } from '../src/mockData/user';
 import Review from '../src/components/Review';
+import { mockTestWords } from './__utils__/mockData/mockData';
 
 function renderWithContextAndInitState() {
   const providerProps = {
     ...initProviderState,
     loading: false,
     user: mockUser,
+    testWords: mockTestWords,
   };
   return renderWithContext(<Review />, providerProps);
 }
@@ -25,6 +27,7 @@ describe('Test the Review component placeholders', () => {
       ...initProviderState,
       loading: false,
       user: testUser,
+      testWords: [],
     };
     renderWithContext(<Review />, providerProps);
     expect(screen.getByText(/🙁 No words here yet/)).toBeInTheDocument();
