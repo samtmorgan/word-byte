@@ -1,7 +1,8 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { mockUser } from '../mockData/user';
+
+import axios from 'axios';
 import { ContextType, UserType } from '../types/types';
 // import { buildSessionWords } from '../utils/wordUtils';
 
@@ -12,10 +13,7 @@ export const initProviderState = {
   setError: () => {},
   user: null,
   setUser: () => {},
-  //   sessionWords: null,
-  //   setSessionWords: () => {},
-  //   testLifecycle: null,
-  //   setTestLifecycle: () => {},
+  testWords: [],
 };
 
 const AppContext = createContext<ContextType>(initProviderState);
@@ -32,9 +30,7 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
   const [user, setUser] = useState<UserType>(null);
-  //   const [sessionWords, setSessionWords] = useState<string[] | null>([]);
-  //   const [sessionWords, setSessionWords] = useState<string[] | null>(null);
-  //   const [testLifecycle, setTestLifecycle] = useState<TestLifecycleType | null>('notStarted');
+  const [testWords, setTestWords] = useState<string[]>([]);
 
   const contextValue = useMemo(
     () => ({
@@ -44,54 +40,34 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
       setLoading,
       setError,
       setUser,
-      //   sessionWords,
-      //   setSessionWords,
-      //   testLifecycle,
-      //   setTestLifecycle,
+      testWords,
+      setTestWords,
     }),
-    [
-      loading,
-      error,
-      user,
-      setLoading,
-      setError,
-      setUser,
-      //   sessionWords,
-      //   setSessionWords,
-      //   testLifecycle,
-      //   setTestLifecycle,
-    ],
+    [loading, error, user, setLoading, setError, setUser, testWords, setTestWords],
   );
 
-  //   useEffect(() => {
-  //     setUser(mockUser);
-  //     if (mockUser) {
-  //       const currentWords = buildSessionWords(mockUser.words);
-  //       setSessionWords(currentWords);
-  //     }
-
-  //     setLoading(false);
-  //   }, []);
-
   useEffect(() => {
-    if (!mockUser) {
-      setError(true);
-      setLoading(false);
-    }
-    setUser(mockUser);
-    setLoading(false);
-  }, []);
+    const getWords = async () => {
+      const protocol = 'https://';
+      const host = 'word-byte-api.onrender.com/';
+      const currentWordsPath = 'api/v1/words/currentWords';
 
-  //   useEffect(() => {
-  //     return;
-  //     if (!user) return;
-  //     if (user.words.wordSets.length > 0) {
-  //       const currentWords = buildSessionWords(user.words.wordSets[0]);
-  //       setSessionWords(currentWords);
-  //       //   setSessionWords(user.words.wordSets[0]);
-  //     }
-  //     setLoading(false);
-  //   }, [user]);
+      axios
+        .get(`${protocol}${host}${currentWordsPath}`)
+        .then(res => {
+          const theWords = res.data;
+          console.log(theWords);
+          setTestWords(theWords);
+          setLoading(false);
+        })
+        .catch(e => {
+          console.log(e);
+          setError(true);
+          setLoading(false);
+        });
+    };
+    getWords();
+  }, []);
 
   return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>;
 }

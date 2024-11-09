@@ -51,6 +51,7 @@ export type ContextType = {
   setError: (error: boolean) => void;
   user: UserType;
   setUser: (user: UserType) => void;
+  testWords: string[];
   //   sessionWords: SessionWordType[] | null;
   //   setSessionWords: (sessionWords: SessionWordType[] | null) => void;
   //   sessionWords: string[] | null;

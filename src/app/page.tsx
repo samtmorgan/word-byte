@@ -1,30 +1,35 @@
 'use client';
 
+import axios from 'axios';
 // import LinkButton from '@/components/LinkButton';
 // import Select from '@/components/Select';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // import { generateWordList } from '../utils/wordUtils';
 
 export default function Home() {
-  //   const speak = () => {
-  //     const msg = new SpeechSynthesisUtterance();
-  //     // msg.text = 'Hello World';
-  //     msg.text = 'Well done Pala';
+  const [words, setWords] = useState<string[]>();
 
-  //     window.speechSynthesis.speak(msg);
-  //   };
+  const protocol = 'https://';
+  const host = 'word-byte-api.onrender.com/';
+  const currentWordsPath = 'api/words/currentWords';
 
-  //   console.log(
-  //     generateWordList(
-  //       ['ascend', 'descend', 'scene', 'scent', 'fascinate', 'muscle', 'scissors', 'scientist'],
-  //       'platform',
-  //     ),
-  //   );
+  useEffect(() => {
+    axios
+      .get(`${protocol}${host}${currentWordsPath}`)
+      .then(res => {
+        const theWords = res.data;
+        console.log(theWords);
+        setWords(theWords);
+      })
+      .catch(e => console.log(e));
+  }, []);
 
   return (
     <>
       <h1>Hi, I am Word Byte</h1>
-      {/* display 7 day practice summary starting at beginning of current set 
+      {words && words.map((word: string) => <span>{word}</span>)}
+
+      {/* display 7 day practice summary starting at beginning of current set
         - maybe format of 5/8 for each day  */}
     </>
   );

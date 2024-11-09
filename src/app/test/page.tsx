@@ -9,31 +9,20 @@ import Loader from '../../components/Loader';
 import { TestLifecycleType } from '../../types/types';
 
 export default function TestWordsPage() {
-  const { user, loading, setLoading, error } = useAppContext();
+  const { testWords, loading, error } = useAppContext();
   const [hasSeenAllWords, setHasSeenAllWords] = useState<boolean>(false);
   const [testIndex, setTestIndex] = useState<number>(0);
-  const [sessionWords, setSessionWords] = useState<string[] | null>(null);
   const [testLifecycle, setTestLifecycle] = useState<TestLifecycleType | null>('notStarted');
 
-  useEffect(() => {
-    if (user) {
-      setSessionWords(user.words.wordSets[0]);
-    }
-  }, [setSessionWords, user, setLoading]);
-
   const sessionWordsCount = useMemo(() => {
-    if (!sessionWords) return 0;
-    return sessionWords.length;
-  }, [sessionWords]);
-
-  //   useEffect(() => {
-  //     console.log({ sessionWords, user });
-  //   }, [sessionWords, user]);
+    if (!testWords) return 0;
+    return testWords.length;
+  }, [testWords]);
 
   const handleSpeak = useCallback(() => {
-    if (!sessionWords) return;
-    speak(sessionWords[testIndex]);
-  }, [sessionWords, testIndex]);
+    if (!testWords) return;
+    speak(testWords[testIndex]);
+  }, [testWords, testIndex]);
 
   const handleIndexChange = useCallback(
     (direction: 'increment' | 'decrement') => {
@@ -55,9 +44,9 @@ export default function TestWordsPage() {
 
   if (error) return <div>Error...</div>;
 
-  if (loading || !sessionWords) return <Loader />;
+  if (loading || !testWords) return <Loader />;
 
-  if (sessionWords.length === 0) return <div>🙁 No words here yet</div>;
+  if (testWords.length === 0) return <div>🙁 No words here yet</div>;
 
   if (testLifecycle === 'notStarted' || testLifecycle === 'finished' || testLifecycle === 'cancelled') {
     return (

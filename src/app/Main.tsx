@@ -9,7 +9,6 @@ export default function Main({ children }: { children?: React.ReactNode }) {
   return (
     <AppContextProvider>
       <Header navOptions={navOptions} />
-      {/* <Navigation /> */}
       <main>{children}</main>
     </AppContextProvider>
   );
