@@ -4,6 +4,10 @@
 
 Word Byte is an app to support children with Key Stage 2 spellings practice.
 
+## 🌐 Deployment
+
+https://word-byte.vercel.app/test
+
 ## 🗺️ Road map
 
 1. Front end to support

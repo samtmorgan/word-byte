@@ -11,11 +11,9 @@ function buildResults(words: string[]): ResultType[] {
 }
 
 export default function Review() {
-  const { user, loading, error } = useAppContext();
+  const { loading, error, testWords } = useAppContext();
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [results, setResults] = useState<ResultType[]>(
-    user?.words.wordSets[0] ? buildResults(user.words.wordSets[0]) : [],
-  );
+  const [results, setResults] = useState<ResultType[]>(testWords ? buildResults(testWords) : []);
 
   const handleWordClick = useCallback(
     (index: number) => {
