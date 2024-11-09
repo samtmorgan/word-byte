@@ -75,3 +75,16 @@ export const mockUser: MockUserType = {
     customWords: mockUserWords,
   },
 };
+
+export const mockTestWords = [
+  'recommend',
+  'relevant',
+  'restaurant',
+  'rhyme',
+  'rhythm',
+  'sacrifice',
+  'secretary',
+  'shoulder',
+  'signature',
+  'sincere',
+];

@@ -5,7 +5,7 @@ import { screen } from '@testing-library/react';
 import { renderWithContext } from './__utils__/renderWithContext';
 import TestWordsPage from '../src/app/test/page';
 import { initProviderState } from '../src/context/AppContext';
-import { mockUser } from './__utils__/mockData/mockData';
+import { mockTestWords, mockUser } from './__utils__/mockData/mockData';
 
 describe('Test that the TestWords page renders expected components', () => {
   it('render loading text when context is not initialised', () => {
@@ -26,6 +26,7 @@ describe('Test that the TestWords page renders expected components', () => {
       ...initProviderState,
       loading: false,
       user: mockUser,
+      testWords: mockTestWords,
     };
     renderWithContext(<TestWordsPage />, providerProps);
     expect(screen.getByRole('button', { name: /Start/ })).toBeInTheDocument();
@@ -53,6 +54,7 @@ describe('Test the TestWords page user interaction', () => {
       ...initProviderState,
       loading: false,
       user: mockUser,
+      testWords: mockTestWords,
     };
     renderWithContext(<TestWordsPage />, providerProps);
     const user = userEvent.setup();
