@@ -50,7 +50,6 @@
     "lint-staged": "^15.0.2",
     "postcss": "latest",
     "prettier": "^3.0.3",
-    "tailwindcss": "latest",
     "tsc-files": "^1.1.4",
     "typescript": "latest"
   },
