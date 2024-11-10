@@ -3,6 +3,7 @@ import { usePathname } from 'next/navigation';
 
 export default function Header({ navOptions }: { navOptions: { label: string; href: string }[] }): ReactElement {
   const pathname = usePathname();
+  //   const { pathname } = window.location;
 
   return (
     <header>

@@ -1,6 +1,6 @@
 export const navOptions = [
   {
-    label: '🏠 Home',
+    label: '👾 Word Byte',
     href: '/',
   },
   {
