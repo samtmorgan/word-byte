@@ -42,39 +42,45 @@ export default function TestWordsPage() {
     }
   }, [setHasSeenAllWords, testIndex, sessionWordsCount]);
 
-  if (error) return <div>Error...</div>;
-
-  if (loading || !testWords) return <Loader />;
-
-  if (testWords.length === 0) return <div>🙁 No words here yet</div>;
-
-  if (testLifecycle === 'notStarted' || testLifecycle === 'finished' || testLifecycle === 'cancelled') {
-    return (
-      <div className="page-container">
-        <Button label="Start 🟢" onClick={() => setTestLifecycle('test')} />
-      </div>
-    );
-  }
-
-  if (testLifecycle === 'review') {
-    return <Review />;
-  }
-
   return (
-    <div className="page-container">
-      <span className="cool-border-with-shadow">{`${testIndex + 1} of ${sessionWordsCount} words`}</span>
+    <>
+      <h1>Test time</h1>
 
-      <Button disabled={testIndex === sessionWordsCount} label="Say word 🔈" onClick={handleSpeak} />
-      <div style={{ gap: '1rem' }}>
-        <Button disabled={testIndex === 0} onClick={() => handleIndexChange('decrement')} label="👈 Previous Word" />
-        <Button
-          disabled={testIndex + 1 === sessionWordsCount}
-          onClick={() => handleIndexChange('increment')}
-          label="Next Word 👉"
-        />
-      </div>
-      <Button disabled={!hasSeenAllWords} label="Check Answers ✔" onClick={() => setTestLifecycle('review')} />
-      <Button label="Cancel 🔴" onClick={() => setTestLifecycle('cancelled')} />
-    </div>
+      {error && <div>Error...</div>}
+
+      {(loading || !testWords) && <Loader />}
+
+      {testWords.length === 0 && <div>🙁 No words here yet</div>}
+
+      {(testLifecycle === 'notStarted' || testLifecycle === 'finished' || testLifecycle === 'cancelled') && (
+        <div className="page-container">
+          <Button label="Start 🟢" onClick={() => setTestLifecycle('test')} />
+        </div>
+      )}
+
+      {testLifecycle === 'review' && <Review />}
+
+      {testLifecycle === 'test' && (
+        <div className="page-container">
+          <span className="cool-border-with-shadow">{`${testIndex + 1} of ${sessionWordsCount} words`}</span>
+
+          <Button disabled={testIndex === sessionWordsCount} label="Say word 🔈" onClick={handleSpeak} />
+          <div style={{ gap: '1rem' }}>
+            <Button
+              disabled={testIndex === 0}
+              onClick={() => handleIndexChange('decrement')}
+              label="👈 Previous Word"
+            />
+            <Button
+              disabled={testIndex + 1 === sessionWordsCount}
+              onClick={() => handleIndexChange('increment')}
+              label="Next Word 👉"
+            />
+          </div>
+          <Button disabled={!hasSeenAllWords} label="Check Answers ✔" onClick={() => setTestLifecycle('review')} />
+          <Button label="Cancel 🔴" onClick={() => setTestLifecycle('cancelled')} />
+        </div>
+      )}
+    </>
   );
 }
