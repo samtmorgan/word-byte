@@ -3,5 +3,10 @@
 import React from 'react';
 
 export default function Home() {
-  return <h1>Hi, I am Word Byte</h1>;
+  return (
+    <div>
+      <h1>This is Word Byte</h1>
+      <p>A place to practice KS2 spellings!</p>
+    </div>
+  );
 }
