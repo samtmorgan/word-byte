@@ -68,6 +68,10 @@ header {
   height: var(--header-height);
 }
 
+nav {
+  padding: 1em;
+}
+
 nav ul {
   list-style: none;
   display: flex;
