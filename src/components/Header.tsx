@@ -4,8 +4,7 @@ export default function Header(): ReactElement {
   return (
     <header>
       <nav>
-        {/* <a className="button cool-border-with-shadow" href="/"> */}
-        <a className="" href="/">
+        <a className="nav-link" href="/">
           👾 Word Byte
         </a>
       </nav>

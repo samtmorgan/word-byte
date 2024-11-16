@@ -7,7 +7,9 @@ export default function Home() {
     <div>
       <h1>This is Word Byte</h1>
       <p>A place to practice KS2 spellings!</p>
-      <a href="/test">✍️ Take a test now</a>
+      <a className="nav-link" href="/test">
+        ✍️ Take a test now
+      </a>
     </div>
   );
 }

@@ -8,6 +8,7 @@
   --border: 2px solid var(--color-main);
   --header-height: 5rem;
   --button-hover-background-color: #fff;
+  --button-height: 2rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -25,10 +26,13 @@ main {
   min-height: calc(100vh - var(--header-height));
   margin-top: var(--header-height);
   box-sizing: border-box;
+  /* background-color: var(--color-main-background);
+  color: var(--color-main);
+  line-height: 2rem; */
 }
 
 html {
-  line-height: 1.5;
+  line-height: 2rem;
   -webkit-text-size-adjust: 100%;
   -moz-tab-size: 4;
   -o-tab-size: 4;
@@ -131,11 +135,11 @@ input:focus {
 
 .cool-border-with-shadow {
   border: var(--border);
-  background-color: var(--color-main-background);
-  color: var(--color-main);
+  /* background-color: var(--color-main-background);
+  color: var(--color-main); */
   display: inline-block;
   padding: 0 1rem;
-  line-height: 2rem;
+  height: var(--button-height);
   text-align: center;
 }
 
@@ -186,6 +190,17 @@ input:focus {
   background-color: rgb(43, 252, 183, 0.5);
 }
 /* end button */
+
+.nav-link {
+  display: inline-block;
+  padding: 0 1rem;
+  height: var(--button-height);
+  text-align: center;
+  text-decoration: none;
+}
+.nav-link:hover {
+  background-color: var(--button-hover-background-color);
+}
 
 /* .page-container .current-words {
   list-style-type: decimal;
