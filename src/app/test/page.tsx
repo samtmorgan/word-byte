@@ -8,6 +8,13 @@ import Review from '../../components/Review';
 import Loader from '../../components/Loader';
 import { TestLifecycleType } from '../../types/types';
 
+const Wrapper = ({ children }: { children: React.ReactNode }) => (
+  <>
+    <h1>Test time</h1>
+    {children}
+  </>
+);
+
 export default function TestWordsPage() {
   const { testWords, loading, error } = useAppContext();
   const [hasSeenAllWords, setHasSeenAllWords] = useState<boolean>(false);
@@ -42,45 +49,62 @@ export default function TestWordsPage() {
     }
   }, [setHasSeenAllWords, testIndex, sessionWordsCount]);
 
-  return (
-    <>
-      <h1>Test time</h1>
+  if (error)
+    return (
+      <Wrapper>
+        <div>Error...</div>
+      </Wrapper>
+    );
 
-      {error && <div>Error...</div>}
+  if (loading || !testWords)
+    return (
+      <Wrapper>
+        <Loader />
+      </Wrapper>
+    );
 
-      {(loading || !testWords) && <Loader />}
+  if (testWords.length === 0)
+    return (
+      <Wrapper>
+        <div>🙁 No words here yet</div>
+      </Wrapper>
+    );
 
-      {testWords.length === 0 && <div>🙁 No words here yet</div>}
-
-      {(testLifecycle === 'notStarted' || testLifecycle === 'finished' || testLifecycle === 'cancelled') && (
-        <div className="page-container">
+  if (testLifecycle === 'notStarted' || testLifecycle === 'finished' || testLifecycle === 'cancelled') {
+    return (
+      <div className="page-container">
+        <Wrapper>
           <Button label="Start 🟢" onClick={() => setTestLifecycle('test')} />
+        </Wrapper>
+      </div>
+    );
+  }
+
+  if (testLifecycle === 'review') {
+    return (
+      <Wrapper>
+        <Review />
+      </Wrapper>
+    );
+  }
+
+  return (
+    <div className="page-container">
+      <Wrapper>
+        <span className="cool-border-with-shadow">{`${testIndex + 1} of ${sessionWordsCount} words`}</span>
+
+        <Button disabled={testIndex === sessionWordsCount} label="Say word 🔈" onClick={handleSpeak} />
+        <div style={{ gap: '1rem' }}>
+          <Button disabled={testIndex === 0} onClick={() => handleIndexChange('decrement')} label="👈 Previous Word" />
+          <Button
+            disabled={testIndex + 1 === sessionWordsCount}
+            onClick={() => handleIndexChange('increment')}
+            label="Next Word 👉"
+          />
         </div>
-      )}
-
-      {testLifecycle === 'review' && <Review />}
-
-      {testLifecycle === 'test' && (
-        <div className="page-container">
-          <span className="cool-border-with-shadow">{`${testIndex + 1} of ${sessionWordsCount} words`}</span>
-
-          <Button disabled={testIndex === sessionWordsCount} label="Say word 🔈" onClick={handleSpeak} />
-          <div style={{ gap: '1rem' }}>
-            <Button
-              disabled={testIndex === 0}
-              onClick={() => handleIndexChange('decrement')}
-              label="👈 Previous Word"
-            />
-            <Button
-              disabled={testIndex + 1 === sessionWordsCount}
-              onClick={() => handleIndexChange('increment')}
-              label="Next Word 👉"
-            />
-          </div>
-          <Button disabled={!hasSeenAllWords} label="Check Answers ✔" onClick={() => setTestLifecycle('review')} />
-          <Button label="Cancel 🔴" onClick={() => setTestLifecycle('cancelled')} />
-        </div>
-      )}
-    </>
+        <Button disabled={!hasSeenAllWords} label="Check Answers ✔" onClick={() => setTestLifecycle('review')} />
+        <Button label="Cancel 🔴" onClick={() => setTestLifecycle('cancelled')} />
+      </Wrapper>
+    </div>
   );
 }
