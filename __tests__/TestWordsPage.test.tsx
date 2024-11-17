@@ -19,7 +19,7 @@ describe('Test that the TestWords page renders expected components', () => {
       error: true,
     };
     renderWithContext(<TestWordsPage />, providerProps);
-    expect(screen.getByText('Error...')).toBeInTheDocument();
+    expect(screen.getByText('😭 Ouch! Something went wrong, please try again.')).toBeInTheDocument();
   });
   it('render button "Start" when we have session words and the test is not started', () => {
     const providerProps = {

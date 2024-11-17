@@ -6,29 +6,6 @@ import { useAppContext } from '../../context/AppContext';
 import Loader from '../../components/Loader';
 import { Button } from '../../components/Button';
 
-// import LinkButton from '../../components/LinkButton';
-
-// function WordItem({
-//   word,
-//   wordUuid,
-//   onClick,
-//   buttonIcon,
-//   showButton = false,
-// }: {
-//   word: string;
-//   wordUuid: string;
-//   onClick: any;
-//   buttonIcon: string;
-//   showButton?: boolean;
-// }) {
-//   return (
-//     <li className="wordItem">
-//       {word}
-//       {showButton && <Button iconButton label={buttonIcon} onClick={() => onClick(wordUuid)} />}
-//     </li>
-//   );
-// }
-
 interface IFormInput {
   word: string;
 }
