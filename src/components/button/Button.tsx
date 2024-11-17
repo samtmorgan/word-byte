@@ -1,11 +1,10 @@
-import React, { ReactElement, useMemo } from 'react';
+import React, { ReactElement } from 'react';
 import Link from 'next/link';
 
 export type ButtonProps = {
   label: string;
   disabled?: boolean;
   type?: 'button' | 'submit' | 'link';
-  iconButton?: boolean;
   onClick?: () => void;
   href?: string;
 };
@@ -16,29 +15,10 @@ const styles = {
   link: 'nav-link',
 };
 
-export function Button({
-  type = 'button',
-  label,
-  onClick,
-  disabled,
-  iconButton = false,
-  href = '/',
-}: ButtonProps): ReactElement {
-  const style = useMemo(() => {
-    if (iconButton) {
-      return styles.icon;
-    }
-
-    if (type === 'link') {
-      return styles.link;
-    }
-
-    return styles.default;
-  }, [iconButton, type]);
-
+export function Button({ type = 'button', label, onClick, disabled, href = '/' }: ButtonProps): ReactElement {
   if (type === 'submit') {
     return (
-      <button className={style} type="submit" onClick={onClick} disabled={disabled}>
+      <button className={styles.default} type="submit" onClick={onClick} disabled={disabled}>
         {label}
       </button>
     );
@@ -46,14 +26,14 @@ export function Button({
 
   if (type === 'link') {
     return (
-      <Link className="nav-link" href={href}>
+      <Link className={styles.link} href={href}>
         {label}
       </Link>
     );
   }
 
   return (
-    <button className={style} type="button" onClick={onClick} disabled={disabled}>
+    <button className={styles.default} type="button" onClick={onClick} disabled={disabled}>
       {label}
     </button>
   );
