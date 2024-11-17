@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppContext } from '../../context/AppContext';
 import { speak } from '../../utils/wordUtils';
-import { Button } from '../../components/Button';
+import { Button } from '../../components/button/Button';
 import Review from '../../components/Review';
 import Loader from '../../components/Loader';
 import { TestLifecycleType } from '../../types/types';

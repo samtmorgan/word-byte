@@ -4,7 +4,7 @@ import React, { useCallback, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAppContext } from '../../context/AppContext';
 import Loader from '../../components/Loader';
-import { Button } from '../../components/Button';
+import { Button } from '../../components/button/Button';
 
 interface IFormInput {
   word: string;
