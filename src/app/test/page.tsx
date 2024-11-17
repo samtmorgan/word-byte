@@ -7,6 +7,7 @@ import { Button } from '../../components/Button';
 import Review from '../../components/Review';
 import Loader from '../../components/Loader';
 import { TestLifecycleType } from '../../types/types';
+import { Error } from '../../components/Error';
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
   <>
@@ -52,7 +53,7 @@ export default function TestWordsPage() {
   if (error)
     return (
       <Wrapper>
-        <div>Error...</div>
+        <Error />
       </Wrapper>
     );
 
