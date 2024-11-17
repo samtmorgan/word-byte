@@ -1,12 +1,14 @@
 import React, { ReactElement } from 'react';
+import { Button } from './Button';
 
 export default function Header(): ReactElement {
   return (
     <header>
       <nav>
-        <a className="nav-link" href="/">
+        <Button type="link" label="👾 Word Byte" href="/" />
+        {/* <a className="nav-link" href="/">
           👾 Word Byte
-        </a>
+        </a> */}
       </nav>
     </header>
   );

@@ -1,11 +1,3 @@
-export type ButtonType = {
-  label: string;
-  disabled?: boolean;
-  type?: 'button' | 'submit';
-  iconButton?: boolean;
-  onClick?: () => void;
-};
-
 // export type UserType = {
 //   name: string;
 //   uuid: string;
