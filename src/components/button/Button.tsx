@@ -11,19 +11,10 @@ type ButtonProps = {
 
 const styles = {
   default: 'button cool-border-with-shadow',
-  icon: 'button cool-border-with-shadow icon-button',
   link: 'nav-link',
 };
 
 export default function Button({ type = 'button', label, onClick, disabled, href = '/' }: ButtonProps): ReactElement {
-  if (type === 'submit') {
-    return (
-      <button className={styles.default} type="submit" onClick={onClick} disabled={disabled}>
-        {label}
-      </button>
-    );
-  }
-
   if (type === 'link') {
     return (
       <Link className={styles.link} href={href}>
@@ -33,7 +24,12 @@ export default function Button({ type = 'button', label, onClick, disabled, href
   }
 
   return (
-    <button className={styles.default} type="button" onClick={onClick} disabled={disabled}>
+    <button
+      className={styles.default}
+      type={type === 'button' ? 'button' : 'submit'}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {label}
     </button>
   );
