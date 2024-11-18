@@ -3,8 +3,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Main from './Main';
-import Header from '../components/Header';
-// import { navOptions } from '../constants/constants';
+import Header from '../components/header/Header';
 
 const inter = Inter({ subsets: ['latin'] });
 

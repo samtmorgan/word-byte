@@ -2,10 +2,10 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderWithContext } from './__utils__/renderWithContext';
-import SettingsWords from '../src/app/settingsWords/page';
-import { initProviderState } from '../src/context/AppContext';
-import { mockUser } from '../src/mockData/user';
+import SettingsWords from './page';
+import { initProviderState } from '../../context/AppContext';
+import { mockUser } from '../../mockData/user';
+import { renderWithContext } from '../../testUtils/renderWithContext';
 
 function renderWithContextAndInitState() {
   const providerProps = { ...initProviderState };

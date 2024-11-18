@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
-import { useAppContext } from '../context/AppContext';
-import Fireworks from './Fireworks';
-import { ResultType } from '../types/types';
-import Loader from './Loader';
+import { useAppContext } from '../../context/AppContext';
+import { ResultType } from '../../types/types';
+import Loader from '../loader/Loader';
+import Fireworks from '../fireworks/Fireworks';
 
 function buildResults(words: string[]): ResultType[] {
   return words.map(word => ({ word, correct: false }));

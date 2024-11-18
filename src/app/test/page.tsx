@@ -3,11 +3,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppContext } from '../../context/AppContext';
 import { speak } from '../../utils/wordUtils';
-import { Button } from '../../components/button/Button';
-import Review from '../../components/Review';
-import Loader from '../../components/Loader';
+import Loader from '../../components/loader/Loader';
 import { TestLifecycleType } from '../../types/types';
-import { Error } from '../../components/Error';
+import { Button, Review, Error } from '../../components';
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
   <>

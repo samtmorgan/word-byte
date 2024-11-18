@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputType } from '../types/types';
+import { InputType } from '../../types/types';
 
 export default function Input({ value, onChange, name, placeholder, label }: InputType) {
   return (

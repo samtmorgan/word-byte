@@ -1,4 +1,4 @@
-import { MockUserType } from '../../../src/types/types';
+import { MockUserType } from '../../types/types';
 
 export const wordSetText = [
   'illogical',

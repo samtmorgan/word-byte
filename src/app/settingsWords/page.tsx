@@ -3,8 +3,8 @@
 import React, { useCallback, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAppContext } from '../../context/AppContext';
-import Loader from '../../components/Loader';
-import { Button } from '../../components/button/Button';
+import Loader from '../../components/loader/Loader';
+import { Button } from '../../components';
 
 interface IFormInput {
   word: string;

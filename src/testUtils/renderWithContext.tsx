@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import React, { ReactElement } from 'react';
-import { AppContext } from '../../src/context/AppContext';
-import { ContextType } from '../../src/types/types';
+import { AppContext } from '../context/AppContext';
+import { ContextType } from '../types/types';
 
 // A custom render to setup providers. Extends regular
 // render options with `providerProps` to allow injecting

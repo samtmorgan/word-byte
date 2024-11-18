@@ -1,15 +1,14 @@
 'use client';
 
 import React from 'react';
-
-import LinkButton from '../../components/LinkButton';
+import { Button } from '../../components';
 
 export default function Settings() {
   return (
     <div className="page-container">
       <div style={{ gap: '1rem' }}>
-        <LinkButton href="/settingsAccount" label="Account settings" />
-        <LinkButton href="/settingsWords" label="Word settings" />
+        <Button type="link" href="/settingsAccount" label="Account settings" />
+        <Button type="link" href="/settingsWords" label="Word settings" />
       </div>
     </div>
   );

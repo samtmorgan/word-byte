@@ -2,11 +2,11 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
-import { renderWithContext } from './__utils__/renderWithContext';
-import { initProviderState } from '../src/context/AppContext';
-import { mockUser } from '../src/mockData/user';
-import Review from '../src/components/Review';
-import { mockTestWords } from './__utils__/mockData/mockData';
+import { renderWithContext } from '../../testUtils/renderWithContext';
+import { initProviderState } from '../../context/AppContext';
+import { mockUser } from '../../mockData/user';
+import Review from './Review';
+import { mockTestWords } from '../../testUtils/mockData/mockData';
 
 function renderWithContextAndInitState() {
   const providerProps = {

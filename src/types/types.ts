@@ -1,19 +1,3 @@
-// export type UserType = {
-//   name: string;
-//   uuid: string;
-//   words: UserWordType[];
-// } | null;
-
-// export type UserType = {
-//   name: string;
-//   uuid: string;
-//   words: {
-//     current: string[] | null;
-//     history: object[] | null;
-//     customWords: UserWordType[];
-//   };
-// } | null;
-
 export type UserType = {
   name: string;
   uuid: string;

@@ -1,8 +1,7 @@
-/** @jest-environment jsdom */
 import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { Button } from './Button';
+import Button from './Button';
 
 describe('Button component', () => {
   it('should render the given label', () => {

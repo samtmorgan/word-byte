@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import Link from 'next/link';
 
-export type ButtonProps = {
+type ButtonProps = {
   label: string;
   disabled?: boolean;
   type?: 'button' | 'submit' | 'link';
@@ -15,7 +15,7 @@ const styles = {
   link: 'nav-link',
 };
 
-export function Button({ type = 'button', label, onClick, disabled, href = '/' }: ButtonProps): ReactElement {
+export default function Button({ type = 'button', label, onClick, disabled, href = '/' }: ButtonProps): ReactElement {
   if (type === 'submit') {
     return (
       <button className={styles.default} type="submit" onClick={onClick} disabled={disabled}>

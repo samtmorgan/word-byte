@@ -2,10 +2,10 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
-import { renderWithContext } from './__utils__/renderWithContext';
-import TestWordsPage from '../src/app/test/page';
-import { initProviderState } from '../src/context/AppContext';
-import { mockTestWords, mockUser } from './__utils__/mockData/mockData';
+import TestWordsPage from './page';
+import { initProviderState } from '../../context/AppContext';
+import { mockTestWords, mockUser } from '../../testUtils/mockData/mockData';
+import { renderWithContext } from '../../testUtils/renderWithContext';
 
 describe('Test that the TestWords page renders expected components', () => {
   it('render loading text when context is not initialised', () => {
