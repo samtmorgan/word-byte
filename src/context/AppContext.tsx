@@ -56,7 +56,6 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
         .get(`${protocol}${host}${currentWordsPath}`)
         .then(res => {
           const theWords = res.data;
-          console.log(theWords);
           setTestWords(theWords);
           setLoading(false);
         })
