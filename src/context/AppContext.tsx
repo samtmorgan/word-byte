@@ -4,6 +4,7 @@ import React, { createContext, useContext, useEffect, useMemo, useState } from '
 
 import axios from 'axios';
 import { ContextType, UserType } from '../types/types';
+import { composeApiUrl } from '../utils/api';
 // import { buildSessionWords } from '../utils/wordUtils';
 
 export const initProviderState = {
@@ -48,12 +49,8 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const getWords = async () => {
-      const protocol = 'https://';
-      const host = 'word-byte-api.onrender.com/';
-      const currentWordsPath = 'api/v1/words/currentWords';
-
       axios
-        .get(`${protocol}${host}${currentWordsPath}`)
+        .get(composeApiUrl('currentWords'))
         .then(res => {
           const theWords = res.data;
           setTestWords(theWords);
