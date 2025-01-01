@@ -9,7 +9,7 @@
     "prepare": "husky install",
     "lint": "eslint \"./src/**/*.{ts,tsx}\"",
     "autofix": "eslint \"./src/**/*.{ts,tsx}\" --fix",
-    "test": "jest",
+    "test": "jest --coverage",
     "test-watch": "jest --watch"
   },
   "dependencies": {
