@@ -10,19 +10,27 @@ https://word-byte.vercel.app/test
 
 ## 🗺️ Road map
 
-1. Front end to
-2. User pages
-3. [ ] User registration
-4. [ ] User login
-5. [ ] User profile
-6. Progress pages
-7. [ ] Progress overview
-8. Word list customisation
-9. [ ] Add words to word bank
-10. [ ] Remove words from word bank
-11. [ ] Edit words in current practice list
-12. Future features
-13. [ ] UI for doing the spelling practice (e.g. drag and drop letters)
+### Front end
+
+User pages
+
+- [ ] User registration
+- [ ] User login
+- [ ] User profile
+
+Progress pages
+
+- [ ] Progress overview
+
+Word list customisation
+
+- [ ] Add words to word bank
+- [ ] Remove words from word bank
+- [ ] Edit words in current practice list
+
+Future features
+
+- [ ] UI for doing the spelling practice (e.g. drag and drop letters)
 
 ## 🛠️ Built with...
 
