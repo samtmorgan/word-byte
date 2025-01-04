@@ -19,10 +19,12 @@ function getEditButton() {
   return button;
 }
 
+jest.mock('../../components/loader/Loader', () => () => <div>Mock Loading...</div>);
+
 describe('Test the SettingsWords page when loading or there are no words initialised', () => {
   it('render loading text when context is loading', () => {
     renderWithContext(<SettingsWords />, initProviderState);
-    expect(screen.getByLabelText('vortex-loading')).toBeInTheDocument();
+    expect(screen.getByText('Mock Loading...')).toBeInTheDocument();
   });
   it('render message when there are words in the set', () => {
     const providerProps = { ...initProviderState };

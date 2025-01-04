@@ -11,6 +11,11 @@ function renderHeader(): RenderResult {
   return render(<Header />);
 }
 
+jest.mock('@clerk/nextjs', () => ({
+  SignedIn: ({ children }: { children: React.ReactNode }) => <div>Mocked SignedIn{children}</div>,
+  UserButton: () => <div>Mocked UserButton</div>,
+}));
+
 jest.mock('../button/Button', () => () => <a href="/">👾 Word Byte</a>);
 
 describe('Header component', () => {
@@ -34,5 +39,13 @@ describe('Header component', () => {
 
   it('renders the correct href for the link', () => {
     expect(screen.getByText('👾 Word Byte')).toHaveAttribute('href', '/');
+  });
+
+  it('renders the SignedIn component', () => {
+    expect(screen.getByText('Mocked SignedIn')).toBeInTheDocument();
+  });
+
+  it('renders the UserButton component when signed in', () => {
+    expect(screen.getByText('Mocked UserButton')).toBeInTheDocument();
   });
 });

@@ -7,10 +7,12 @@ import { initProviderState } from '../../context/AppContext';
 import { mockTestWords, mockUser } from '../../testUtils/mockData/mockData';
 import { renderWithContext } from '../../testUtils/renderWithContext';
 
+jest.mock('../../components/loader/Loader', () => () => <div>Mock Loading...</div>);
+
 describe('Test that the TestWords page renders expected components', () => {
   it('render loading text when context is not initialised', () => {
     renderWithContext(<TestWordsPage />, initProviderState);
-    expect(screen.getByLabelText('vortex-loading')).toBeInTheDocument();
+    expect(screen.getByText('Mock Loading...')).toBeInTheDocument();
   });
   it('render error text when context error === true', () => {
     const providerProps = {
