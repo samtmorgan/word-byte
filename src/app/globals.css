@@ -61,6 +61,7 @@ body {
   background-color: var(--color-main-background);
   font-weight: 600;
   font-size: 18px;
+  margin: 0;
 }
 
 header {
@@ -70,11 +71,16 @@ header {
   position: fixed;
   background-color: #fbeee0;
   height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 1rem;
+  padding-left: 1rem;
 }
 
-nav {
-  margin: 1em;
-}
+/* nav {
+ margin: 1em; 
+} */
 
 nav ul {
   list-style: none;
@@ -86,9 +92,9 @@ nav ul li a {
   list-style: none;
   text-decoration: none;
 }
-nav ul li {
+/* nav ul li {
   padding: 0.5rem;
-}
+} */
 nav ul li:hover {
   background-color: var(--button-hover-background-color);
 }
