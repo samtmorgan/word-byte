@@ -372,3 +372,71 @@ user.words.attempts - the words that the user has already learnt
     wordSets: word[][]
 }
 */
+
+// User (all user’s data): object array
+// * User_id: uuid
+// * User_auth_id: clerk id
+// * Created: timestamp
+// * Practice: object array
+//     * Created: timestamp
+//     * Results: object array
+//         * Word_id: uuid
+//         * Pass: Boolean
+// * Word_sets: object array
+//     * Word_set_id: uuid
+//     * Created: timestamp
+//     * Word_ids: word_id array
+// * Words: (standard and custom words, and their practice history, standard words are seeded when the user is created): object array
+//     * Word_id: uuid
+//     * Word: string
+//     * Owner: platform | user
+//     * Results: object array
+//         * Created: timestamp
+//         * Pass: Boolean
+
+// Words (all the standard KS2 words): object array
+// * Word_id: uuid
+// * Word: string
+
+type TUser = {
+  userId: string;
+  userAuthId: string;
+  createdAt: number;
+  practice: {
+    createdAt: number;
+    results: {
+      wordId: string;
+      pass: boolean;
+    }[];
+  }[];
+  wordSets: {
+    wordSetId: string;
+    createdAt: number;
+    wordIds: string[];
+  }[];
+  words: {
+    wordId: string;
+    word: string;
+    owner: 'platform' | 'user';
+    results: {
+      createdAt: number;
+      pass: boolean;
+    }[];
+  }[];
+};
+
+export const user: TUser = {
+  userId: '5c6e4f5b-18dc-4902-932c-2e00062018bc',
+  userAuthId: 'clerk id',
+  createdAt: 1735938406366,
+  practice: [],
+  wordSets: [],
+  words: [
+    {
+      word: 'automatic',
+      wordId: 'ab7007c1-8a59-470a-84e4-963598f46883',
+      owner: 'platform',
+      results: [],
+    },
+  ],
+};
