@@ -373,31 +373,6 @@ user.words.attempts - the words that the user has already learnt
 }
 */
 
-// User (all user’s data): object array
-// * User_id: uuid
-// * User_auth_id: clerk id
-// * Created: timestamp
-// * Practice: object array
-//     * Created: timestamp
-//     * Results: object array
-//         * Word_id: uuid
-//         * Pass: Boolean
-// * Word_sets: object array
-//     * Word_set_id: uuid
-//     * Created: timestamp
-//     * Word_ids: word_id array
-// * Words: (standard and custom words, and their practice history, standard words are seeded when the user is created): object array
-//     * Word_id: uuid
-//     * Word: string
-//     * Owner: platform | user
-//     * Results: object array
-//         * Created: timestamp
-//         * Pass: Boolean
-
-// Words (all the standard KS2 words): object array
-// * Word_id: uuid
-// * Word: string
-
 type TUser = {
   userId: string;
   userAuthId: string;
