@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import confetti from 'canvas-confetti';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import ReactCanvasConfetti from 'react-canvas-confetti';
@@ -5,15 +6,6 @@ import ReactCanvasConfetti from 'react-canvas-confetti';
 function randomInRange(min: number, max: number) {
   return Math.random() * (max - min) + min;
 }
-
-// const canvasStyles = {
-//   position: 'fixed',
-//   pointerEvents: 'none',
-//   width: '100%',
-//   height: '100%',
-//   top: 0,
-//   left: 0,
-// };
 
 function getAnimationSettings(originXA: number, originXB: number) {
   return {
@@ -31,8 +23,8 @@ function getAnimationSettings(originXA: number, originXB: number) {
 
 export default function Fireworks() {
   const refAnimationInstance = useRef<confetti.CreateTypes | null>(null);
-  // eslint-disable-next-line no-undef
-  const [intervalId, setIntervalId] = useState<NodeJS.Timer | null>(null);
+
+  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
 
   const getInstance = useCallback((instance: confetti.CreateTypes | null) => {
     refAnimationInstance.current = instance;

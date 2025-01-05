@@ -26,7 +26,6 @@ export default function TestWordsPage() {
   }, [testWords]);
 
   const handleSpeak = useCallback(() => {
-    if (!testWords) return;
     speak(testWords[testIndex]);
   }, [testWords, testIndex]);
 
