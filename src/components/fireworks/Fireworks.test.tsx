@@ -8,7 +8,6 @@ jest.mock('react-canvas-confetti', () => jest.fn(() => <div className="fireworks
 describe('Fireworks Component', () => {
   it('should start animation on mount', () => {
     const result = render(<Fireworks />);
-    // expect(container.querySelector('.fireworks')).toBeInTheDocument();
     expect(result).toMatchSnapshot();
   });
 
