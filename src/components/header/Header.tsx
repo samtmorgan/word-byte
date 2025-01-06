@@ -7,7 +7,6 @@ const Header = (): ReactElement => (
     <nav>
       <Button type="link" label="👾 Word Byte" href="/" />
     </nav>
-    {/* @ts-expect-error Server Component */}
     <SignedIn>
       <UserButton />
     </SignedIn>

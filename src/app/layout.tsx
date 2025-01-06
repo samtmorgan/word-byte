@@ -16,7 +16,6 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    // @ts-expect-error Server Component
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
