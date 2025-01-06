@@ -20,9 +20,11 @@ export default async function Home() {
     <div>
       <h1>This is Word Byte</h1>
       <p>A place to practice KS2 spellings!</p>
+      {/* @ts-expect-error Server Component */}
       <SignedIn>
         <Button label="✍️ Practice now" href="/test" type="link" />
       </SignedIn>
+      {/* @ts-expect-error Server Component */}
       <SignedOut>
         <SignInButton />
       </SignedOut>
