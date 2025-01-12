@@ -1,10 +1,13 @@
-import React from 'react';
+import * as React from 'react';
 import { SignedIn, SignedOut, SignInButton } from '@clerk/nextjs';
 import { Button } from '../components';
+// import { getUser } from '../actions/actions';
 
 export default async function Home() {
   // Get the userId from auth() -- if null, the user is not signed in
   // const { userId } = await auth();
+
+  // getUser('clerk id');
 
   // if (userId) {
   //   console.log('User is signed in', { userId });
@@ -20,9 +23,13 @@ export default async function Home() {
     <div>
       <h1>This is Word Byte</h1>
       <p>A place to practice KS2 spellings!</p>
+      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+      {/* @ts-ignore */}
       <SignedIn>
         <Button label="✍️ Practice now" href="/test" type="link" />
       </SignedIn>
+      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+      {/* @ts-ignore */}{' '}
       <SignedOut>
         <SignInButton />
       </SignedOut>

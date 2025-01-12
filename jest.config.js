@@ -13,7 +13,7 @@ module.exports = {
   collectCoverageFrom: [
     'src/**/*.ts',
     'src/**/*.tsx',
-    '!src/lib/mongodb.ts',
+    '!src/lib/mongoClient.ts',
     '!src/utils/wordUtils.ts',
     '!src/context/*.tsx',
     '!src/components/select/Select.tsx',
