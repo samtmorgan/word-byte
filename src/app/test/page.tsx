@@ -1,11 +1,13 @@
 'use client';
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useAppContext } from '../../context/AppContext';
+// import { set } from 'react-hook-form';
+// import { useAppContext } from '../../context/AppContext';
 import { speak } from '../../utils/wordUtils';
 import Loader from '../../components/loader/Loader';
 import { TestLifecycleType } from '../../types/types';
 import { Button, Review, Error } from '../../components';
+import { getUser } from '../../actions/actions';
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
   <>
@@ -15,10 +17,31 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => (
 );
 
 export default function TestWordsPage() {
-  const { testWords, loading, error } = useAppContext();
+  // const { testWords, loading, error } = useAppContext();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean | string>(false);
+  const [testWords, setTestWords] = useState<string[] | null>(null);
   const [hasSeenAllWords, setHasSeenAllWords] = useState<boolean>(false);
   const [testIndex, setTestIndex] = useState<number>(0);
   const [testLifecycle, setTestLifecycle] = useState<TestLifecycleType | null>('notStarted');
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userRecord = await getUser('testUserAuthId');
+        console.log(userRecord);
+        setLoading(false);
+        setTestWords([]);
+        setUser(userRecord);
+      } catch (e) {
+        setError(true);
+        setLoading(false);
+      }
+    };
+    fetchUser();
+  }, []);
 
   const sessionWordsCount = useMemo(() => {
     if (!testWords) return 0;
@@ -26,6 +49,7 @@ export default function TestWordsPage() {
   }, [testWords]);
 
   const handleSpeak = useCallback(() => {
+    if (!testWords) return;
     speak(testWords[testIndex]);
   }, [testWords, testIndex]);
 

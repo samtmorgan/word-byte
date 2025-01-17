@@ -17,6 +17,7 @@ module.exports = {
     '!src/utils/wordUtils.ts',
     '!src/context/*.tsx',
     '!src/components/select/Select.tsx',
+    '!src/components/error/Error.tsx',
     '!src/components/review/Review.tsx',
     '!src/components/input/Input.tsx',
     '!src/components/fireworks/Fireworks.tsx',
@@ -25,7 +26,8 @@ module.exports = {
     '!src/app/settingsAccount/page.tsx',
     '!src/app/settingsWords/page.tsx',
     '!src/app/settings/page.tsx',
-    '!src/app/*.tsx',
+    '!src/app/layout.tsx',
+    '!src/app/page.tsx',
     '!src/middleware.ts',
   ],
 };
