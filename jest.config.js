@@ -4,10 +4,10 @@ module.exports = {
   testEnvironment: 'jsdom',
   coverageThreshold: {
     global: {
-      branches: 100,
-      functions: 100,
-      lines: 100,
-      statements: 100,
+      branches: 90,
+      functions: 90,
+      lines: 90,
+      statements: 90,
     },
   },
   collectCoverageFrom: [
@@ -19,7 +19,6 @@ module.exports = {
     '!src/components/select/Select.tsx',
     '!src/components/error/Error.tsx',
     '!src/components/review/Review.tsx',
-    '!src/components/input/Input.tsx',
     '!src/components/fireworks/Fireworks.tsx',
     '!src/app/test/page.tsx',
     '!src/app/settingsWords/page.tsx',

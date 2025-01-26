@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { SignedIn, SignedOut, SignInButton } from '@clerk/nextjs';
-// import { auth } from '@clerk/nextjs/server';
-// import { redirect } from 'next/navigation';
-import { Button } from '../components';
+import { SignedOut, SignInButton } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
+import { redirect } from 'next/navigation';
+// import { Button } from '../components';
 // import { getUser } from '../actions/actions';
 
 export default async function Home() {
   // Get the userId from auth() -- if null, the user is not signed in
-  // const { userId } = await auth();
+  const { userId } = await auth();
 
-  // if (userId) {
-  //   redirect('/welcome');
-  // }
+  if (userId) {
+    redirect('/welcome');
+  }
   // getUser('clerk id');
 
   // if (userId) {
@@ -30,12 +30,14 @@ export default async function Home() {
       <p>A place to practice Key Stage two spellings!</p>
       {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
       {/* @ts-ignore */}
-      <SignedIn>
+      {/* this should be unnecessary here, if the user is signed in they will get
+      redirected to the welcome page */}
+      {/* <SignedIn>
         <h2>Welcome Back!</h2>
         <Button label="✍️ Practice now" href="/test" type="link" />
-      </SignedIn>
+      </SignedIn> */}
       {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-      {/* @ts-ignore */}{' '}
+      {/* @ts-ignore */}
       <SignedOut>
         <SignInButton />
       </SignedOut>
