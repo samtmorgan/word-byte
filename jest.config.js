@@ -28,5 +28,6 @@ module.exports = {
     '!src/app/layout.tsx',
     '!src/app/page.tsx',
     '!src/middleware.ts',
+    '!src/app/welcome/page.tsx',
   ],
 };

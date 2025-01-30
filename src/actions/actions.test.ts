@@ -1,75 +1,10 @@
 import client from '../lib/mongoClient';
 
-import { getCurrentWords, getUser, User, Word } from './actions';
+import { getCurrentWords, User, Word } from './actions';
 
 jest.mock('../lib/mongoClient', () => ({
   connect: jest.fn(),
 }));
-
-describe('getUser', () => {
-  let mockConnect: jest.Mock, mockDb: jest.Mock, mockCollection: jest.Mock, mockFindOne: jest.Mock;
-
-  beforeEach(() => {
-    mockFindOne = jest.fn();
-    mockCollection = jest.fn(() => ({ findOne: mockFindOne }));
-    mockDb = jest.fn(() => ({ collection: mockCollection }));
-    mockConnect = jest.fn(() => ({ db: mockDb }));
-    (client.connect as jest.Mock) = mockConnect;
-    jest.spyOn(console, 'error').mockImplementation(() => {});
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it('should return a user and status ok when found', async () => {
-    const mockUser: User = {
-      _id: '1',
-      userAuthId: 'auth123',
-      userPlatformId: 'platform123',
-      userName: 'testUser',
-      createdAt: 1735938406366,
-      wordSets: [],
-      words: [],
-    };
-    mockFindOne.mockResolvedValue(mockUser);
-
-    const expected = { status: 'ok', user: mockUser };
-    const result = await getUser('auth123');
-
-    expect(client.connect).toHaveBeenCalled();
-    expect(mockDb).toHaveBeenCalledWith('wordByteTest');
-    expect(mockCollection).toHaveBeenCalledWith('users');
-    expect(mockFindOne).toHaveBeenCalledWith({ userAuthId: 'auth123' });
-    expect(result).toEqual(expected);
-  });
-
-  it('should return null and status ok when user is not found', async () => {
-    mockFindOne.mockResolvedValue(null);
-
-    const expected = { status: 'ok', user: null };
-    const result = await getUser('auth123');
-
-    expect(client.connect).toHaveBeenCalled();
-    expect(mockDb).toHaveBeenCalledWith('wordByteTest');
-    expect(mockCollection).toHaveBeenCalledWith('users');
-    expect(mockFindOne).toHaveBeenCalledWith({ userAuthId: 'auth123' });
-    expect(result).toEqual(expected);
-  });
-
-  it('should return status error and the correct message when an error occurs', async () => {
-    mockFindOne.mockRejectedValue(new Error('Database error'));
-
-    const expected = { status: 'error', message: 'getUserError' };
-    const result = await getUser('auth123');
-
-    expect(client.connect).toHaveBeenCalled();
-    expect(mockDb).toHaveBeenCalledWith('wordByteTest');
-    expect(mockCollection).toHaveBeenCalledWith('users');
-    expect(mockFindOne).toHaveBeenCalledWith({ userAuthId: 'auth123' });
-    expect(result).toEqual(expected);
-  });
-});
 
 describe('getCurrentWords', () => {
   let mockConnect: jest.Mock, mockDb: jest.Mock, mockCollection: jest.Mock, mockFindOne: jest.Mock;

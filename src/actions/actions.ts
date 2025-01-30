@@ -1,6 +1,7 @@
 'use server';
 
 import client from '../lib/mongoClient';
+import { Errors, Response, ResponseError, Status } from './sharedTypes';
 
 interface Result {
   created: number;
@@ -30,45 +31,8 @@ export interface User {
   words: Word[];
 }
 
-enum Errors {
-  GET_USER_ERROR = 'getUserError',
-  GET_CURRENT_WORDS_ERROR = 'getCurrentWordsError',
-  USER_NOT_FOUND = 'userNotFound',
-  WORD_SETS_NOT_FOUND = 'wordSetsNotFound',
-}
-
-enum Status {
-  OK = 'ok',
-  ERROR = 'error',
-}
-
-interface Response {
-  status: Status;
-}
-
-interface ResponseError extends Response {
-  message: Errors;
-}
-
-interface GetUserResponse extends Response {
-  user: User | null;
-}
-
 interface getCurrentWordsResponse extends Response {
   currentWords: Word[] | null;
-}
-
-export async function getUser(userAuthId: string): Promise<GetUserResponse | ResponseError> {
-  try {
-    const mongoClient = await client.connect();
-    const db = mongoClient.db('wordByteTest');
-    const user = (await db.collection('users').findOne({ userAuthId })) as User | null;
-    const res: GetUserResponse = { status: Status.OK, user: JSON.parse(JSON.stringify(user)) };
-    return res;
-  } catch (e) {
-    console.error(e);
-    return { status: Status.ERROR, message: Errors.GET_USER_ERROR };
-  }
 }
 
 export async function getCurrentWords(userAuthId: string): Promise<getCurrentWordsResponse | ResponseError> {

@@ -1,9 +1,6 @@
 import React from 'react';
+import WelcomeContent from '../../components/pageComponents/WelcomeContent';
 
-export default function Welcome() {
-  return (
-    <div>
-      <h1>Welcome Back!</h1>
-    </div>
-  );
+export default async function Welcome() {
+  return <WelcomeContent />;
 }
