@@ -3,8 +3,6 @@ import Button from '../button/Button';
 import { User } from '../../actions/initUser';
 
 export default function WelcomeContent({ user }: { user: User | null }) {
-  console.log({ user });
-
   if (!user) {
     return null;
   }

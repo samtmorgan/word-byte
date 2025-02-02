@@ -1,5 +1,5 @@
-import { DbUser } from '../../actions/getUser';
-import { MockUserType } from '../../types/types';
+import { DbUser } from '../actions/getUser';
+import { MockUserType } from '../types/types';
 
 // ~~~~ current below \/
 
@@ -13,8 +13,12 @@ export const mockDbUser: DbUser = {
   wordSets: [],
   words: [],
 };
+export const mockUser = {
+  ...mockDbUser,
+  username: mockUsername,
+};
 
-// ~~~~ current above /\
+// ~;~~~ current above /\
 
 export const wordSetText = [
   'illogical',
@@ -82,7 +86,7 @@ export const mockUserWords = [
   },
 ];
 
-export const mockUser: MockUserType = {
+export const oldMockUser: MockUserType = {
   name: 'Ginny',
   uuid: 'b8765153-9c08-4301-869c-d810453408ca',
   words: {

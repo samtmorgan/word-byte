@@ -6,7 +6,7 @@ import { renderWithContext } from '../../testUtils/renderWithContext';
 import { initProviderState } from '../../context/AppContext';
 import { mockUser } from '../../mockData/user';
 import Review from './Review';
-import { mockTestWords } from '../../testUtils/mockData/mockData';
+import { mockTestWords } from '../../testUtils/mockData';
 
 function renderWithContextAndInitState() {
   const providerProps = {

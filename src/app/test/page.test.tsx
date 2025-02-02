@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
 import TestWordsPage from './page';
 import { initProviderState } from '../../context/AppContext';
-import { mockTestWords, mockUser } from '../../testUtils/mockData/mockData';
+import { mockTestWords, oldMockUser } from '../../testUtils/mockData';
 import { renderWithContext } from '../../testUtils/renderWithContext';
 
 jest.mock('../../components/loader/Loader', () => () => <div>Mock Loading...</div>);
@@ -30,7 +30,7 @@ describe.skip('Test that the TestWords page renders expected components', () => 
     const providerProps = {
       ...initProviderState,
       loading: false,
-      user: mockUser,
+      user: oldMockUser,
       testWords: mockTestWords,
     };
     renderWithContext(<TestWordsPage />, providerProps);
@@ -41,7 +41,7 @@ describe.skip('Test that the TestWords page renders expected components', () => 
 describe.skip('test if there are no words in the array', () => {
   it('render message when there are no words in the set', () => {
     //   hack as structuredClone is not implemented in jsdom
-    const testUser = JSON.parse(JSON.stringify(mockUser));
+    const testUser = JSON.parse(JSON.stringify(oldMockUser));
     testUser.words.wordSets = [[]];
     const providerProps = {
       ...initProviderState,
@@ -58,7 +58,7 @@ describe.skip('Test the TestWords page user interaction', () => {
     const providerProps = {
       ...initProviderState,
       loading: false,
-      user: mockUser,
+      user: oldMockUser,
       testWords: mockTestWords,
     };
     renderWithContext(<TestWordsPage />, providerProps);
@@ -79,7 +79,7 @@ describe.skip('Test the TestWords page user interaction', () => {
     expect(sayWordButton).toBeEnabled();
     expect(cancelButton).toBeEnabled();
     // assert that current test index is as expected
-    const wordsListLength = mockUser.words.wordSets[0].length;
+    const wordsListLength = oldMockUser.words.wordSets[0].length;
     expect(screen.getByText(`1 of ${wordsListLength} words`)).toBeInTheDocument();
     await user.click(nextButton);
     // assert that clicking the next button changes the word
