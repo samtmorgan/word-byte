@@ -1,4 +1,4 @@
-import { getUser, User } from './getUser';
+import { getUser, DbUser } from './getUser';
 import client from '../lib/mongoClient';
 
 jest.mock('../lib/mongoClient', () => ({
@@ -22,11 +22,10 @@ describe('getUser', () => {
   });
 
   it('should return the user and when found', async () => {
-    const mockUser: User = {
+    const mockUser: DbUser = {
       _id: '1',
       userAuthId: 'auth123',
       userPlatformId: 'platform123',
-      userName: 'testUser',
       createdAt: 1735938406366,
       wordSets: [],
       words: [],

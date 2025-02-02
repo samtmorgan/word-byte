@@ -1,4 +1,6 @@
-import client from '../lib/mongoClient';
+'use server';
+
+import { getMongoDB } from '../lib/mongoDB';
 
 interface Result {
   created: number;
@@ -18,20 +20,18 @@ interface WordSet {
   wordIds: string[];
 }
 
-export interface User {
+export interface DbUser {
   _id: string;
   userAuthId: string;
   userPlatformId: string;
-  userName: string;
-  createdAt: 1735938406366;
+  createdAt: number;
   wordSets: WordSet[];
   words: Word[];
 }
 
-export async function getUser(userAuthId: string): Promise<User | null> {
-  const mongoClient = await client.connect();
-  const db = mongoClient.db('wordByteTest');
-  const user = (await db.collection('users').findOne({ userAuthId })) as User | null;
+export async function getUser(userAuthId: string): Promise<DbUser | null> {
+  const db = await getMongoDB();
+  const user = (await db.collection('users').findOne({ userAuthId })) as DbUser | null;
 
   return user;
 }

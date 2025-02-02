@@ -1,9 +1,18 @@
 import React from 'react';
-import initUser from '../../actions/initUser';
+import Button from '../button/Button';
+import { User } from '../../actions/initUser';
 
-export default async function WelcomeContent() {
-  const user = await initUser();
+export default function WelcomeContent({ user }: { user: User | null }) {
   console.log({ user });
 
-  return user ? <div>Hello {user.username} 👋</div> : null;
+  if (!user) {
+    return null;
+  }
+
+  return (
+    <div>
+      <h1>Hello {user.username} 👋</h1>
+      <Button label="✍️ Practice now" href="/test" type="link" />
+    </div>
+  );
 }

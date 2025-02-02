@@ -1,4 +1,20 @@
+import { DbUser } from '../../actions/getUser';
 import { MockUserType } from '../../types/types';
+
+// ~~~~ current below \/
+
+export const mockAuthUserId = 'auth123';
+export const mockUsername = 'testUser';
+export const mockDbUser: DbUser = {
+  _id: '1',
+  userAuthId: mockAuthUserId,
+  userPlatformId: 'platform123',
+  createdAt: 1735938406366,
+  wordSets: [],
+  words: [],
+};
+
+// ~~~~ current above /\
 
 export const wordSetText = [
   'illogical',
