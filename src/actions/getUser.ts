@@ -14,7 +14,7 @@ export interface Word {
   results: Result[];
 }
 
-interface WordSet {
+export interface WordSet {
   wordSetId: string;
   createdAt: number;
   wordIds: string[];

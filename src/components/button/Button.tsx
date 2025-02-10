@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import Link from 'next/link';
 
-type ButtonProps = {
+export type ButtonProps = {
   label: string;
   disabled?: boolean;
   type?: 'button' | 'submit' | 'link';

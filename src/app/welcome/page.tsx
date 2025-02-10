@@ -1,9 +1,9 @@
 import React from 'react';
 import WelcomeContent from '../../components/pageComponents/WelcomeContent';
-import initUser from '../../actions/initUser';
+import { initialiseUser } from '../../actions/initUser';
 
 export default async function Welcome() {
-  const user = await initUser();
+  const user = await initialiseUser();
 
   return <WelcomeContent user={user} />;
 }

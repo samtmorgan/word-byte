@@ -1,8 +1,9 @@
 import { auth, clerkClient } from '@clerk/nextjs/server';
-import initUser, { User } from './initUser';
+import { User, initialiseUser } from './initUser';
 import { getUser } from './getUser';
 import { mockAuthUserId, mockDbUser, mockUsername } from '../testUtils/mockData';
 import { createUser } from './createUser';
+import { getTimeStamp } from '../utils/getTimeStamp';
 
 jest.mock('@clerk/nextjs/server', () => ({
   auth: jest.fn(),
@@ -18,6 +19,9 @@ jest.mock('./createUser', () => ({
 jest.mock('./getUser', () => ({
   getUser: jest.fn(),
 }));
+jest.mock('../utils/getTimeStamp', () => ({
+  getTimeStamp: jest.fn(),
+}));
 
 describe('initUser', () => {
   const mockAuth = auth as unknown as jest.Mock;
@@ -27,6 +31,7 @@ describe('initUser', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    (getTimeStamp as jest.Mock).mockReturnValue(1234567890);
   });
 
   it('should return a user when auth and db user are found', async () => {
@@ -40,7 +45,7 @@ describe('initUser', () => {
     mockClerkGetUser.mockResolvedValue({ username: mockUsername });
     mockGetUser.mockResolvedValue(mockDbUser);
 
-    const result = await initUser();
+    const result = await initialiseUser();
 
     expect(mockAuth).toHaveBeenCalled();
     expect(mockGetUser).toHaveBeenCalledWith(mockAuthUserId);
@@ -51,7 +56,7 @@ describe('initUser', () => {
   it('should throw an error when no auth userId is found', async () => {
     mockAuth.mockResolvedValue({ userId: null });
 
-    await expect(initUser()).rejects.toThrow('no auth userAuthId found');
+    await expect(initialiseUser()).rejects.toThrow('no auth userAuthId found');
 
     expect(mockAuth).toHaveBeenCalled();
     expect(mockClerkGetUser).not.toHaveBeenCalled();
@@ -62,7 +67,7 @@ describe('initUser', () => {
     mockAuth.mockResolvedValue({ userId: mockAuthUserId });
     mockClerkGetUser.mockResolvedValue({ username: null });
 
-    await expect(initUser()).rejects.toThrow('no auth username found');
+    await expect(initialiseUser()).rejects.toThrow('no auth username found');
     expect(mockAuth).toHaveBeenCalled();
     expect(mockClerkGetUser).toHaveBeenCalledWith(mockAuthUserId);
     expect(mockGetUser).not.toHaveBeenCalled();
@@ -79,7 +84,7 @@ describe('initUser', () => {
       username: mockUsername,
     };
 
-    const result = await initUser();
+    const result = await initialiseUser();
 
     expect(mockAuth).toHaveBeenCalled();
     expect(mockAuth).toHaveBeenCalled();

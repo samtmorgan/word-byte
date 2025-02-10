@@ -16,5 +16,9 @@ import React from 'react';
 // }
 
 export default function Loader() {
-  return <p>Loading...</p>;
+  return (
+    <div className="page-container">
+      <h1>Loading...</h1>
+    </div>
+  );
 }

@@ -1,4 +1,4 @@
-import { Word } from '../actions/getUser';
+import { Word, WordSet } from '../actions/getUser';
 
 export const defaultWords: Word[] = [
   { word: 'accident', wordId: 'd659c3a4-4ea2-4619-b4da-53b6550d925f', owner: 'platform', results: [] },
@@ -125,4 +125,23 @@ export const defaultWords: Word[] = [
   { word: 'muscle', wordId: 'c8d1fa80-7982-4eb9-b8b2-c1174a69e4ec', owner: 'platform', results: [] },
   { word: 'scissors', wordId: 'bbb51109-fb68-4f77-8df3-34bc5f8bad65', owner: 'platform', results: [] },
   { word: 'scientist', wordId: '2182d4b4-f084-4310-93c1-b36d59a57275', owner: 'platform', results: [] },
+];
+
+export const defaultWordSets: WordSet[] = [
+  {
+    wordSetId: '',
+    createdAt: 0,
+    wordIds: [
+      'd659c3a4-4ea2-4619-b4da-53b6550d925f',
+      'b02b5c18-1ed6-40e5-bf4b-dc268a1b8866',
+      'e13e18b1-7c04-4dae-8a02-6898848d168b',
+      '1ed7098e-e2a7-4607-940c-cdb7f49b3bc0',
+      '8ec8b1ff-50a1-4152-bae2-01ff3e5450ad',
+      'fbc6c6b1-df0b-4015-94c9-01207ceb4471',
+      '26dd4d7a-045c-4103-8461-1466bd4b84c1',
+      'a86b4f9e-7027-4940-9345-fed0951c87b0',
+      '26dd4d7a-045c-4103-8461-1466bd4b84c1',
+      'a86b4f9e-7027-4940-9345-fed0951c87b0',
+    ],
+  },
 ];

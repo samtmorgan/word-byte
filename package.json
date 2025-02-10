@@ -10,7 +10,9 @@
     "lint": "eslint \"./src/**/*.{ts,tsx}\"",
     "autofix": "eslint \"./src/**/*.{ts,tsx}\" --fix",
     "test": "jest --coverage",
-    "test-watch": "jest --watch"
+    "test-watch": "jest --watch",
+    "type-check": "tsc --noEmit",
+    "ci-checks": "yarn lint && yarn type-check && yarn test"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.9.6",

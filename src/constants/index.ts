@@ -1,3 +1,3 @@
-import { defaultWords } from './constants';
+import { defaultWords, defaultWordSets } from './constants';
 
-export { defaultWords };
+export { defaultWords, defaultWordSets };

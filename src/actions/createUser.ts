@@ -1,7 +1,8 @@
 import { v4 } from 'uuid';
 import { DbUser, getUser } from './getUser';
 import { getMongoDB } from '../lib/mongoDB';
-import { defaultWords } from '../constants';
+import { defaultWords, defaultWordSets } from '../constants';
+import { getTimeStamp } from '../utils/getTimeStamp';
 
 type NewIdDbUser = Omit<DbUser, '_id'>;
 
@@ -11,15 +12,18 @@ export async function createUser(userAuthId: string): Promise<DbUser | null> {
   const users = db.collection('users');
 
   const uuid = v4();
-  const timestamp = Date.now();
+  const timestamp = getTimeStamp();
 
   const newUser: NewIdDbUser = {
     userAuthId,
     createdAt: timestamp,
-    wordSets: [],
+    wordSets: defaultWordSets,
     words: [...defaultWords],
     userPlatformId: uuid,
   };
+
+  newUser.wordSets[0].wordSetId = v4();
+  newUser.wordSets[0].createdAt = timestamp;
 
   await users.insertOne(newUser);
   const newDBUser: DbUser | null = await getUser(userAuthId);

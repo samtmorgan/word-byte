@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
+import { ErrorPage } from '../components';
 
 export default function Error() {
-  return <div>Sorry, something went wrong.</div>;
+  return <ErrorPage />;
 }

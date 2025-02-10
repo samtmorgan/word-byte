@@ -13,7 +13,7 @@ export interface User extends DbUser {
   username: string;
 }
 
-export default async function initUser(): Promise<User | null> {
+export async function initialiseUser(): Promise<User | null> {
   const { userId: userAuthId } = await auth();
 
   if (!userAuthId) {

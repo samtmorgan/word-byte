@@ -1,5 +1,9 @@
 import React from 'react';
 
-const Error = () => <div>😭 Ouch! Something went wrong, please try again.</div>;
-
-export default Error;
+export default function ErrorPage() {
+  return (
+    <div className="page-container">
+      <h1>😭 Ouch! Something went wrong, please try again.</h1>
+    </div>
+  );
+}

@@ -1,58 +1,56 @@
 'use client';
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-// import { set } from 'react-hook-form';
-// import { useAppContext } from '../../context/AppContext';
 import { speak } from '../../utils/wordUtils';
-import Loader from '../../components/loader/Loader';
-import { TestLifecycleType } from '../../types/types';
-import { Button, Review, Error } from '../../components';
+import { Button, Review, ErrorPage, Loader } from '../../components';
+import { getCurrentWords } from '../../actions/getCurrentWords';
+import { Word } from '../../actions/getUser';
+
+enum TestLifecycle {
+  NOT_STARTED = 'notStarted',
+  TEST = 'test',
+  REVIEW = 'review',
+  REVISE = 'revise',
+  FINISHED = 'finished',
+  CANCELLED = 'cancelled',
+}
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
-  <>
+  <div className="page-container">
     <h1>Test time</h1>
     {children}
-  </>
+  </div>
 );
 
 export default function TestWordsPage() {
-  // const { testWords, loading, error } = useAppContext();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [user, setUser] = useState<any>(null);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState<boolean>(true);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<boolean | string>(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [testWords, setTestWords] = useState<string[] | null>(null);
+  const [testWords, setTestWords] = useState<Word[] | null>(null);
   const [hasSeenAllWords, setHasSeenAllWords] = useState<boolean>(false);
   const [testIndex, setTestIndex] = useState<number>(0);
-  const [testLifecycle, setTestLifecycle] = useState<TestLifecycleType | null>('notStarted');
+  const [testLifecycle, setTestLifecycle] = useState<TestLifecycle>(TestLifecycle.NOT_STARTED);
 
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     try {
-  //       const userRecord = await getUser('testUserAuthId');
-  //       console.log(userRecord);
-  //       setLoading(false);
-  //       setTestWords([]);
-  //       setUser(userRecord);
-  //     } catch (e) {
-  //       setError(true);
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchUser();
-  // }, []);
+  useEffect(() => {
+    const getTheWords = async () => {
+      try {
+        const words: Word[] | null = await getCurrentWords();
+        setTestWords(words);
+        // console.log(words);
+        setLoading(false);
+      } catch (e) {
+        setError(true);
+        setLoading(false);
+      }
+    };
 
-  const sessionWordsCount = useMemo(() => {
-    if (!testWords) return 0;
-    return testWords.length;
-  }, [testWords]);
+    getTheWords();
+  }, []);
+
+  const sessionWordsCount = useMemo(() => testWords?.length || 0, [testWords]);
 
   const handleSpeak = useCallback(() => {
     if (!testWords) return;
-    speak(testWords[testIndex]);
+    speak(testWords[testIndex].word);
   }, [testWords, testIndex]);
 
   const handleIndexChange = useCallback(
@@ -71,12 +69,12 @@ export default function TestWordsPage() {
     if (testIndex + 1 === sessionWordsCount) {
       setHasSeenAllWords(true);
     }
-  }, [setHasSeenAllWords, testIndex, sessionWordsCount]);
+  }, [testIndex, sessionWordsCount]);
 
   if (error)
     return (
       <Wrapper>
-        <Error />
+        <ErrorPage />
       </Wrapper>
     );
 
@@ -90,17 +88,15 @@ export default function TestWordsPage() {
   if (testWords.length === 0)
     return (
       <Wrapper>
-        <div>🙁 No words here yet</div>
+        <h1>🙁 No words here yet</h1>
       </Wrapper>
     );
 
   if (testLifecycle === 'notStarted' || testLifecycle === 'finished' || testLifecycle === 'cancelled') {
     return (
-      <div className="page-container">
-        <Wrapper>
-          <Button label="Start 🟢" onClick={() => setTestLifecycle('test')} />
-        </Wrapper>
-      </div>
+      <Wrapper>
+        <Button label="Start 🟢" onClick={() => setTestLifecycle(TestLifecycle.TEST)} />
+      </Wrapper>
     );
   }
 
@@ -113,22 +109,24 @@ export default function TestWordsPage() {
   }
 
   return (
-    <div className="page-container">
-      <Wrapper>
-        <span className="cool-border-with-shadow">{`${testIndex + 1} of ${sessionWordsCount} words`}</span>
+    <Wrapper>
+      <span className="cool-border-with-shadow">{`${testIndex + 1} of ${sessionWordsCount} words`}</span>
 
-        <Button disabled={testIndex === sessionWordsCount} label="Say word 🔈" onClick={handleSpeak} />
-        <div style={{ gap: '1rem' }}>
-          <Button disabled={testIndex === 0} onClick={() => handleIndexChange('decrement')} label="👈 Previous Word" />
-          <Button
-            disabled={testIndex + 1 === sessionWordsCount}
-            onClick={() => handleIndexChange('increment')}
-            label="Next Word 👉"
-          />
-        </div>
-        <Button disabled={!hasSeenAllWords} label="Check Answers ✔" onClick={() => setTestLifecycle('review')} />
-        <Button label="Cancel 🔴" onClick={() => setTestLifecycle('cancelled')} />
-      </Wrapper>
-    </div>
+      <Button disabled={testIndex === sessionWordsCount} label="Say word 🔈" onClick={handleSpeak} />
+      <div style={{ gap: '1rem' }}>
+        <Button disabled={testIndex === 0} onClick={() => handleIndexChange('decrement')} label="👈 Previous Word" />
+        <Button
+          disabled={testIndex + 1 === sessionWordsCount}
+          onClick={() => handleIndexChange('increment')}
+          label="Next Word 👉"
+        />
+      </div>
+      <Button
+        disabled={!hasSeenAllWords}
+        label="Check Answers ✔"
+        onClick={() => setTestLifecycle(TestLifecycle.REVIEW)}
+      />
+      <Button label="Cancel 🔴" onClick={() => setTestLifecycle(TestLifecycle.CANCELLED)} />
+    </Wrapper>
   );
 }
