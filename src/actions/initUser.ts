@@ -40,8 +40,5 @@ export async function initialiseUser(): Promise<User | null> {
   const user = JSON.parse(JSON.stringify(dbUser)) as User;
   user.username = username;
 
-  // used to debug the loading state
-  // await new Promise(resolve => setTimeout(resolve, 2000));
-
   return user;
 }

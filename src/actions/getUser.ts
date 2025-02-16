@@ -2,7 +2,7 @@
 
 import { getMongoDB } from '../lib/mongoDB';
 
-interface Result {
+export interface Result {
   created: number;
   pass: boolean;
 }

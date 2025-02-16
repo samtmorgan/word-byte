@@ -1,5 +1,4 @@
 import { DbUser } from '../actions/getUser';
-import { MockUserType } from '../types/types';
 
 // ~~~~ current below \/
 
@@ -75,14 +74,14 @@ export const mockCurrentWords = [
     results: [],
   },
   {
-    word: 'believe',
-    wordId: '26dd4d7a-045c-4103-8461-1466bd4b84c1',
+    word: 'breathe',
+    wordId: '35f7a198-d160-40ab-ae2e-597c3112ec15',
     owner: 'platform',
     results: [],
   },
   {
-    word: 'bicycle',
-    wordId: 'a86b4f9e-7027-4940-9345-fed0951c87b0',
+    word: 'build',
+    wordId: 'f3edfc26-b5ae-4ce7-8b0f-817ee4982d0c',
     owner: 'platform',
     results: [],
   },
@@ -155,16 +154,6 @@ export const mockUserWords = [
     owner: 'platform',
   },
 ];
-
-export const oldMockUser: MockUserType = {
-  name: 'Ginny',
-  uuid: 'b8765153-9c08-4301-869c-d810453408ca',
-  words: {
-    wordSets: [wordSetText],
-    attempts: [],
-    customWords: mockUserWords,
-  },
-};
 
 export const mockTestWords = [
   'recommend',

@@ -1,0 +1,132 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Review component should render expected content when there are words in the set 1`] = `
+<div>
+  <div
+    class="page-container"
+  >
+    <section
+      class="review"
+    >
+      <h1>
+        Time to check your spellings!
+      </h1>
+      <p>
+        Click the words you got right ✓
+      </p>
+      <ol>
+        <li
+          class="word-list"
+        >
+          <button
+            class="button cool-border-with-shadow "
+            type="button"
+          >
+            accident 
+          </button>
+        </li>
+        <li
+          class="word-list"
+        >
+          <button
+            class="button cool-border-with-shadow "
+            type="button"
+          >
+            accidentally 
+          </button>
+        </li>
+        <li
+          class="word-list"
+        >
+          <button
+            class="button cool-border-with-shadow "
+            type="button"
+          >
+            actual 
+          </button>
+        </li>
+        <li
+          class="word-list"
+        >
+          <button
+            class="button cool-border-with-shadow "
+            type="button"
+          >
+            actually 
+          </button>
+        </li>
+        <li
+          class="word-list"
+        >
+          <button
+            class="button cool-border-with-shadow "
+            type="button"
+          >
+            address 
+          </button>
+        </li>
+        <li
+          class="word-list"
+        >
+          <button
+            class="button cool-border-with-shadow "
+            type="button"
+          >
+            answer 
+          </button>
+        </li>
+        <li
+          class="word-list"
+        >
+          <button
+            class="button cool-border-with-shadow "
+            type="button"
+          >
+            believe 
+          </button>
+        </li>
+        <li
+          class="word-list"
+        >
+          <button
+            class="button cool-border-with-shadow "
+            type="button"
+          >
+            bicycle 
+          </button>
+        </li>
+        <li
+          class="word-list"
+        >
+          <button
+            class="button cool-border-with-shadow "
+            type="button"
+          >
+            breathe 
+          </button>
+        </li>
+        <li
+          class="word-list"
+        >
+          <button
+            class="button cool-border-with-shadow "
+            type="button"
+          >
+            build 
+          </button>
+        </li>
+      </ol>
+      <div
+        class="button-container"
+      >
+        <button
+          class="button cool-border-with-shadow finish-button"
+          type="button"
+        >
+          🏁 Finish
+        </button>
+      </div>
+    </section>
+  </div>
+</div>
+`;

@@ -25,7 +25,7 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => (
 export default function TestWordsPage() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean | string>(false);
-  const [testWords, setTestWords] = useState<Word[] | null>(null);
+  const [currentWords, setCurrentWords] = useState<Word[] | null>(null);
   const [hasSeenAllWords, setHasSeenAllWords] = useState<boolean>(false);
   const [testIndex, setTestIndex] = useState<number>(0);
   const [testLifecycle, setTestLifecycle] = useState<TestLifecycle>(TestLifecycle.NOT_STARTED);
@@ -34,8 +34,7 @@ export default function TestWordsPage() {
     const getTheWords = async () => {
       try {
         const words: Word[] | null = await getCurrentWords();
-        setTestWords(words);
-        // console.log(words);
+        setCurrentWords(words);
         setLoading(false);
       } catch (e) {
         setError(true);
@@ -46,12 +45,12 @@ export default function TestWordsPage() {
     getTheWords();
   }, []);
 
-  const sessionWordsCount = useMemo(() => testWords?.length || 0, [testWords]);
+  const sessionWordsCount = useMemo(() => currentWords?.length || 0, [currentWords]);
 
   const handleSpeak = useCallback(() => {
-    if (!testWords) return;
-    speak(testWords[testIndex].word);
-  }, [testWords, testIndex]);
+    if (!currentWords) return;
+    speak(currentWords[testIndex].word);
+  }, [currentWords, testIndex]);
 
   const handleIndexChange = useCallback(
     (direction: 'increment' | 'decrement') => {
@@ -78,14 +77,14 @@ export default function TestWordsPage() {
       </Wrapper>
     );
 
-  if (loading || !testWords)
+  if (loading || !currentWords)
     return (
       <Wrapper>
         <Loader />
       </Wrapper>
     );
 
-  if (testWords.length === 0)
+  if (currentWords.length === 0)
     return (
       <Wrapper>
         <h1>🙁 No words here yet</h1>
@@ -101,11 +100,7 @@ export default function TestWordsPage() {
   }
 
   if (testLifecycle === 'review') {
-    return (
-      <Wrapper>
-        <Review />
-      </Wrapper>
-    );
+    return <Review currentWords={currentWords} />;
   }
 
   return (

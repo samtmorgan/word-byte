@@ -3,7 +3,7 @@ import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import TestWordsPage from './page';
-import { mockCurrentWords, mockTestWords, oldMockUser } from '../../testUtils/mockData';
+import { mockCurrentWords } from '../../testUtils/mockData';
 import { getCurrentWords } from '../../actions/getCurrentWords';
 import { ButtonProps } from '../../components/button/Button';
 import { speak } from '../../utils/wordUtils';
@@ -67,7 +67,7 @@ describe('TestWords page renders expected components', () => {
 
 describe('TestWords page user interaction', () => {
   beforeEach(async () => {
-    (getCurrentWords as jest.Mock).mockResolvedValue(mockTestWords);
+    (getCurrentWords as jest.Mock).mockResolvedValue(mockCurrentWords);
 
     await act(async () => {
       render(<TestWordsPage />);
@@ -157,42 +157,5 @@ describe('TestWords page user interaction', () => {
     expect(screen.getByText(/Test time/)).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Start/ })).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Cancel/ })).not.toBeInTheDocument();
-  });
-
-  it.skip('should execute the expected test the lifecycle', async () => {
-    const user = userEvent.setup();
-    // get and fire the start button
-    await user.click(screen.getByRole('button', { name: /Start/ }));
-    // get the expected controls
-    const checkButton = screen.getByRole('button', { name: /Check Answers/ });
-    const previousButton = screen.getByRole('button', { name: /Previous Word/ });
-    const nextButton = screen.getByRole('button', { name: /Next Word/ });
-    const sayWordButton = screen.getByRole('button', { name: /Say word/ });
-    const cancelButton = screen.getByRole('button', { name: /Cancel/ });
-    // assert that the expected controls are disabled
-    expect(checkButton).toBeDisabled();
-    expect(previousButton).toBeDisabled();
-    // assert that the expected controls are enabled
-    expect(nextButton).toBeEnabled();
-    expect(sayWordButton).toBeEnabled();
-    expect(cancelButton).toBeEnabled();
-    // assert that current test index is as expected
-    const wordsListLength = oldMockUser.words.wordSets[0].length;
-    expect(screen.getByText(`1 of ${wordsListLength} words`)).toBeInTheDocument();
-    await user.click(nextButton);
-    // assert that clicking the next button changes the word
-    expect(screen.queryByText(`1 of ${wordsListLength} words`)).toBeNull();
-    expect(screen.getByText(`2 of ${wordsListLength} words`)).toBeInTheDocument();
-    // assert that the previous button is now enabled
-    expect(previousButton).toBeEnabled();
-    // assert that the previous button changes the word
-    await user.click(previousButton);
-    expect(screen.getByText(`1 of ${wordsListLength} words`)).toBeInTheDocument();
-    // assert that the cancel button ends the test
-    await user.click(cancelButton);
-    expect(screen.getByText(/Start/)).toBeInTheDocument();
-    // assert that the start button starts the test again, we need to get the button again as it is a new render
-    await user.click(screen.getByRole('button', { name: /Start/ }));
-    expect(screen.getByText(`1 of ${wordsListLength} words`)).toBeInTheDocument();
   });
 });

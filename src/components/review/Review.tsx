@@ -1,77 +1,49 @@
 'use client';
 
-import React, { useCallback, useEffect, useState } from 'react';
-import { useAppContext } from '../../context/AppContext';
-import { ResultType } from '../../types/types';
-import Loader from '../loader/Loader';
-import Fireworks from '../fireworks/Fireworks';
+import React, { useState, JSX } from 'react';
+import { Word } from '../../actions/getUser';
+import { Complete } from './components/Complete';
+import { InProgress } from './components/InProgress';
+import { LocalResults, ReviewButtonsProps, ReviewLifecycle, ReviewProps } from './types';
 
-function buildResults(words: string[]): ResultType[] {
-  return words.map(word => ({ word, correct: false }));
+function buildLocalResults(currentWords: Word[]): LocalResults {
+  return currentWords.map(word => ({ ...word, pass: null }));
 }
 
-export default function Review() {
-  const { loading, error, testWords } = useAppContext();
-  const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [results, setResults] = useState<ResultType[]>(testWords ? buildResults(testWords) : []);
+const ReviewButtons = ({ reviewLifecycle, setReviewLifecycle }: ReviewButtonsProps): JSX.Element => (
+  <div className="button-container">
+    {reviewLifecycle === ReviewLifecycle.IN_PROGRESS ? (
+      <button
+        className="button cool-border-with-shadow finish-button"
+        type="button"
+        onClick={() => setReviewLifecycle(ReviewLifecycle.COMPLETE)}
+      >
+        🏁 Finish
+      </button>
+    ) : (
+      <a className="button cool-border-with-shadow finish-button" href="/">
+        🏠 Go to home
+      </a>
+    )}
+  </div>
+);
 
-  const handleWordClick = useCallback(
-    (index: number) => {
-      const newResults = [...results];
-      newResults[index].correct = !newResults[index].correct;
-      setResults(newResults);
-    },
-    [results],
-  );
-  useEffect(() => {
-    if (results?.every(({ correct }) => correct)) {
-      setIsVisible(true);
-      setTimeout(() => setIsVisible(false), 10000);
-    }
-  }, [results]);
-
-  if (error) return <div>Error...</div>;
-
-  if (loading) return <Loader />;
+export default function Review({ currentWords }: ReviewProps) {
+  const [results, setResults] = useState<LocalResults>(buildLocalResults(currentWords || []));
+  const [reviewLifecycle, setReviewLifecycle] = useState<ReviewLifecycle>(ReviewLifecycle.IN_PROGRESS);
 
   if (!results || results.length === 0) return <div>🙁 No words here yet</div>;
 
   return (
-    <>
-      <div className="page-container">
-        <section className="review">
-          <h1>Click the words you got right ✓</h1>
-
-          <ol>
-            {results.map((result, index) => (
-              <li className="word-list" key={result.word}>
-                <button
-                  className={`button cool-border-with-shadow ${result.correct && 'correct-word'}`}
-                  type="button"
-                  onClick={() => handleWordClick(index)}
-                  key={result.word}
-                >
-                  {`${result.word} ${result.correct ? '✓' : ''}`}
-                </button>
-              </li>
-            ))}
-          </ol>
-
-          {/* <h2>Click the words you got right ✓</h2>
-          {results.map((wordData, index) => (
-            <button
-              className={`button cool-border-with-shadow ${wordData.correct && 'correct-word'}`}
-              type="button"
-              onClick={() => handleWordClick(index)}
-              key={wordData.word}
-            >
-              {`${wordData.word} ${wordData.correct ? '✓' : ''}`}
-            </button>
-          ))} */}
-        </section>
-      </div>
-      {/* {isVisible && <Confetti />} */}
-      {isVisible && <Fireworks />}
-    </>
+    <div className="page-container">
+      <section className="review">
+        {reviewLifecycle === ReviewLifecycle.IN_PROGRESS ? (
+          <InProgress results={results} setResults={setResults} />
+        ) : (
+          <Complete results={results} />
+        )}
+        <ReviewButtons reviewLifecycle={reviewLifecycle} setReviewLifecycle={setReviewLifecycle} />
+      </section>
+    </div>
   );
 }
