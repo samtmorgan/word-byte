@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { speak } from '../../utils/wordUtils';
+import { speak } from '../../utils/speech';
 import { Button, Review, ErrorPage, Loader } from '../../components';
 import { getCurrentWords } from '../../actions/getCurrentWords';
 import { Word } from '../../actions/getUser';
