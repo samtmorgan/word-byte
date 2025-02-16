@@ -6,7 +6,7 @@ import TestWordsPage from './page';
 import { mockCurrentWords } from '../../testUtils/mockData';
 import { getCurrentWords } from '../../actions/getCurrentWords';
 import { ButtonProps } from '../../components/button/Button';
-import { speak } from '../../utils/wordUtils';
+import { speak } from '../../utils/speech';
 
 jest.mock('../../components', () => ({
   Loader: () => <div>mock loading</div>,
@@ -21,7 +21,7 @@ jest.mock('../../components', () => ({
 jest.mock('../../actions/getCurrentWords', () => ({
   getCurrentWords: jest.fn(),
 }));
-jest.mock('../../utils/wordUtils', () => ({
+jest.mock('../../utils/speech', () => ({
   speak: jest.fn(),
 }));
 
