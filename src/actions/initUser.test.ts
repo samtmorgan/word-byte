@@ -74,6 +74,22 @@ describe('initUser', () => {
     expect(mockGetUser).not.toHaveBeenCalled();
   });
 
+  it('should throw an error when createUser fails', async () => {
+    mockAuth.mockResolvedValue({ userId: mockAuthUserId });
+    mockClerkGetUser.mockResolvedValue({ username: mockUsername });
+    mockGetUser.mockResolvedValue(null);
+    (createUser as jest.Mock).mockResolvedValue(null);
+
+    await expect(initialiseUser()).rejects.toThrow('failed to write new user to db');
+
+    expect(mockAuth).toHaveBeenCalled();
+    expect(mockClerkGetUser).toHaveBeenCalledWith(mockAuthUserId);
+    expect(mockGetUser).toHaveBeenCalledWith(mockAuthUserId);
+    expect(createUser).toHaveBeenCalledWith(mockAuthUserId);
+    expect(mockGetUser).toHaveBeenCalledWith(mockAuthUserId);
+    expect(createUser).toHaveBeenCalledWith(mockAuthUserId);
+  });
+
   it('should create a new user when no db user is found', async () => {
     mockAuth.mockResolvedValue({ userId: mockAuthUserId });
     mockClerkGetUser.mockResolvedValue({ username: mockUsername });
