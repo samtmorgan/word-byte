@@ -6,7 +6,7 @@ import TestWordsPage from './page';
 import { mockCurrentWords } from '../../testUtils/mockData';
 import { getCurrentWords } from '../../actions/getCurrentWords';
 import { ButtonProps } from '../../components/button/Button';
-import { speak } from '../../utils/speech';
+import { sayTestWord } from '../../utils/sayTestWord';
 
 jest.mock('../../components', () => ({
   Loader: () => <div>mock loading</div>,
@@ -21,8 +21,8 @@ jest.mock('../../components', () => ({
 jest.mock('../../actions/getCurrentWords', () => ({
   getCurrentWords: jest.fn(),
 }));
-jest.mock('../../utils/speech', () => ({
-  speak: jest.fn(),
+jest.mock('../../utils/sayTestWord', () => ({
+  sayTestWord: jest.fn(),
 }));
 
 describe('TestWords page renders expected components', () => {
@@ -109,25 +109,16 @@ describe('TestWords page user interaction', () => {
     const previousButton = screen.getByRole('button', { name: /Previous Word/ });
     const nextButton = screen.getByRole('button', { name: /Next Word/ });
 
-    expect(screen.getByText(/1 of 10 word/)).toBeInTheDocument();
+    expect(screen.getByText(`1 of ${mockCurrentWords.length} words`)).toBeInTheDocument();
 
     await user.click(nextButton);
-    expect(screen.getByText(/2 of 10 word/)).toBeInTheDocument();
+    expect(screen.getByText(`2 of ${mockCurrentWords.length} words`)).toBeInTheDocument();
 
     await user.click(previousButton);
-    expect(screen.getByText(/1 of 10 word/)).toBeInTheDocument();
+    expect(screen.getByText(`1 of ${mockCurrentWords.length} words`)).toBeInTheDocument();
 
     await user.click(nextButton);
-    await user.click(nextButton);
-    await user.click(nextButton);
-    await user.click(nextButton);
-    await user.click(nextButton);
-    await user.click(nextButton);
-    await user.click(nextButton);
-    await user.click(nextButton);
-    await user.click(nextButton);
-
-    expect(screen.getByText(/10 of 10 word/)).toBeInTheDocument();
+    expect(screen.getByText(`2 of ${mockCurrentWords.length} words`)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Next Word/ })).toBeDisabled();
 
     const reviewButton = screen.getByRole('button', { name: /Check Answers/ });
@@ -144,7 +135,7 @@ describe('TestWords page user interaction', () => {
     const sayWordButton = screen.getByRole('button', { name: /Say word/ });
     await user.click(sayWordButton);
 
-    expect(speak).toHaveBeenCalled();
+    expect(sayTestWord).toHaveBeenCalled();
   });
 
   it('should render the expected controls when the test is cancelled', async () => {

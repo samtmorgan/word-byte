@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { speak } from '../../utils/speech';
 import { Button, Review, ErrorPage, Loader } from '../../components';
 import { getCurrentWords } from '../../actions/getCurrentWords';
 import { Word } from '../../actions/types';
+import { sayTestWord } from '../../utils/sayTestWord';
 
 enum TestLifecycle {
   NOT_STARTED = 'notStarted',
@@ -48,8 +48,7 @@ export default function TestWordsPage() {
   const sessionWordsCount = useMemo(() => currentWords?.length || 0, [currentWords]);
 
   const handleSpeak = useCallback(() => {
-    if (!currentWords) return;
-    speak(currentWords[testIndex].word);
+    sayTestWord(currentWords, testIndex);
   }, [currentWords, testIndex]);
 
   const handleIndexChange = useCallback(

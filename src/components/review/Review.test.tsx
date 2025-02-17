@@ -5,6 +5,7 @@ import { render, screen } from '@testing-library/react';
 import Review from './Review';
 import { mockCurrentWords } from '../../testUtils/mockData';
 import { Word } from '../../actions/types';
+import { addTestResults } from '../../actions/addTestResults';
 
 jest.mock('./components/InProgress', () => ({
   InProgress: () => <div>MockInProgress</div>,
@@ -12,8 +13,11 @@ jest.mock('./components/InProgress', () => ({
 jest.mock('./components/Complete', () => ({
   Complete: () => <div>MockComplete</div>,
 }));
+jest.mock('../../actions/addTestResults', () => ({
+  addTestResults: jest.fn(),
+}));
 
-describe.only('Review component', () => {
+describe('Review component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -32,11 +36,29 @@ describe.only('Review component', () => {
 
   it('should render the review complete view when the user clicks the finish button', async () => {
     render(<Review currentWords={mockCurrentWords as Word[]} />);
+    // arrange
     const user = userEvent.setup();
     const button = screen.getByRole('button', { name: '🏁 Finish' });
+    const expectedLocalResults = [
+      {
+        word: 'testWord1',
+        wordId: 'testWordId1',
+        pass: null,
+      },
+      {
+        word: 'testWord2',
+        wordId: 'testWordId2',
+        pass: null,
+      },
+    ];
+
+    // act
     await user.click(button);
+
+    // assert
     expect(screen.getByText(/MockComplete/)).toBeInTheDocument();
     expect(screen.queryByText(/MockInProgress/)).not.toBeInTheDocument();
+    expect(addTestResults).toHaveBeenCalledWith(expectedLocalResults);
   });
 
   it.skip('should render expected content when there are words in the set', () => {
