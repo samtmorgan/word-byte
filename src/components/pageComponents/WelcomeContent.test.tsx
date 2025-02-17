@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import WelcomeContent from './WelcomeContent';
-import { User } from '../../actions/initUser';
+import { User } from '../../actions/types';
 import { mockUser } from '../../testUtils/mockData';
 
 describe('WelcomeContent', () => {

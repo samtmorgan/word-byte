@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '../button/Button';
-import { User } from '../../actions/initUser';
+import { User } from '../../actions/types';
 
 export default function WelcomeContent({ user }: { user: User | null }) {
   if (!user) {

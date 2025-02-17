@@ -1,10 +1,9 @@
 import { v4 } from 'uuid';
-import { DbUser, getUser } from './getUser';
+import { getUser } from './getUser';
 import { getMongoDB } from '../lib/mongoDB';
 import { defaultWords, defaultWordSets } from '../constants';
 import { getTimeStamp } from '../utils/getTimeStamp';
-
-type NewIdDbUser = Omit<DbUser, '_id'>;
+import { DbUser, NewIdDbUser } from './types';
 
 export async function createUser(userAuthId: string): Promise<DbUser | null> {
   const db = await getMongoDB();

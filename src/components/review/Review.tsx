@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useState, JSX } from 'react';
-import { Word } from '../../actions/getUser';
+import { Word } from '../../actions/types';
 import { Complete } from './components/Complete';
 import { InProgress } from './components/InProgress';
 import { LocalResults, ReviewButtonsProps, ReviewLifecycle, ReviewProps } from './types';
 
 function buildLocalResults(currentWords: Word[]): LocalResults {
-  return currentWords.map(word => ({ ...word, pass: null }));
+  return currentWords.map(({ word, wordId }) => ({ word, wordId, pass: null }));
 }
 
 const ReviewButtons = ({ reviewLifecycle, setReviewLifecycle }: ReviewButtonsProps): JSX.Element => (

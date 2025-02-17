@@ -1,9 +1,10 @@
 import { auth, clerkClient } from '@clerk/nextjs/server';
-import { User, initialiseUser } from './initUser';
+import { initialiseUser } from './initUser';
 import { getUser } from './getUser';
 import { mockAuthUserId, mockDbUser, mockUsername } from '../testUtils/mockData';
 import { createUser } from './createUser';
 import { getTimeStamp } from '../utils/getTimeStamp';
+import { User } from './types';
 
 jest.mock('@clerk/nextjs/server', () => ({
   auth: jest.fn(),

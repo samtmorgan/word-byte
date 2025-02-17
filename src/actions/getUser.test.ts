@@ -1,5 +1,6 @@
-import { getUser, DbUser } from './getUser';
+import { getUser } from './getUser';
 import client from '../lib/mongoClient';
+import { DbUser } from './types';
 
 jest.mock('../lib/mongoClient', () => ({
   connect: jest.fn(),

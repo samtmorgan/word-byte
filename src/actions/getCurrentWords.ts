@@ -1,7 +1,7 @@
 'use server';
 
-import { Word } from './getUser';
-import { User, initialiseUser } from './initUser';
+import { initialiseUser } from './initUser';
+import { User, Word } from './types';
 
 export async function getCurrentWords(): Promise<Word[] | null> {
   const user: User | null = await initialiseUser();

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Word } from '../../actions/getUser';
+import { Word } from '../../actions/types';
 
 type ReviewProps = {
   currentWords: Word[];

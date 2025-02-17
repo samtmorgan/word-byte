@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import Review from './Review';
 import { mockCurrentWords } from '../../testUtils/mockData';
-import { Word } from '../../actions/getUser';
+import { Word } from '../../actions/types';
 
 jest.mock('./components/InProgress', () => ({
   InProgress: () => <div>MockInProgress</div>,

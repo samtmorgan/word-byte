@@ -1,17 +1,9 @@
 'use server';
 
 import { auth, clerkClient } from '@clerk/nextjs/server';
-import { DbUser, getUser } from './getUser';
+import { getUser } from './getUser';
 import { createUser } from './createUser';
-
-export type AuthUser = {
-  userAuthId: string;
-  username: string;
-};
-
-export interface User extends DbUser {
-  username: string;
-}
+import { User } from './types';
 
 export async function initialiseUser(): Promise<User | null> {
   const { userId: userAuthId } = await auth();
