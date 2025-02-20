@@ -15,13 +15,13 @@ describe('WelcomeContent', () => {
     const { getByText } = render(<WelcomeContent user={user} />);
 
     expect(getByText('Hello testUser 👋')).toBeInTheDocument();
-    expect(getByText('✍️ Practice now')).toBeInTheDocument();
+    expect(getByText('✍️ Practice Now')).toBeInTheDocument();
   });
 
   it('renders the button with correct href', () => {
     const user: User = mockUser;
     const { getByText } = render(<WelcomeContent user={user} />);
-    const button = getByText('✍️ Practice now');
+    const button = getByText('✍️ Practice Now');
 
     expect(button.closest('a')).toHaveAttribute('href', '/test');
   });
