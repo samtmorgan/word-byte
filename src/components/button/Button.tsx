@@ -17,7 +17,7 @@ const styles = {
 export default function Button({ type = 'button', label, onClick, disabled, href = '/' }: ButtonProps): ReactElement {
   if (type === 'link') {
     return (
-      <Link className={styles.link} href={href}>
+      <Link className={styles.default} href={href}>
         {label}
       </Link>
     );

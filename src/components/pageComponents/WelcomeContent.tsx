@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '../button/Button';
+import Link from 'next/link';
 import { User } from '../../actions/types';
 
 export default function WelcomeContent({ user }: { user: User | null }) {
@@ -10,7 +10,12 @@ export default function WelcomeContent({ user }: { user: User | null }) {
   return (
     <div className="page-container">
       <h1>Hello {user.username} 👋</h1>
-      <Button label="✍️ Practice now" href="/test" type="link" />
+      <Link href="/test" className="button cool-border-with-shadow">
+        ✍️ Practice Now
+      </Link>
+      <Link href="/" className="button cool-border-with-shadow">
+        ⛮ Word Settings
+      </Link>
     </div>
   );
 }

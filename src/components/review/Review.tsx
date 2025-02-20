@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, JSX, useCallback, useEffect } from 'react';
+import Link from 'next/link';
 import { Word } from '../../actions/types';
 import { Complete } from './components/Complete';
 import { InProgress } from './components/InProgress';
@@ -23,9 +24,9 @@ const ReviewButtons = ({ reviewLifecycle, setReviewLifecycle }: ReviewButtonsPro
           🏁 Finish
         </button>
       ) : (
-        <a className="button cool-border-with-shadow finish-button" href="/">
+        <Link className="button cool-border-with-shadow finish-button" href="/">
           🏠 Go to home
-        </a>
+        </Link>
       )}
     </div>
   );
