@@ -30,6 +30,8 @@ describe('getWordData', () => {
       currentWords: [{ owner: 'platform', results: [], word: 'mockWord', wordId: 'mockWordId' }],
       wordSets: mockUser.wordSets,
       words: mockUser.words,
+      username: mockUser.username,
+      userPlatformId: mockUser.userPlatformId,
     });
     expect(initialiseUser).toHaveBeenCalled();
     expect(buildWordSetData).toHaveBeenCalledWith(mockUser.wordSets, mockUser.words, 0);
