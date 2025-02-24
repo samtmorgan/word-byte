@@ -13,7 +13,7 @@ export default function WelcomeContent({ user }: { user: User | null }) {
       <Link href="/test" className="button cool-border-with-shadow">
         ✍️ Practice Now
       </Link>
-      <Link href="/" className="button cool-border-with-shadow">
+      <Link href="/word-settings" className="button cool-border-with-shadow">
         ⛮ Word Settings
       </Link>
     </div>
