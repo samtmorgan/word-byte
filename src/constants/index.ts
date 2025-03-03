@@ -1,3 +1,2 @@
-import { defaultWords, defaultWordSets } from './constants';
-
-export { defaultWords, defaultWordSets };
+export * from './words';
+export * from './paths';
