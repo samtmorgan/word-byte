@@ -235,7 +235,7 @@ input:focus {
   height: 2.5rem;
 }
 
-.page-container .add-word-form {
+.add-word-form {
   display: flex;
   flex-direction: column;
   height: 2rem;
@@ -243,10 +243,14 @@ input:focus {
   height: fit-content;
   margin-top: 2rem;
 }
-.page-container .add-word-input {
+.add-word-form label {
   display: flex;
   flex-direction: column;
 }
+.add-word-form p {
+  margin: 0;
+}
+
 .page-container .edit-controls {
   display: flex;
   flex-direction: column;
