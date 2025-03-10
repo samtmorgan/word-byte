@@ -101,7 +101,7 @@ export default function SettingsWords() {
                 {editMode && (
                   <button
                     aria-label={`Remove word: ${word}`}
-                    className="button cool-border-with-shadow icon-button"
+                    className="icon-button"
                     type="button"
                     onClick={() => handleRemoveWord(word)}
                   >

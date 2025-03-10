@@ -19,7 +19,7 @@ exports[`Review component should render expected content when there are words in
           class="word-list"
         >
           <button
-            class="button cool-border-with-shadow "
+            class=""
             type="button"
           >
             accident 
@@ -29,7 +29,7 @@ exports[`Review component should render expected content when there are words in
           class="word-list"
         >
           <button
-            class="button cool-border-with-shadow "
+            class=""
             type="button"
           >
             accidentally 
@@ -39,7 +39,7 @@ exports[`Review component should render expected content when there are words in
           class="word-list"
         >
           <button
-            class="button cool-border-with-shadow "
+            class=""
             type="button"
           >
             actual 
@@ -49,7 +49,7 @@ exports[`Review component should render expected content when there are words in
           class="word-list"
         >
           <button
-            class="button cool-border-with-shadow "
+            class=""
             type="button"
           >
             actually 
@@ -59,7 +59,7 @@ exports[`Review component should render expected content when there are words in
           class="word-list"
         >
           <button
-            class="button cool-border-with-shadow "
+            class=""
             type="button"
           >
             address 
@@ -69,7 +69,7 @@ exports[`Review component should render expected content when there are words in
           class="word-list"
         >
           <button
-            class="button cool-border-with-shadow "
+            class=""
             type="button"
           >
             answer 
@@ -79,7 +79,7 @@ exports[`Review component should render expected content when there are words in
           class="word-list"
         >
           <button
-            class="button cool-border-with-shadow "
+            class=""
             type="button"
           >
             believe 
@@ -89,7 +89,7 @@ exports[`Review component should render expected content when there are words in
           class="word-list"
         >
           <button
-            class="button cool-border-with-shadow "
+            class=""
             type="button"
           >
             bicycle 
@@ -99,7 +99,7 @@ exports[`Review component should render expected content when there are words in
           class="word-list"
         >
           <button
-            class="button cool-border-with-shadow "
+            class=""
             type="button"
           >
             breathe 
@@ -109,7 +109,7 @@ exports[`Review component should render expected content when there are words in
           class="word-list"
         >
           <button
-            class="button cool-border-with-shadow "
+            class=""
             type="button"
           >
             build 
@@ -120,7 +120,7 @@ exports[`Review component should render expected content when there are words in
         class="button-container"
       >
         <button
-          class="button cool-border-with-shadow finish-button"
+          class="finish-button"
           type="button"
         >
           🏁 Finish

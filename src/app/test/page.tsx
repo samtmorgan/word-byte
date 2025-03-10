@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Button, Review, ErrorPage, Loader } from '../../components';
+import { Review, ErrorPage, Loader } from '../../components';
 import { getCurrentWords } from '../../actions/getCurrentWords';
 import { Word } from '../../actions/types';
 import { sayTestWord } from '../../utils/sayTestWord';
@@ -93,7 +93,9 @@ export default function TestWordsPage() {
   if (testLifecycle === 'notStarted' || testLifecycle === 'finished' || testLifecycle === 'cancelled') {
     return (
       <Wrapper>
-        <Button label="Start 🟢" onClick={() => setTestLifecycle(TestLifecycle.TEST)} />
+        <button type="button" onClick={() => setTestLifecycle(TestLifecycle.TEST)}>
+          Start 🟢
+        </button>
       </Wrapper>
     );
   }
@@ -106,21 +108,27 @@ export default function TestWordsPage() {
     <Wrapper>
       <span className="cool-border-with-shadow">{`${testIndex + 1} of ${sessionWordsCount} words`}</span>
 
-      <Button disabled={testIndex === sessionWordsCount} label="Say word 🔈" onClick={handleSpeak} />
+      <button disabled={testIndex === sessionWordsCount} type="button" onClick={handleSpeak}>
+        Say word 🔈
+      </button>
       <div style={{ gap: '1rem' }}>
-        <Button disabled={testIndex === 0} onClick={() => handleIndexChange('decrement')} label="👈 Previous Word" />
-        <Button
+        <button disabled={testIndex === 0} onClick={() => handleIndexChange('decrement')} type="button">
+          👈 Previous Word
+        </button>
+        <button
           disabled={testIndex + 1 === sessionWordsCount}
           onClick={() => handleIndexChange('increment')}
-          label="Next Word 👉"
-        />
+          type="button"
+        >
+          Next Word 👉
+        </button>
       </div>
-      <Button
-        disabled={!hasSeenAllWords}
-        label="Check Answers ✔"
-        onClick={() => setTestLifecycle(TestLifecycle.REVIEW)}
-      />
-      <Button label="Cancel 🔴" onClick={() => setTestLifecycle(TestLifecycle.CANCELLED)} />
+      <button disabled={!hasSeenAllWords} type="button" onClick={() => setTestLifecycle(TestLifecycle.REVIEW)}>
+        Check Answers ✔
+      </button>
+      <button type="button" onClick={() => setTestLifecycle(TestLifecycle.CANCELLED)}>
+        Cancel 🔴
+      </button>
     </Wrapper>
   );
 }

@@ -159,7 +159,8 @@ input:focus {
 }
 
 /* *start* button */
-.button {
+button,
+a {
   font-family: inherit;
   font-weight: 600;
   font-size: 18px;
@@ -172,18 +173,22 @@ input:focus {
   background-color: rgb(239, 239, 239);
   text-align: center;
 }
-.button:hover {
+button:hover,
+a:hover {
   background-color: var(--button-hover-background-color);
 }
-.button:active {
+button:active,
+a:active {
   box-shadow: #422800 2px 2px 0 0;
   transform: translate(2px, 2px);
 }
-.button:active:disabled {
+button:active:disabled,
+a:active:disabled {
   box-shadow: var(--box-shadow);
   transform: none;
 }
-.button:disabled {
+button:disabled,
+a:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -193,7 +198,8 @@ input:focus {
 .correct-word:hover {
   background-color: rgb(43, 252, 183, 0.5);
 }
-.cool-border-with-shadow {
+button,
+a {
   border: var(--border);
   display: inline-block;
   padding: 0 1rem;
@@ -270,7 +276,7 @@ input:focus {
 }
 
 @media (min-width: 768px) {
-  .button {
+  button {
     min-width: 120px;
     padding: 0 25px;
   }
