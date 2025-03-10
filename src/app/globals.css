@@ -249,6 +249,8 @@ input:focus {
 }
 .add-word-form p {
   margin: 0;
+  font-style: italic;
+  color: orangered;
 }
 
 .page-container .edit-controls {
