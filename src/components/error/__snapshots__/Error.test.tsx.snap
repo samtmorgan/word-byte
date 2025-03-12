@@ -3,7 +3,7 @@
 exports[`Loader component renders loading text 1`] = `
 <div>
   <div
-    class="page-container"
+    class="pageContainer"
   >
     <h1>
       😭 Ouch! Something went wrong, please try again.

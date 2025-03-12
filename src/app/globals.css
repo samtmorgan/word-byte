@@ -61,39 +61,16 @@ body {
   margin: 0;
 }
 
-header {
-  left: 0;
-  right: 0;
-  top: 0;
-  position: fixed;
-  background-color: #fbeee0;
-  height: var(--header-height);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-right: 1rem;
-  padding-left: 1rem;
-}
-
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 1rem;
-  flex-direction: row;
-}
-nav ul li a {
-  list-style: none;
-  text-decoration: none;
-}
-nav ul li:hover {
-  background-color: var(--button-hover-background-color);
-}
-nav ul li.current-location {
-  border-bottom: var(--border);
-}
-
 h1 {
   font-size: larger;
+}
+
+h2 {
+  font-size: large;
+}
+
+p {
+  font-size: medium;
 }
 
 input:focus {
@@ -104,7 +81,7 @@ input:focus {
   flex-direction: column;
 }
 
-.page-container {
+.pageContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -113,37 +90,6 @@ input:focus {
   gap: 1rem;
   box-sizing: border-box;
   width: 100vw;
-}
-
-.page-container .review {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0rem;
-}
-.page-container .review p {
-  margin: 0rem;
-}
-.page-container .review ol {
-  margin: 0rem;
-}
-.page-container .finish-button {
-  margin-top: 0.5rem;
-  width: 100%;
-}
-.review .button-container {
-  margin-top: 1rem;
-  width: 100%;
-}
-.review a {
-  color: var(--color-main);
-}
-
-.test-page-current-word-control {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
 }
 
 .icon-button {
@@ -207,28 +153,7 @@ a {
 }
 /* end button */
 
-.nav-link {
-  display: inline-block;
-  padding: 0 1rem;
-  height: var(--button-height);
-  text-align: center;
-  text-decoration: none;
-}
-.nav-link:hover {
-  background-color: var(--button-hover-background-color);
-}
-
-.wordItem {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  padding: 0.5rem;
-  border: var(--border);
-  background-color: var(--color-main-background);
-}
-.page-container .word-list {
+.pageContainer .word-list {
   list-style-type: decimal;
   margin: 1rem 0rem 1rem 2rem;
   /* max-width: fit-content; */
@@ -259,12 +184,12 @@ a {
   color: orangered;
 }
 
-.page-container .edit-controls {
+.pageContainer .edit-controls {
   display: flex;
   flex-direction: column;
 }
 
-.page-container .controls {
+.pageContainer .controls {
   display: flex;
   gap: 1rem;
   align-items: flex-end;
@@ -276,12 +201,12 @@ a {
 }
 
 @media (min-width: 768px) {
-  button {
+  /* button {
     min-width: 120px;
     padding: 0 25px;
   }
   .icon-button {
     padding: 0px;
     min-width: 2rem;
-  }
+  } */
 }

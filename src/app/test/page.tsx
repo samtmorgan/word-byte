@@ -16,7 +16,7 @@ enum TestLifecycle {
 }
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
-  <div className="page-container">
+  <div className="pageContainer">
     <h1>Test time</h1>
     {children}
   </div>

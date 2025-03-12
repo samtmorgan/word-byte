@@ -11,4 +11,7 @@ module.exports = {
     },
   },
   collectCoverageFrom: ['src/**/*.ts', 'src/**/*.tsx'],
+  moduleNameMapper: {
+    '\\.module\\.css$': 'identity-obj-proxy',
+  },
 };

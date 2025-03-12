@@ -9,7 +9,7 @@ export default function WelcomeContent({ user }: { user: User | null }) {
   }
 
   return (
-    <div className="page-container">
+    <div className="pageContainer">
       <h1>Hello {user.username} 👋</h1>
       <Link href={PATHS.TEST} className="button cool-border-with-shadow">
         ✍️ Practice Now

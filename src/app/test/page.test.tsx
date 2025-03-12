@@ -5,17 +5,11 @@ import { render, screen } from '@testing-library/react';
 import TestWordsPage from './page';
 import { mockCurrentWords } from '../../testUtils/mockData';
 import { getCurrentWords } from '../../actions/getCurrentWords';
-import { ButtonProps } from '../../components/button/Button';
 import { sayTestWord } from '../../utils/sayTestWord';
 
 jest.mock('../../components', () => ({
   Loader: () => <div>mock loading</div>,
   ErrorPage: () => <div>mock error</div>,
-  Button: ({ label, onClick, disabled }: ButtonProps) => (
-    <button type="button" disabled={disabled} onClick={onClick}>
-      {label}
-    </button>
-  ),
   Review: () => <div>mock review</div>,
 }));
 jest.mock('../../actions/getCurrentWords', () => ({

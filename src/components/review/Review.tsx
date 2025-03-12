@@ -7,6 +7,8 @@ import { Complete } from './components/Complete';
 import { InProgress } from './components/InProgress';
 import { LocalResults, ReviewButtonsProps, ReviewLifecycle, ReviewProps } from './types';
 import { addTestResults } from '../../actions/addTestResults';
+import { PATHS } from '../../constants';
+import styles from './Review.module.css';
 
 function buildLocalResults(currentWords: Word[]): LocalResults {
   return currentWords.map(({ word, wordId }) => ({ word, wordId, pass: null }));
@@ -18,13 +20,13 @@ const ReviewButtons = ({ reviewLifecycle, setReviewLifecycle }: ReviewButtonsPro
   }, [setReviewLifecycle]);
 
   return (
-    <div className="button-container">
+    <div className={styles.buttonContainer}>
       {reviewLifecycle === ReviewLifecycle.IN_PROGRESS ? (
-        <button className="button cool-border-with-shadow finish-button" type="button" onClick={handleFinish}>
+        <button className={styles.finishButton} type="button" onClick={handleFinish}>
           🏁 Finish
         </button>
       ) : (
-        <Link className="button cool-border-with-shadow finish-button" href="/">
+        <Link className={styles.finishButton} href={PATHS.ROOT}>
           🏠 Go to home
         </Link>
       )}
@@ -45,8 +47,8 @@ export default function Review({ currentWords }: ReviewProps) {
   if (!results || results.length === 0) return <div>🙁 No words here yet</div>;
 
   return (
-    <div className="page-container">
-      <section className="review">
+    <div className="pageContainer">
+      <section className={styles.review}>
         {reviewLifecycle === ReviewLifecycle.IN_PROGRESS ? (
           <InProgress results={results} setResults={setResults} />
         ) : (

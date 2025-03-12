@@ -16,8 +16,6 @@ jest.mock('@clerk/nextjs', () => ({
   UserButton: () => <div>Mocked UserButton</div>,
 }));
 
-jest.mock('../button/Button', () => () => <a href="/">👾 Word Byte</a>);
-
 describe('Header component', () => {
   beforeEach(() => renderHeader());
 

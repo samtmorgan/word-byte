@@ -3,7 +3,7 @@
 exports[`Review component should render expected content when there are words in the set 1`] = `
 <div>
   <div
-    class="page-container"
+    class="pageContainer"
   >
     <section
       class="review"
