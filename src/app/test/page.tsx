@@ -113,14 +113,14 @@ export default function TestWordsPage() {
       </button>
       <div style={{ gap: '1rem' }}>
         <button disabled={testIndex === 0} onClick={() => handleIndexChange('decrement')} type="button">
-          👈 Previous Word
+          👈 Previous
         </button>
         <button
           disabled={testIndex + 1 === sessionWordsCount}
           onClick={() => handleIndexChange('increment')}
           type="button"
         >
-          Next Word 👉
+          Next 👉
         </button>
       </div>
       <button disabled={!hasSeenAllWords} type="button" onClick={() => setTestLifecycle(TestLifecycle.REVIEW)}>

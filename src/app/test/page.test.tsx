@@ -83,8 +83,8 @@ describe('TestWords page user interaction', () => {
     await user.click(screen.getByRole('button', { name: /Start/ }));
 
     const checkButton = screen.getByRole('button', { name: /Check Answers/ });
-    const previousButton = screen.getByRole('button', { name: /Previous Word/ });
-    const nextButton = screen.getByRole('button', { name: /Next Word/ });
+    const previousButton = screen.getByRole('button', { name: /Previous/ });
+    const nextButton = screen.getByRole('button', { name: /Next/ });
     const sayWordButton = screen.getByRole('button', { name: /Say word/ });
     const cancelButton = screen.getByRole('button', { name: /Cancel/ });
 
@@ -100,8 +100,8 @@ describe('TestWords page user interaction', () => {
     const user = userEvent.setup();
     await user.click(screen.getByRole('button', { name: /Start/ }));
 
-    const previousButton = screen.getByRole('button', { name: /Previous Word/ });
-    const nextButton = screen.getByRole('button', { name: /Next Word/ });
+    const previousButton = screen.getByRole('button', { name: /Previous/ });
+    const nextButton = screen.getByRole('button', { name: /Next/ });
 
     expect(screen.getByText(`1 of ${mockCurrentWords.length} words`)).toBeInTheDocument();
 
@@ -113,7 +113,7 @@ describe('TestWords page user interaction', () => {
 
     await user.click(nextButton);
     expect(screen.getByText(`2 of ${mockCurrentWords.length} words`)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Next Word/ })).toBeDisabled();
+    expect(screen.getByRole('button', { name: /Next/ })).toBeDisabled();
 
     const reviewButton = screen.getByRole('button', { name: /Check Answers/ });
     expect(reviewButton).toBeEnabled();

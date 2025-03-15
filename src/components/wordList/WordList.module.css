@@ -1,0 +1,26 @@
+.wordList {
+  width: 100%;
+  min-height: 2rem;
+  padding-inline-start: 1.5rem;
+}
+
+.newWordContainer {
+  display: flex;
+  width: calc(100% - 1.5rem);
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.newWord {
+  word-break: break-all;
+}
+
+.removeButton {
+  border-radius: 50%;
+  padding: 0;
+  height: 2rem;
+  min-width: 2rem;
+  font-size: medium;
+  box-shadow: none;
+  margin-left: 1rem;
+}

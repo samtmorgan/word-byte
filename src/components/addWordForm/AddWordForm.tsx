@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { SubmitHandler, useForm, ValidateResult } from 'react-hook-form';
+import styles from './AddWordForm.module.css';
 
 interface IFormInput {
   word: string;
@@ -28,7 +29,7 @@ export function AddWordForm({ setWords, words }: IAddWordForm): ReactElement {
   const validateDuplicate = (value: string): ValidateResult => (words.includes(value) ? 'duplicate' : true);
 
   return (
-    <form className="add-word-form" onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles.addWordForm} onSubmit={handleSubmit(onSubmit)}>
       <span>
         <label htmlFor={INPUT_NAME}>
           Add new word
