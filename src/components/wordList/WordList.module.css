@@ -18,9 +18,9 @@
 .removeButton {
   border-radius: 50%;
   padding: 0;
-  height: 2rem;
-  min-width: 2rem;
-  font-size: medium;
+  height: 1.5rem;
+  min-width: 1.5rem;
+  font-size: small;
   box-shadow: none;
   margin-left: 1rem;
 }
