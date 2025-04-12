@@ -36,6 +36,7 @@ export function AddWordForm({ setWords, words }: IAddWordForm): ReactElement {
           <input
             {...register('word', { required: true, pattern: /^[A-Za-z][a-z]*$/, validate: validateDuplicate })}
             id={INPUT_NAME}
+            autoCapitalize="off"
           />
         </label>
         {errors.word?.type === 'required' && <p role="alert">Word needs some letters</p>}

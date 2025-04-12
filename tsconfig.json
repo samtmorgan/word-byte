@@ -31,7 +31,8 @@
     ".next/types/**/*.ts",
     "index.d.ts",
     "src/components/modal/Modal.test.jsx",
-    "src/components/modal/Modal.jsx"
+    "src/components/modal/Modal.jsx",
+    "src/types"
   ],
   "exclude": ["node_modules"]
 }
