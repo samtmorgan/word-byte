@@ -1,11 +1,17 @@
 import React, { ReactElement } from 'react';
-import Button from '../button/Button';
+import { SignedIn, UserButton } from '@clerk/nextjs';
+import Link from 'next/link';
+import { PATHS } from '../../constants';
+import styles from './Header.module.css';
 
 const Header = (): ReactElement => (
-  <header>
+  <header className={styles.header}>
     <nav>
-      <Button type="link" label="👾 Word Byte" href="/" />
+      <Link href={PATHS.ROOT}>👾 Word Byte</Link>
     </nav>
+    <SignedIn>
+      <UserButton />
+    </SignedIn>
   </header>
 );
 

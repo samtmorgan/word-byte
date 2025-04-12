@@ -1,0 +1,14 @@
+.newWordListContainer {
+  width: 100%;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 400px) {
+  .newWordListContainer {
+    max-width: 300px;
+  }
+}

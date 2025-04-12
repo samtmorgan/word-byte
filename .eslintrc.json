@@ -5,6 +5,7 @@
     "jest": true
   },
   "extends": [
+    "next",
     "next/core-web-vitals",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -87,7 +88,7 @@
     "import/no-import-module-exports": "error",
     "import/no-relative-packages": "error",
     "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": ["error"],
+    "@typescript-eslint/no-use-before-define": "error",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/ban-types": "off",
@@ -97,6 +98,16 @@
         "args": "after-used",
         "ignoreRestSiblings": true,
         "argsIgnorePattern": "^_"
+      }
+    ],
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": "error",
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "required": {
+          "some": ["nesting", "id"]
+        }
       }
     ]
   }
