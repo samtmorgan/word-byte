@@ -40,7 +40,9 @@ export function AddWordForm({ setWords, words }: IAddWordForm): ReactElement {
           />
         </label>
         {errors.word?.type === 'required' && <p role="alert">Word needs some letters</p>}
-        {errors.word?.type === 'pattern' && <p role="alert">Letters only, only first letter can be uppercase</p>}
+        {errors.word?.type === 'pattern' && (
+          <p role="alert">Letters only, only first letter can be uppercase, no spaces</p>
+        )}
         {errors.word?.type === 'validate' && <p role="alert">Duplicates not allowed</p>}
       </span>
       <button disabled={Boolean(errors.word)} type="submit">
