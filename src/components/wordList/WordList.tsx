@@ -19,7 +19,7 @@ export const WordList = ({ words, setWords }: WordListProps): ReactElement | nul
             }}
             className={styles.removeButton}
           >
-            ❌
+            🗑️
           </button>
         )}
       </div>
