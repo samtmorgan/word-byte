@@ -1,6 +1,5 @@
-/* eslint-disable no-undef */
 import confetti from 'canvas-confetti';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 
 function randomInRange(min: number, max: number) {
@@ -24,43 +23,37 @@ function getAnimationSettings(originXA: number, originXB: number) {
 export default function Fireworks() {
   const refAnimationInstance = useRef<confetti.CreateTypes | null>(null);
 
-  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
-
   const getInstance = useCallback((instance: confetti.CreateTypes | null) => {
     refAnimationInstance.current = instance;
   }, []);
 
-  const nextTickAnimation = useCallback(() => {
-    if (refAnimationInstance.current) {
-      refAnimationInstance.current(getAnimationSettings(0.1, 0.3));
-      refAnimationInstance.current(getAnimationSettings(0.7, 0.9));
-    }
-  }, []);
-
-  const startAnimation = useCallback(() => {
-    if (!intervalId) {
-      setIntervalId(setInterval(nextTickAnimation, 500));
-    }
-  }, [intervalId, nextTickAnimation]);
-
-  //   const pauseAnimation = useCallback(() => {
-  //     clearInterval(intervalId);
-  //     setIntervalId(null);
-  //   }, [intervalId]);
-
-  //   const stopAnimation = useCallback(() => {
-  //     clearInterval(intervalId);
-  //     setIntervalId(null);
-  //     refAnimationInstance.current && refAnimationInstance.current.reset();
-  //   }, [intervalId]);
-
-  //   useEffect(() => {
-  //     clearInterval(intervalId);
-  //   }, [intervalId]);
-
   useEffect(() => {
-    startAnimation();
-  }, [startAnimation]);
+    // Start the animation
+    const interval = setInterval(() => {
+      if (refAnimationInstance.current) {
+        refAnimationInstance.current(getAnimationSettings(0.1, 0.3));
+        refAnimationInstance.current(getAnimationSettings(0.3, 0.6));
+        refAnimationInstance.current(getAnimationSettings(0.6, 0.9));
+      }
+    }, 500);
+
+    // Stop the animation after 1 second
+    const timeout = setTimeout(() => {
+      clearInterval(interval); // Stop the interval
+      if (refAnimationInstance.current) {
+        refAnimationInstance.current.reset(); // Reset the animation
+      }
+    }, 20 * 1000);
+
+    // Cleanup function to clear the interval and timeout
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+      if (refAnimationInstance.current) {
+        refAnimationInstance.current.reset();
+      }
+    };
+  }, []);
 
   return (
     <ReactCanvasConfetti
