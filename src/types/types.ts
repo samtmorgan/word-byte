@@ -55,14 +55,6 @@ export interface SessionWordType extends UserWordType {
   correct: boolean;
 }
 
-export type InputType = {
-  value: string;
-  onChange: (value: string) => void;
-  name: string;
-  placeholder?: string;
-  label?: string;
-};
-
 export type ResultType = {
   word: string;
   correct: boolean;

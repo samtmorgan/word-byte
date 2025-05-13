@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Loader component renders loading text 1`] = `
+<div>
+  <div
+    class="pageContainer"
+  >
+    <h1>
+      😭 Ouch! Something went wrong, please try again.
+    </h1>
+  </div>
+</div>
+`;

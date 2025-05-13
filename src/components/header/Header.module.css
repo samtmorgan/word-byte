@@ -1,0 +1,17 @@
+.header {
+  left: 0;
+  right: 0;
+  top: 0;
+  position: fixed;
+  background-color: #fbeee0;
+  height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+.header button {
+  box-shadow: none;
+}
