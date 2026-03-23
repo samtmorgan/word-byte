@@ -20,7 +20,7 @@
     "axios": "^1.7.9",
     "canvas-confetti": "^1.9.3",
     "mongodb": "^6.12.0",
-    "next": "^15.1.4",
+    "next": "15.1.11",
     "react": "^18.2.0",
     "react-canvas-confetti": "^1.4.0",
     "react-dom": "^18.2.0",
