@@ -7,11 +7,14 @@ export enum WordOwner {
   PLATFORM = 'platform',
   USER = 'user',
 }
+export type YearGroup = 'year3_4' | 'year5_6';
+
 export interface Word {
   word: string;
   wordId: string;
   owner: WordOwner;
   results: Result[];
+  yearGroup?: YearGroup;
 }
 
 export interface WordSet {
