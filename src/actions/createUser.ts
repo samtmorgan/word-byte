@@ -19,6 +19,11 @@ export async function createUser(userAuthId: string): Promise<DbUser | null> {
     wordSets: defaultWordSets,
     words: [...defaultWords],
     userPlatformId: uuid,
+    autoWordSet: {
+      wordSetId: v4(),
+      createdAt: timestamp,
+      wordIds: defaultWords.map(w => w.wordId),
+    },
   };
 
   newUser.wordSets[0].wordSetId = v4();

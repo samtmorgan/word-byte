@@ -4,6 +4,8 @@ import { auth, clerkClient } from '@clerk/nextjs/server';
 import { getUser } from './getUser';
 import { createUser } from './createUser';
 import { User } from './types';
+import { updateUserWords } from './updateUserWords';
+import { defaultWords } from '../constants';
 
 export async function initialiseUser(): Promise<User | null> {
   const { userId: userAuthId } = await auth();
@@ -26,6 +28,18 @@ export async function initialiseUser(): Promise<User | null> {
 
     if (!dbUser) {
       throw new Error('failed to write new user to db');
+    }
+  } else {
+    const existingWordIds = new Set(dbUser.words.map(w => w.wordId));
+    const missingWords = defaultWords.filter(w => !existingWordIds.has(w.wordId));
+
+    if (missingWords.length > 0) {
+      const updatedWords = [...dbUser.words, ...missingWords];
+      await updateUserWords({ words: updatedWords, userPlatformId: dbUser.userPlatformId });
+      dbUser = await getUser(userAuthId);
+      if (!dbUser) {
+        throw new Error('failed to sync words for existing user');
+      }
     }
   }
 
