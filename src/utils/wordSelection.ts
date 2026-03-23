@@ -4,6 +4,50 @@ export const STREAK_THRESHOLD = 3;
 export const COOLDOWN_DAYS = 14;
 export const AUTO_WORD_SET_SIZE = 10;
 
+const shuffleArray = <T>(array: T[]): T[] => {
+  const result = [...array];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+};
+
+const weightedSampleByRecency = (words: Word[], count: number): Word[] => {
+  if (words.length === 0) return [];
+  if (count >= words.length) return shuffleArray(words);
+
+  const now = Date.now();
+
+  const weighted = words.map(word => {
+    const lastFailed = word.results
+      .filter(r => !r.pass)
+      .reduce((max, r) => Math.max(max, r.created), 0);
+    const weight = lastFailed > 0 ? 1 / (now - lastFailed + 1) : 1;
+    return { word, weight };
+  });
+
+  const result: Word[] = [];
+  const remaining = [...weighted];
+
+  for (let i = 0; i < count && remaining.length > 0; i++) {
+    const totalWeight = remaining.reduce((sum, item) => sum + item.weight, 0);
+    let r = Math.random() * totalWeight;
+    let selected = remaining.length - 1;
+    for (let j = 0; j < remaining.length; j++) {
+      r -= remaining[j].weight;
+      if (r <= 0) {
+        selected = j;
+        break;
+      }
+    }
+    result.push(remaining[selected].word);
+    remaining.splice(selected, 1);
+  }
+
+  return result;
+};
+
 export const calculateStreak = (results: Result[]): number => {
   if (!results.length) return 0;
 
@@ -82,48 +126,4 @@ export const refreshAutoWordSet = (currentSet: Word[], allWords: Word[], count: 
   }
 
   return [...retained, ...replacements];
-};
-
-const shuffleArray = <T>(array: T[]): T[] => {
-  const result = [...array];
-  for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [result[i], result[j]] = [result[j], result[i]];
-  }
-  return result;
-};
-
-const weightedSampleByRecency = (words: Word[], count: number): Word[] => {
-  if (words.length === 0) return [];
-  if (count >= words.length) return shuffleArray(words);
-
-  const now = Date.now();
-
-  const weighted = words.map(word => {
-    const lastFailed = word.results
-      .filter(r => !r.pass)
-      .reduce((max, r) => Math.max(max, r.created), 0);
-    const weight = lastFailed > 0 ? 1 / (now - lastFailed + 1) : 1;
-    return { word, weight };
-  });
-
-  const result: Word[] = [];
-  const remaining = [...weighted];
-
-  for (let i = 0; i < count && remaining.length > 0; i++) {
-    const totalWeight = remaining.reduce((sum, item) => sum + item.weight, 0);
-    let r = Math.random() * totalWeight;
-    let selected = remaining.length - 1;
-    for (let j = 0; j < remaining.length; j++) {
-      r -= remaining[j].weight;
-      if (r <= 0) {
-        selected = j;
-        break;
-      }
-    }
-    result.push(remaining[selected].word);
-    remaining.splice(selected, 1);
-  }
-
-  return result;
 };
