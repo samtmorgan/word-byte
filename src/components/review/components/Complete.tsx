@@ -1,9 +1,9 @@
 import React, { useMemo, JSX } from 'react';
 import dynamic from 'next/dynamic';
-
-const Confetti = dynamic(() => import('../../confetti/Confetti'), { ssr: false });
 import { LocalResults } from '../types';
 import styles from './Complete.module.css';
+
+const Confetti = dynamic(() => import('../../confetti/Confetti'), { ssr: false });
 
 const WordsToPractice = ({ results }: { results: LocalResults }): JSX.Element => (
   <div>
