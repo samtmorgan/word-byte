@@ -8,7 +8,7 @@
     "start": "next start",
     "prepare": "husky install",
     "lint": "eslint \"./src/**/*.{ts,tsx}\"",
-    "autofix": "eslint \"./src/**/*.{ts,tsx}\" --fix",
+    "lint:fix": "eslint \"./src/**/*.{ts,tsx}\" --fix",
     "test": "jest --coverage",
     "test-watch": "jest --watch",
     "type-check": "tsc --noEmit",

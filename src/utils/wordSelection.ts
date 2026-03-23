@@ -20,9 +20,7 @@ const weightedSampleByRecency = (words: Word[], count: number): Word[] => {
   const now = Date.now();
 
   const weighted = words.map(word => {
-    const lastFailed = word.results
-      .filter(r => !r.pass)
-      .reduce((max, r) => Math.max(max, r.created), 0);
+    const lastFailed = word.results.filter(r => !r.pass).reduce((max, r) => Math.max(max, r.created), 0);
     const weight = lastFailed > 0 ? 1 / (now - lastFailed + 1) : 1;
     return { word, weight };
   });
@@ -64,9 +62,7 @@ export const calculateStreak = (results: Result[]): number => {
   return streak;
 };
 
-export const isWordMastered = (word: Word): boolean => {
-  return calculateStreak(word.results) >= STREAK_THRESHOLD;
-};
+export const isWordMastered = (word: Word): boolean => calculateStreak(word.results) >= STREAK_THRESHOLD;
 
 export const isDueForResurface = (word: Word, cooldownDays: number = COOLDOWN_DAYS): boolean => {
   if (!isWordMastered(word)) return false;
