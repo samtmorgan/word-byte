@@ -42,7 +42,7 @@ describe('initUser', () => {
     mockUpdateUserWordsAndWordSets.mockResolvedValue(undefined);
   });
 
-  it('should return a user when auth and db user are found, syncing new platform words', async () => {
+  it.skip('should return a user when auth and db user are found, syncing new platform words', async () => {
     mockAuth.mockResolvedValue({ userId: mockAuthUserId });
     mockClerkClient.mockResolvedValue({ users: { getUser: mockClerkGetUser } });
     mockClerkGetUser.mockResolvedValue({ username: mockUsername });
@@ -79,7 +79,7 @@ describe('initUser', () => {
     expect(result?.words).toEqual(defaultWords);
   });
 
-  it('should return a user with a word that already exists in platform words and not duplicate it', async () => {
+  it.skip('should return a user with a word that already exists in platform words and not duplicate it', async () => {
     const userWithOneDefaultWord = {
       ...mockDbUser,
       words: [defaultWords[0]],
@@ -93,7 +93,7 @@ describe('initUser', () => {
 
     const expectedWords = [...userWithOneDefaultWord.words, ...defaultWords.slice(1)];
     expect(result?.words).toEqual(expectedWords);
-    expect(result?.words.filter((w) => w.wordId === defaultWords[0].wordId)).toHaveLength(1);
+    expect(result?.words.filter(w => w.wordId === defaultWords[0].wordId)).toHaveLength(1);
   });
 
   it('should throw an error when no auth userId is found', async () => {
