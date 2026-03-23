@@ -1,5 +1,6 @@
 import { DbUser, Word, WordOwner } from '../actions/types';
 import { LocalResults } from '../components/review/types';
+import { defaultWords } from '../constants/words';
 
 // ~~~~ current below \/
 
@@ -17,7 +18,7 @@ export const mockDbUser: DbUser = {
       wordIds: ['mockWordId'],
     },
   ],
-  words: [{ word: 'mockWord', wordId: 'mockWordId', owner: WordOwner.PLATFORM, results: [] }],
+  words: [...defaultWords],
 };
 
 export const mockUser = {

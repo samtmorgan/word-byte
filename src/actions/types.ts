@@ -12,6 +12,7 @@ export interface Word {
   wordId: string;
   owner: WordOwner;
   results: Result[];
+  yearGroup?: 'year3_4' | 'year5_6';
 }
 
 export interface WordSet {

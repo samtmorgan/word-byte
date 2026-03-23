@@ -20,6 +20,9 @@ jest.mock('./createUser', () => ({
 jest.mock('./getUser', () => ({
   getUser: jest.fn(),
 }));
+jest.mock('./updateUserWords', () => ({
+  updateUserWords: jest.fn(),
+}));
 jest.mock('../utils/getTimeStamp', () => ({
   getTimeStamp: jest.fn(),
 }));
