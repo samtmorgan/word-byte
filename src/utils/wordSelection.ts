@@ -54,8 +54,8 @@ export const calculateStreak = (results: Result[]): number => {
   const sorted = [...results].sort((a, b) => b.created - a.created);
 
   let streak = 0;
-  for (const result of sorted) {
-    if (result.pass) {
+  for (let i = 0; i < sorted.length; i++) {
+    if (sorted[i].pass) {
       streak++;
     } else {
       break;
@@ -95,7 +95,11 @@ export const initAutoWordSet = (allWords: Word[], count: number = AUTO_WORD_SET_
   return shuffleArray(allWords).slice(0, count);
 };
 
-export const refreshAutoWordSet = (currentSet: Word[], allWords: Word[], count: number = AUTO_WORD_SET_SIZE): Word[] => {
+export const refreshAutoWordSet = (
+  currentSet: Word[],
+  allWords: Word[],
+  count: number = AUTO_WORD_SET_SIZE,
+): Word[] => {
   const retained = currentSet.filter(w => !isWordMastered(w));
   const needed = count - retained.length;
 
