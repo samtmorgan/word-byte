@@ -43,7 +43,7 @@ export default function Fireworks() {
       if (refAnimationInstance.current) {
         refAnimationInstance.current.reset(); // Reset the animation
       }
-    }, 20 * 1000);
+    }, 6 * 1000);
 
     // Cleanup function to clear the interval and timeout
     return () => {

@@ -1,5 +1,7 @@
 import React, { useMemo, JSX } from 'react';
-import Confetti from '../../confetti/Confetti';
+import dynamic from 'next/dynamic';
+
+const Confetti = dynamic(() => import('../../confetti/Confetti'), { ssr: false });
 import { LocalResults } from '../types';
 import styles from './Complete.module.css';
 
