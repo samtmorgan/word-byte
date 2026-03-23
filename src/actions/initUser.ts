@@ -30,8 +30,8 @@ export async function initialiseUser(): Promise<User | null> {
       throw new Error('failed to write new user to db');
     }
   } else {
-    const existingWordIds = new Set(dbUser.words.map((w) => w.wordId));
-    const newWords = defaultWords.filter((w) => !existingWordIds.has(w.wordId));
+    const existingWordIds = new Set(dbUser.words.map(w => w.wordId));
+    const newWords = defaultWords.filter(w => !existingWordIds.has(w.wordId));
 
     if (newWords.length > 0) {
       const updatedWords = [...dbUser.words, ...newWords];
