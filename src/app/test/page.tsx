@@ -5,9 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { Review, ErrorPage, Loader } from '../../components';
 import { getCurrentWords } from '../../actions/getCurrentWords';
 import { getAutoWords } from '../../actions/getAutoWords';
-import { DEFAULT_YEAR_GROUPS } from '../../actions/autoWordUtils';
-import { updateAutoConfig } from '../../actions/updateAutoConfig';
-import { Word, YearGroup } from '../../actions/types';
+import { Word } from '../../actions/types';
 import { sayTestWord } from '../../utils/sayTestWord';
 
 enum TestLifecycle {
@@ -18,13 +16,6 @@ enum TestLifecycle {
   FINISHED = 'finished',
   CANCELLED = 'cancelled',
 }
-
-const YEAR_GROUP_LABELS: Record<YearGroup, string> = {
-  year3_4: 'Year 3 & 4',
-  year5_6: 'Year 5 & 6',
-};
-
-const ALL_YEAR_GROUPS: YearGroup[] = ['year3_4', 'year5_6'];
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
   <div className="pageContainer">
@@ -41,7 +32,6 @@ function TestWordsPageContent() {
   const [error, setError] = useState<boolean | string>(false);
   const [currentWords, setCurrentWords] = useState<Word[] | null>(null);
   const [isEmptyAutoSet, setIsEmptyAutoSet] = useState<boolean>(false);
-  const [yearGroups, setYearGroups] = useState<YearGroup[]>(DEFAULT_YEAR_GROUPS);
   const [hasSeenAllWords, setHasSeenAllWords] = useState<boolean>(false);
   const [testIndex, setTestIndex] = useState<number>(0);
   const [testLifecycle, setTestLifecycle] = useState<TestLifecycle>(TestLifecycle.NOT_STARTED);
@@ -51,7 +41,6 @@ function TestWordsPageContent() {
       try {
         if (isAutoMode) {
           const result = await getAutoWords();
-          setYearGroups(result.yearGroups);
           if (result.isEmpty) {
             setIsEmptyAutoSet(true);
             setCurrentWords([]);
@@ -96,34 +85,6 @@ function TestWordsPageContent() {
     }
   }, [testIndex, sessionWordsCount]);
 
-  const handleYearGroupToggle = useCallback(
-    async (group: YearGroup) => {
-      const updated = yearGroups.includes(group) ? yearGroups.filter(g => g !== group) : [...yearGroups, group];
-
-      if (updated.length === 0) return;
-
-      setYearGroups(updated);
-      setLoading(true);
-      try {
-        await updateAutoConfig(updated);
-        const result = await getAutoWords();
-        setYearGroups(result.yearGroups);
-        if (result.isEmpty) {
-          setIsEmptyAutoSet(true);
-          setCurrentWords([]);
-        } else {
-          setIsEmptyAutoSet(false);
-          setCurrentWords(result.words);
-        }
-      } catch {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    },
-    [yearGroups],
-  );
-
   if (error)
     return (
       <Wrapper>
@@ -155,21 +116,6 @@ function TestWordsPageContent() {
   if (testLifecycle === 'notStarted' || testLifecycle === 'finished' || testLifecycle === 'cancelled') {
     return (
       <Wrapper>
-        {isAutoMode && (
-          <div>
-            <p>Year groups:</p>
-            {ALL_YEAR_GROUPS.map(group => (
-              <label key={group} style={{ display: 'block' }}>
-                <input
-                  type="checkbox"
-                  checked={yearGroups.includes(group)}
-                  onChange={() => handleYearGroupToggle(group)}
-                />{' '}
-                {YEAR_GROUP_LABELS[group]}
-              </label>
-            ))}
-          </div>
-        )}
         <button type="button" onClick={() => setTestLifecycle(TestLifecycle.TEST)}>
           Start 🟢
         </button>

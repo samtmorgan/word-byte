@@ -46,10 +46,10 @@ describe('WelcomeContent', () => {
     expect(queryByText('Year 5/6')).toBeNull();
   });
 
-  it('shows Practice Now and Make new word list in manual mode', () => {
+  it('shows Start Practice and Make new word list in manual mode', () => {
     const user: User = { ...mockUser, mode: 'manual' };
     const { getByText } = render(<WelcomeContent user={user} />);
-    expect(getByText('✍️ Practice Now')).toBeInTheDocument();
+    expect(getByText('✍️ Start Practice')).toBeInTheDocument();
     expect(getByText('⛮ Make new word list')).toBeInTheDocument();
   });
 
@@ -68,11 +68,20 @@ describe('WelcomeContent', () => {
     expect(getByText('⛮ Make new word list')).toBeInTheDocument();
   });
 
-  it('prevents deselecting the last year group', () => {
+  it('allows deselecting all year groups and shows error message', () => {
     const user: User = { ...mockUser, mode: 'auto', autoConfig: { yearGroups: ['year3_4'] } };
-    const { getByText } = render(<WelcomeContent user={user} />);
+    const { getByText, queryByText } = render(<WelcomeContent user={user} />);
     const chip = getByText('Year 3/4');
     fireEvent.click(chip);
-    expect(chip).toBeInTheDocument();
+    expect(getByText('Please select at least one year group to start practice.')).toBeInTheDocument();
+    expect(queryByText('✍️ Start Practice')).toBeInTheDocument();
+  });
+
+  it('disables Start Practice button when no year groups selected', () => {
+    const user: User = { ...mockUser, mode: 'auto', autoConfig: { yearGroups: ['year3_4'] } };
+    const { getByText } = render(<WelcomeContent user={user} />);
+    fireEvent.click(getByText('Year 3/4'));
+    const button = getByText('✍️ Start Practice');
+    expect(button.closest('button')).toBeDisabled();
   });
 });

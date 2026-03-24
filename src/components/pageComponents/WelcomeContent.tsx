@@ -25,15 +25,14 @@ export default function WelcomeContent({ user }: { user: User | null }) {
 
   const handleYearGroupToggle = (group: YearGroup) => {
     const isSelected = yearGroups.includes(group);
-    if (isSelected && yearGroups.length === 1) {
-      return;
-    }
     const newYearGroups = isSelected ? yearGroups.filter(g => g !== group) : [...yearGroups, group];
     setYearGroups(newYearGroups);
     startTransition(() => {
       updateAutoConfig(newYearGroups);
     });
   };
+
+  const canStart = yearGroups.length > 0;
 
   return (
     <div className="pageContainer">
@@ -74,16 +73,23 @@ export default function WelcomeContent({ user }: { user: User | null }) {
               Year 5/6
             </button>
           </div>
-          <Link href={`${PATHS.TEST}?mode=auto`} className="button cool-border-with-shadow">
-            ✍️ Start Practice
-          </Link>
+          {!canStart && <p>Please select at least one year group to start practice.</p>}
+          {canStart ? (
+            <Link href={`${PATHS.TEST}?mode=auto`} className="button cool-border-with-shadow">
+              ✍️ Start Practice
+            </Link>
+          ) : (
+            <button type="button" disabled className="button cool-border-with-shadow">
+              ✍️ Start Practice
+            </button>
+          )}
         </>
       )}
 
       {mode === 'manual' && (
         <>
           <Link href={PATHS.TEST} className="button cool-border-with-shadow">
-            ✍️ Practice Now
+            ✍️ Start Practice
           </Link>
           <Link href={PATHS.NEW_WORD_LIST} className="button cool-border-with-shadow">
             ⛮ Make new word list

@@ -20,10 +20,6 @@ jest.mock('../../actions/getCurrentWords', () => ({
 }));
 jest.mock('../../actions/getAutoWords', () => ({
   getAutoWords: jest.fn(),
-  DEFAULT_YEAR_GROUPS: ['year3_4', 'year5_6'],
-}));
-jest.mock('../../actions/updateAutoConfig', () => ({
-  updateAutoConfig: jest.fn(),
 }));
 jest.mock('../../utils/sayTestWord', () => ({
   sayTestWord: jest.fn(),
