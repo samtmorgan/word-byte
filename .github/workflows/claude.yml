@@ -37,19 +37,18 @@ jobs:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
 
           # Allow Claude to write code, commit, push branches, and open PRs
-          claude_args: >-
-            --allowed-tools
-            "Bash(git add:*)"
-            "Bash(git commit:*)"
-            "Bash(git push:*)"
-            "Bash(git checkout:*)"
-            "Bash(git branch:*)"
-            "Bash(gh pr create:*)"
-            "Bash(gh pr list:*)"
-            "Bash(gh pr view:*)"
-            "Bash(gh issue comment:*)"
-            "Bash(npm run:*)"
-            "Bash(npm test:*)"
+          allowed_tools: |
+            Bash(git add:*)
+            Bash(git commit:*)
+            Bash(git push:*)
+            Bash(git checkout:*)
+            Bash(git branch:*)
+            Bash(gh pr create:*)
+            Bash(gh pr list:*)
+            Bash(gh pr view:*)
+            Bash(gh issue comment:*)
+            Bash(npm run:*)
+            Bash(npm test:*)
 
           # This is an optional setting that allows Claude to read CI results on PRs
           additional_permissions: |
