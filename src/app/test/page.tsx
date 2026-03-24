@@ -98,9 +98,7 @@ function TestWordsPageContent() {
 
   const handleYearGroupToggle = useCallback(
     async (group: YearGroup) => {
-      const updated = yearGroups.includes(group)
-        ? yearGroups.filter(g => g !== group)
-        : [...yearGroups, group];
+      const updated = yearGroups.includes(group) ? yearGroups.filter(g => g !== group) : [...yearGroups, group];
 
       if (updated.length === 0) return;
 
@@ -166,8 +164,7 @@ function TestWordsPageContent() {
                   type="checkbox"
                   checked={yearGroups.includes(group)}
                   onChange={() => handleYearGroupToggle(group)}
-                />
-                {' '}
+                />{' '}
                 {YEAR_GROUP_LABELS[group]}
               </label>
             ))}

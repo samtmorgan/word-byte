@@ -17,6 +17,11 @@ jest.mock('../../actions/addTestResults', () => ({
   addTestResults: jest.fn(),
 }));
 
+const expectedLocalResults = [
+  { word: 'testWord1', wordId: 'testWordId1', pass: null },
+  { word: 'testWord2', wordId: 'testWordId2', pass: null },
+];
+
 describe('Review component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -34,68 +39,57 @@ describe('Review component', () => {
     expect(screen.getByText(/MockInProgress/)).toBeInTheDocument();
   });
 
+  it('should show the finish button when in progress', () => {
+    render(<Review currentWords={mockCurrentWords as Word[]} />);
+
+    expect(screen.getByRole('button', { name: '🏁 Finish' })).toBeInTheDocument();
+  });
+
   it('should render the review complete view when the user clicks the finish button', async () => {
     render(<Review currentWords={mockCurrentWords as Word[]} />);
-    // arrange
     const user = userEvent.setup();
     const button = screen.getByRole('button', { name: '🏁 Finish' });
-    const expectedLocalResults = [
-      {
-        word: 'testWord1',
-        wordId: 'testWordId1',
-        pass: null,
-      },
-      {
-        word: 'testWord2',
-        wordId: 'testWordId2',
-        pass: null,
-      },
-    ];
 
-    // act
     await user.click(button);
 
-    // assert
     expect(screen.getByText(/MockComplete/)).toBeInTheDocument();
     expect(screen.queryByText(/MockInProgress/)).not.toBeInTheDocument();
-    expect(addTestResults).toHaveBeenCalledWith(expectedLocalResults);
   });
 
-  it.skip('should render expected content when there are words in the set', () => {
-    const { container } = render(<Review currentWords={mockCurrentWords as Word[]} />);
-
-    expect(screen.getByText(/Click the words you got right ✓/)).toBeInTheDocument();
-    expect(screen.getByRole('list')).toBeInTheDocument();
-    expect(screen.getAllByRole('listitem').length).toEqual(mockCurrentWords.length);
-    expect(container).toMatchSnapshot();
-  });
-
-  it.skip('should respond to user interaction', async () => {
-    render(<Review currentWords={mockCurrentWords.slice(0, 1) as Word[]} />);
-
-    const firstWord = mockCurrentWords[0].word;
-    const user = userEvent.setup();
-    let button = screen.getAllByRole('button')[0];
-
-    await user.click(button);
-
-    expect(screen.getByText(`${firstWord} ✓`)).toBeInTheDocument();
-
-    await user.click(button);
-
-    [button] = screen.getAllByRole('button');
-
-    expect(screen.queryByText(`${firstWord} `)).toBeInTheDocument();
-    expect(screen.queryByText(firstWord)).toBeInTheDocument();
-  });
-
-  it.skip('should render the fireworks when the user has reviewed all the words and they are correct', async () => {
-    render(<Review currentWords={mockCurrentWords.slice(0, 1) as Word[]} />);
-    const button = screen.getAllByRole('button')[0];
+  it('should call addTestResults with results and isAutoMode=false when finish is clicked', async () => {
+    render(<Review currentWords={mockCurrentWords as Word[]} />);
     const user = userEvent.setup();
 
-    await user.click(button);
+    await user.click(screen.getByRole('button', { name: '🏁 Finish' }));
 
-    expect(screen.getByText(/Confetti/)).toBeInTheDocument();
+    expect(addTestResults).toHaveBeenCalledWith(expectedLocalResults, false);
+  });
+
+  it('should call addTestResults with isAutoMode=true when prop is set', async () => {
+    render(<Review currentWords={mockCurrentWords as Word[]} isAutoMode />);
+    const user = userEvent.setup();
+
+    await user.click(screen.getByRole('button', { name: '🏁 Finish' }));
+
+    expect(addTestResults).toHaveBeenCalledWith(expectedLocalResults, true);
+  });
+
+  it('should show the go home link after finishing', async () => {
+    render(<Review currentWords={mockCurrentWords as Word[]} />);
+    const user = userEvent.setup();
+
+    await user.click(screen.getByRole('button', { name: '🏁 Finish' }));
+
+    expect(screen.getByRole('link', { name: '🏠 Go to home' })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: '🏁 Finish' })).not.toBeInTheDocument();
+  });
+
+  it('should not call addTestResults more than once', async () => {
+    render(<Review currentWords={mockCurrentWords as Word[]} />);
+    const user = userEvent.setup();
+
+    await user.click(screen.getByRole('button', { name: '🏁 Finish' }));
+
+    expect(addTestResults).toHaveBeenCalledTimes(1);
   });
 });

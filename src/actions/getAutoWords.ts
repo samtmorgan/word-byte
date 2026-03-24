@@ -6,7 +6,6 @@ import { initAutoWordSet } from '../utils/wordSelection';
 import { Word, YearGroup } from './types';
 import { DEFAULT_YEAR_GROUPS, filterWordsByYearGroups } from './autoWordUtils';
 
-
 export type GetAutoWordsResult = {
   words: Word[];
   isEmpty: boolean;
