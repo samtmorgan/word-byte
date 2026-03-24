@@ -1,9 +1,12 @@
 'use client';
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Review, ErrorPage, Loader } from '../../components';
 import { getCurrentWords } from '../../actions/getCurrentWords';
-import { Word } from '../../actions/types';
+import { getAutoWords, DEFAULT_YEAR_GROUPS } from '../../actions/getAutoWords';
+import { updateAutoConfig } from '../../actions/updateAutoConfig';
+import { Word, YearGroup } from '../../actions/types';
 import { sayTestWord } from '../../utils/sayTestWord';
 
 enum TestLifecycle {
@@ -15,6 +18,13 @@ enum TestLifecycle {
   CANCELLED = 'cancelled',
 }
 
+const YEAR_GROUP_LABELS: Record<YearGroup, string> = {
+  year3_4: 'Year 3 & 4',
+  year5_6: 'Year 5 & 6',
+};
+
+const ALL_YEAR_GROUPS: YearGroup[] = ['year3_4', 'year5_6'];
+
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
   <div className="pageContainer">
     <h1>Test time</h1>
@@ -23,18 +33,34 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => (
 );
 
 export default function TestWordsPage() {
+  const searchParams = useSearchParams();
+  const isAutoMode = searchParams.get('mode') === 'auto';
+
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean | string>(false);
   const [currentWords, setCurrentWords] = useState<Word[] | null>(null);
+  const [isEmptyAutoSet, setIsEmptyAutoSet] = useState<boolean>(false);
+  const [yearGroups, setYearGroups] = useState<YearGroup[]>(DEFAULT_YEAR_GROUPS);
   const [hasSeenAllWords, setHasSeenAllWords] = useState<boolean>(false);
   const [testIndex, setTestIndex] = useState<number>(0);
   const [testLifecycle, setTestLifecycle] = useState<TestLifecycle>(TestLifecycle.NOT_STARTED);
 
   useEffect(() => {
-    const getTheWords = async () => {
+    const loadWords = async () => {
       try {
-        const words: Word[] | null = await getCurrentWords();
-        setCurrentWords(words);
+        if (isAutoMode) {
+          const result = await getAutoWords();
+          setYearGroups(result.yearGroups);
+          if (result.isEmpty) {
+            setIsEmptyAutoSet(true);
+            setCurrentWords([]);
+          } else {
+            setCurrentWords(result.words);
+          }
+        } else {
+          const words: Word[] | null = await getCurrentWords();
+          setCurrentWords(words);
+        }
         setLoading(false);
       } catch (e) {
         setError(true);
@@ -42,8 +68,8 @@ export default function TestWordsPage() {
       }
     };
 
-    getTheWords();
-  }, []);
+    loadWords();
+  }, [isAutoMode]);
 
   const sessionWordsCount = useMemo(() => currentWords?.length || 0, [currentWords]);
 
@@ -69,6 +95,36 @@ export default function TestWordsPage() {
     }
   }, [testIndex, sessionWordsCount]);
 
+  const handleYearGroupToggle = useCallback(
+    async (group: YearGroup) => {
+      const updated = yearGroups.includes(group)
+        ? yearGroups.filter(g => g !== group)
+        : [...yearGroups, group];
+
+      if (updated.length === 0) return;
+
+      setYearGroups(updated);
+      setLoading(true);
+      try {
+        await updateAutoConfig(updated);
+        const result = await getAutoWords();
+        setYearGroups(result.yearGroups);
+        if (result.isEmpty) {
+          setIsEmptyAutoSet(true);
+          setCurrentWords([]);
+        } else {
+          setIsEmptyAutoSet(false);
+          setCurrentWords(result.words);
+        }
+      } catch {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [yearGroups],
+  );
+
   if (error)
     return (
       <Wrapper>
@@ -83,16 +139,39 @@ export default function TestWordsPage() {
       </Wrapper>
     );
 
-  if (currentWords.length === 0)
+  if (isAutoMode && isEmptyAutoSet)
     return (
       <Wrapper>
-        <h1>🙁 No words here yet</h1>
+        <p>🎉 Amazing! You have mastered all your words. Check back later for more!</p>
+      </Wrapper>
+    );
+
+  if (!isAutoMode && currentWords.length === 0)
+    return (
+      <Wrapper>
+        <p>🙁 No words here yet</p>
       </Wrapper>
     );
 
   if (testLifecycle === 'notStarted' || testLifecycle === 'finished' || testLifecycle === 'cancelled') {
     return (
       <Wrapper>
+        {isAutoMode && (
+          <div>
+            <p>Year groups:</p>
+            {ALL_YEAR_GROUPS.map(group => (
+              <label key={group} style={{ display: 'block' }}>
+                <input
+                  type="checkbox"
+                  checked={yearGroups.includes(group)}
+                  onChange={() => handleYearGroupToggle(group)}
+                />
+                {' '}
+                {YEAR_GROUP_LABELS[group]}
+              </label>
+            ))}
+          </div>
+        )}
         <button type="button" onClick={() => setTestLifecycle(TestLifecycle.TEST)}>
           Start 🟢
         </button>
@@ -101,7 +180,7 @@ export default function TestWordsPage() {
   }
 
   if (testLifecycle === 'review') {
-    return <Review currentWords={currentWords} />;
+    return <Review currentWords={currentWords} isAutoMode={isAutoMode} />;
   }
 
   return (

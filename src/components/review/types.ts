@@ -3,6 +3,7 @@ import { Word } from '../../actions/types';
 
 type ReviewProps = {
   currentWords: Word[];
+  isAutoMode?: boolean;
 };
 
 type LocalResults = {

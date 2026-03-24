@@ -14,6 +14,12 @@ jest.mock('./initUser.ts', () => ({
 jest.mock('../utils/mapResultsToUserWords.ts', () => ({
   mapResultsToUserWords: jest.fn(),
 }));
+jest.mock('./updateAutoWordSet.ts', () => ({
+  updateAutoWordSet: jest.fn(),
+}));
+jest.mock('../utils/wordSelection.ts', () => ({
+  refreshAutoWordSet: jest.fn(),
+}));
 
 describe('addTestResults', () => {
   beforeEach(() => {

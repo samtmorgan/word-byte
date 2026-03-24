@@ -23,6 +23,10 @@ export interface WordSet {
   wordIds: string[];
 }
 
+export interface AutoConfig {
+  yearGroups: YearGroup[];
+}
+
 export interface DbUser {
   _id: string;
   userAuthId: string;
@@ -30,6 +34,8 @@ export interface DbUser {
   createdAt: number;
   wordSets: WordSet[];
   words: Word[];
+  autoWordSet?: string[];
+  autoConfig?: AutoConfig;
 }
 
 export type AuthUser = {

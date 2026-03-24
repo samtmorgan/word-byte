@@ -11,6 +11,9 @@ export default function WelcomeContent({ user }: { user: User | null }) {
   return (
     <div className="pageContainer">
       <h1>Hello {user.username} 👋</h1>
+      <Link href={`${PATHS.TEST}?mode=auto`} className="button cool-border-with-shadow">
+        🤖 Auto Practice
+      </Link>
       <Link href={PATHS.TEST} className="button cool-border-with-shadow">
         ✍️ Practice Now
       </Link>
