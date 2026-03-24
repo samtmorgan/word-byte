@@ -52,7 +52,7 @@ function TestWordsPageContent() {
           setCurrentWords(words);
         }
         setLoading(false);
-      } catch (e) {
+      } catch {
         setError(true);
         setLoading(false);
       }

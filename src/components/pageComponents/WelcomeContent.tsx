@@ -6,6 +6,8 @@ import { User, UserMode, YearGroup } from '../../actions/types';
 import { PATHS } from '../../constants';
 import { updateUserMode } from '../../actions/updateUserMode';
 import { updateAutoConfig } from '../../actions/updateAutoConfig';
+import { buildDashboardStats } from '../../utils/dashboardStats';
+import Dashboard from '../dashboard/Dashboard';
 
 export default function WelcomeContent({ user }: { user: User | null }) {
   const [mode, setMode] = useState<UserMode>(user?.mode ?? 'auto');
@@ -33,10 +35,13 @@ export default function WelcomeContent({ user }: { user: User | null }) {
   };
 
   const canStart = yearGroups.length > 0;
+  const groups = buildDashboardStats(user.words);
 
   return (
     <div className="pageContainer">
       <h1>Hello {user.username} 👋</h1>
+
+      <Dashboard groups={groups} />
 
       <div style={{ display: 'flex', gap: '0.5rem' }}>
         <button

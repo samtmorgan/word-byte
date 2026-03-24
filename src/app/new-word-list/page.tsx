@@ -29,7 +29,7 @@ export default function NewWordList(): React.ReactElement {
       setWords([]);
       setLoading(false);
       setSuccess(true);
-    } catch (e) {
+    } catch {
       setLoading(false);
       setError(true);
     }

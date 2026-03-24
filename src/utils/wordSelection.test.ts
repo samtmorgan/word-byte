@@ -299,6 +299,44 @@ describe('refreshAutoWordSet', () => {
     expect(ids).toContain('f1');
     expect(ids).toContain('u1');
   });
+
+  it('samples from failed words using weighted selection when more failed words than needed', () => {
+    // Ensures weightedSampleByRecency is exercised with count < words.length:
+    // needed = 2, failedWords.length = 3 → weightedSampleByRecency([f1,f2,f3], 2)
+    const current = [masteredWord('m1')];
+    const failedWords = [failedWord('f1'), failedWord('f2'), failedWord('f3')];
+    const all = [...current, ...failedWords];
+
+    const set = refreshAutoWordSet(current, all, 2);
+    expect(set).toHaveLength(2);
+    const ids = set.map(w => w.wordId);
+    expect(ids).not.toContain('m1');
+    const failedInSet = ids.filter(id => ['f1', 'f2', 'f3'].includes(id));
+    expect(failedInSet).toHaveLength(2);
+  });
+
+  it('weights recently failed words higher in weighted sampling', () => {
+    const current = [masteredWord('m1')];
+    const recentFail = makeWord('recent', [
+      { created: now - 3000, pass: true },
+      { created: now - 1000, pass: false }, // failed very recently
+    ]);
+    const oldFail = makeWord('old', [
+      { created: now - 100 * DAY_MS, pass: true },
+      { created: now - 99 * DAY_MS, pass: false }, // failed long ago
+    ]);
+    const extraFail = failedWord('extra');
+    const all = [current[0], recentFail, oldFail, extraFail];
+
+    // Run many times and check recently-failed word appears more often
+    let recentCount = 0;
+    for (let i = 0; i < 100; i++) {
+      const set = refreshAutoWordSet(current, all, 2);
+      if (set.some(w => w.wordId === 'recent')) recentCount++;
+    }
+    // Recent failure should appear in the majority of samples
+    expect(recentCount).toBeGreaterThan(50);
+  });
 });
 
 describe('constants', () => {
