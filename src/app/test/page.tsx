@@ -4,7 +4,8 @@ import React, { Suspense, useCallback, useEffect, useMemo, useState } from 'reac
 import { useSearchParams } from 'next/navigation';
 import { Review, ErrorPage, Loader } from '../../components';
 import { getCurrentWords } from '../../actions/getCurrentWords';
-import { getAutoWords, DEFAULT_YEAR_GROUPS } from '../../actions/getAutoWords';
+import { getAutoWords } from '../../actions/getAutoWords';
+import { DEFAULT_YEAR_GROUPS } from '../../actions/autoWordUtils';
 import { updateAutoConfig } from '../../actions/updateAutoConfig';
 import { Word, YearGroup } from '../../actions/types';
 import { sayTestWord } from '../../utils/sayTestWord';

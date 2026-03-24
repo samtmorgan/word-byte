@@ -4,7 +4,7 @@ import { initialiseUser } from './initUser';
 import { updateAutoWordSet } from './updateAutoWordSet';
 import { initAutoWordSet } from '../utils/wordSelection';
 import { YearGroup } from './types';
-import { filterWordsByYearGroups } from './getAutoWords';
+import { filterWordsByYearGroups } from './autoWordUtils';
 
 export async function updateAutoConfig(yearGroups: YearGroup[]): Promise<void> {
   const user = await initialiseUser();

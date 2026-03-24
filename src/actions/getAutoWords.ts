@@ -3,13 +3,9 @@
 import { initialiseUser } from './initUser';
 import { updateAutoWordSet } from './updateAutoWordSet';
 import { initAutoWordSet } from '../utils/wordSelection';
-import { Word, WordOwner, YearGroup } from './types';
+import { Word, YearGroup } from './types';
+import { DEFAULT_YEAR_GROUPS, filterWordsByYearGroups } from './autoWordUtils';
 
-export const DEFAULT_YEAR_GROUPS: YearGroup[] = ['year3_4', 'year5_6'];
-
-export function filterWordsByYearGroups(words: Word[], yearGroups: YearGroup[]): Word[] {
-  return words.filter(w => w.owner === WordOwner.USER || !w.yearGroup || yearGroups.includes(w.yearGroup));
-}
 
 export type GetAutoWordsResult = {
   words: Word[];

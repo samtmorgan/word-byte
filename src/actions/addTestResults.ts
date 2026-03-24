@@ -7,7 +7,7 @@ import { updateUserWords } from './updateUserWords';
 import { updateAutoWordSet } from './updateAutoWordSet';
 import { refreshAutoWordSet } from '../utils/wordSelection';
 import { Word } from './types';
-import { DEFAULT_YEAR_GROUPS, filterWordsByYearGroups } from './getAutoWords';
+import { DEFAULT_YEAR_GROUPS, filterWordsByYearGroups } from './autoWordUtils';
 
 export async function addTestResults(localResults: LocalResults, isAutoMode = false) {
   const user = await initialiseUser();
