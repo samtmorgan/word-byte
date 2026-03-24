@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Review, ErrorPage, Loader } from '../../components';
 import { getCurrentWords } from '../../actions/getCurrentWords';
@@ -32,7 +32,7 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => (
   </div>
 );
 
-export default function TestWordsPage() {
+function TestWordsPageContent() {
   const searchParams = useSearchParams();
   const isAutoMode = searchParams.get('mode') === 'auto';
 
@@ -209,5 +209,13 @@ export default function TestWordsPage() {
         Cancel 🔴
       </button>
     </Wrapper>
+  );
+}
+
+export default function TestWordsPage() {
+  return (
+    <Suspense>
+      <TestWordsPageContent />
+    </Suspense>
   );
 }
