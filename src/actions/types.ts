@@ -23,6 +23,8 @@ export interface WordSet {
   wordIds: string[];
 }
 
+export type UserMode = 'auto' | 'manual';
+
 export interface AutoConfig {
   yearGroups: YearGroup[];
 }
@@ -36,6 +38,7 @@ export interface DbUser {
   words: Word[];
   autoWordSet?: string[];
   autoConfig?: AutoConfig;
+  mode?: UserMode;
 }
 
 export type AuthUser = {

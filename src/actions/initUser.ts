@@ -4,6 +4,7 @@ import { auth, clerkClient } from '@clerk/nextjs/server';
 import { getUser } from './getUser';
 import { createUser } from './createUser';
 import { updateUserWordsAndWordSets } from './updateUserWordsAndWordSets';
+import { updateUserMode } from './updateUserMode';
 import { User } from './types';
 import { defaultWords } from '../constants';
 
@@ -41,6 +42,18 @@ export async function initialiseUser(): Promise<User | null> {
         userPlatformId: dbUser.userPlatformId,
       });
       dbUser.words = updatedWords;
+    }
+
+    if (!dbUser.mode || !dbUser.autoConfig) {
+      const migratedMode = dbUser.mode ?? 'auto';
+      const migratedAutoConfig = dbUser.autoConfig ?? { yearGroups: ['year3_4', 'year5_6'] };
+      await updateUserMode({
+        userPlatformId: dbUser.userPlatformId,
+        mode: migratedMode,
+        autoConfig: migratedAutoConfig,
+      });
+      dbUser.mode = migratedMode;
+      dbUser.autoConfig = migratedAutoConfig;
     }
   }
 

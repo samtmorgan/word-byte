@@ -25,6 +25,9 @@ jest.mock('./getUser', () => ({
 jest.mock('./updateUserWordsAndWordSets', () => ({
   updateUserWordsAndWordSets: jest.fn(),
 }));
+jest.mock('./updateUserMode', () => ({
+  updateUserMode: jest.fn(),
+}));
 jest.mock('../utils/getTimeStamp', () => ({
   getTimeStamp: jest.fn(),
 }));
