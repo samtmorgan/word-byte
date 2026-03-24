@@ -34,15 +34,15 @@ const ReviewButtons = ({ reviewLifecycle, setReviewLifecycle }: ReviewButtonsPro
   );
 };
 
-export default function Review({ currentWords }: ReviewProps) {
+export default function Review({ currentWords, isAutoMode = false }: ReviewProps) {
   const [results, setResults] = useState<LocalResults>(buildLocalResults(currentWords || []));
   const [reviewLifecycle, setReviewLifecycle] = useState<ReviewLifecycle>(ReviewLifecycle.IN_PROGRESS);
 
   useEffect(() => {
     if (reviewLifecycle === ReviewLifecycle.COMPLETE) {
-      addTestResults(results);
+      addTestResults(results, isAutoMode);
     }
-  }, [reviewLifecycle, results]);
+  }, [reviewLifecycle, results, isAutoMode]);
 
   if (!results || results.length === 0) return <div>🙁 No words here yet</div>;
 

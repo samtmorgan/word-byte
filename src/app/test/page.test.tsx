@@ -7,6 +7,9 @@ import { mockCurrentWords } from '../../testUtils/mockData';
 import { getCurrentWords } from '../../actions/getCurrentWords';
 import { sayTestWord } from '../../utils/sayTestWord';
 
+jest.mock('next/navigation', () => ({
+  useSearchParams: () => ({ get: () => null }),
+}));
 jest.mock('../../components', () => ({
   Loader: () => <div>mock loading</div>,
   ErrorPage: () => <div>mock error</div>,
@@ -14,6 +17,13 @@ jest.mock('../../components', () => ({
 }));
 jest.mock('../../actions/getCurrentWords', () => ({
   getCurrentWords: jest.fn(),
+}));
+jest.mock('../../actions/getAutoWords', () => ({
+  getAutoWords: jest.fn(),
+  DEFAULT_YEAR_GROUPS: ['year3_4', 'year5_6'],
+}));
+jest.mock('../../actions/updateAutoConfig', () => ({
+  updateAutoConfig: jest.fn(),
 }));
 jest.mock('../../utils/sayTestWord', () => ({
   sayTestWord: jest.fn(),
