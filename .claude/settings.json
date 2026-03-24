@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(yarn lint*)",
+      "Bash(yarn test*)",
+      "Bash(yarn type-check*)",
+      "Bash(yarn ci-checks*)",
+      "Bash(next build*)",
+      "Bash(gh pr create*)",
+      "Bash(gh pr view*)",
+      "Bash(git push*)"
+    ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\": {\"hookEventName\": \"Stop\", \"additionalContext\": \"WORKFLOW CHECK: Before finishing, confirm all of the following are complete: (1) yarn ci-checks passed (lint + type-check + tests), (2) next build passed with no errors, (3) branch pushed with git push, (4) PR created with gh pr create. If any step is missing, do not stop — complete it first.\"}}'",
+            "statusMessage": "Checking workflow requirements..."
+          }
+        ]
+      }
+    ]
+  }
+}
