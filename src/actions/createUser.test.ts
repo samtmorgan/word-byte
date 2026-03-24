@@ -92,6 +92,8 @@ describe('createUser', () => {
       ],
       words: [...defaultWords],
       userPlatformId: 'mock-uuid',
+      mode: 'auto',
+      autoConfig: { yearGroups: ['year3_4', 'year5_6'] },
     });
     expect(getUser).toHaveBeenCalledWith(mockUserAuthId);
     expect(result).toEqual(mockDbUser);
@@ -129,6 +131,8 @@ describe('createUser', () => {
       ],
       words: [...defaultWords],
       userPlatformId: 'mock-uuid',
+      mode: 'auto',
+      autoConfig: { yearGroups: ['year3_4', 'year5_6'] },
     });
     expect(getUser).toHaveBeenCalledWith(mockUserAuthId);
     expect(result).toBeNull();
