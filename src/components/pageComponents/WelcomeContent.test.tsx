@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import WelcomeContent from './WelcomeContent';
-import { User } from '../../actions/types';
+import { User, WordOwner } from '../../actions/types';
 import { mockUser } from '../../testUtils/mockData';
 
 jest.mock('../../actions/updateUserMode', () => ({
@@ -31,7 +31,7 @@ describe('WelcomeContent', () => {
     expect(getByText('Manual')).toBeInTheDocument();
   });
 
-  it('shows year group chips and Start Practice in auto mode', () => {
+  it('shows year group toggles and Start Practice in auto mode', () => {
     const user: User = { ...mockUser, mode: 'auto' };
     const { getByText } = render(<WelcomeContent user={user} />);
     expect(getByText('Year 3/4')).toBeInTheDocument();
@@ -39,7 +39,28 @@ describe('WelcomeContent', () => {
     expect(getByText('✍️ Start Practice')).toBeInTheDocument();
   });
 
-  it('hides year group chips in manual mode', () => {
+  it('shows My words toggle in auto mode', () => {
+    const user: User = { ...mockUser, mode: 'auto' };
+    const { getByText } = render(<WelcomeContent user={user} />);
+    expect(getByText('My words')).toBeInTheDocument();
+  });
+
+  it('disables My words toggle when user has no user words', () => {
+    const user: User = { ...mockUser, mode: 'auto' };
+    const { getByText } = render(<WelcomeContent user={user} />);
+    const label = getByText('My words');
+    expect(label.closest('button')).toBeDisabled();
+  });
+
+  it('enables My words toggle when user has user words', () => {
+    const userWord = { word: 'myword', wordId: 'myWordId', owner: WordOwner.USER, results: [] };
+    const user: User = { ...mockUser, mode: 'auto', words: [...mockUser.words, userWord] };
+    const { getByText } = render(<WelcomeContent user={user} />);
+    const label = getByText('My words');
+    expect(label.closest('button')).not.toBeDisabled();
+  });
+
+  it('hides year group toggles in manual mode', () => {
     const user: User = { ...mockUser, mode: 'manual' };
     const { queryByText } = render(<WelcomeContent user={user} />);
     expect(queryByText('Year 3/4')).toBeNull();
@@ -71,17 +92,16 @@ describe('WelcomeContent', () => {
   it('allows deselecting all year groups and shows error message', () => {
     const user: User = { ...mockUser, mode: 'auto', autoConfig: { yearGroups: ['year3_4'] } };
     const { getByText, queryByText } = render(<WelcomeContent user={user} />);
-    const chip = getByText('Year 3/4');
-    fireEvent.click(chip);
-    expect(getByText('Please select at least one year group to start practice.')).toBeInTheDocument();
+    fireEvent.click(getByText('Year 3/4'));
+    expect(getByText('Please select at least one option to start practice.')).toBeInTheDocument();
     expect(queryByText('✍️ Start Practice')).toBeInTheDocument();
   });
 
-  it('disables Start Practice button when no year groups selected', () => {
+  it('marks Start Practice as aria-disabled when no options selected', () => {
     const user: User = { ...mockUser, mode: 'auto', autoConfig: { yearGroups: ['year3_4'] } };
     const { getByText } = render(<WelcomeContent user={user} />);
     fireEvent.click(getByText('Year 3/4'));
-    const button = getByText('✍️ Start Practice');
-    expect(button.closest('button')).toBeDisabled();
+    const link = getByText('✍️ Start Practice');
+    expect(link.closest('a')).toHaveAttribute('aria-disabled', 'true');
   });
 });

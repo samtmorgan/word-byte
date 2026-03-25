@@ -28,6 +28,9 @@ jest.mock('./updateUserWordsAndWordSets', () => ({
 jest.mock('./updateUserMode', () => ({
   updateUserMode: jest.fn(),
 }));
+jest.mock('./updateAutoWordSet', () => ({
+  updateAutoWordSet: jest.fn().mockResolvedValue(undefined),
+}));
 jest.mock('../utils/getTimeStamp', () => ({
   getTimeStamp: jest.fn(),
 }));

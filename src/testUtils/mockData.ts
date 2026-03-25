@@ -20,6 +20,7 @@ export const mockDbUser: DbUser = {
   words: [{ word: 'mockWord', wordId: 'mockWordId', owner: WordOwner.PLATFORM, results: [] }],
   mode: 'auto',
   autoConfig: { yearGroups: ['year3_4', 'year5_6'] },
+  dataVersion: 1,
 };
 
 export const mockUser = {

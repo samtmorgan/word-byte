@@ -27,6 +27,7 @@ export type UserMode = 'auto' | 'manual';
 
 export interface AutoConfig {
   yearGroups: YearGroup[];
+  includeUserWords?: boolean;
 }
 
 export const DATA_VERSION = 1;

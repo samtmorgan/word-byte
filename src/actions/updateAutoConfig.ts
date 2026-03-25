@@ -6,16 +6,16 @@ import { initAutoWordSet } from '../utils/wordSelection';
 import { YearGroup } from './types';
 import { filterWordsByYearGroups } from './autoWordUtils';
 
-export async function updateAutoConfig(yearGroups: YearGroup[]): Promise<void> {
+export async function updateAutoConfig(config: { yearGroups: YearGroup[]; includeUserWords: boolean }): Promise<void> {
   const user = await initialiseUser();
   if (!user) throw new Error("couldn't initialise user");
 
-  const filteredWords = filterWordsByYearGroups(user.words, yearGroups);
+  const filteredWords = filterWordsByYearGroups(user.words, config.yearGroups, config.includeUserWords);
   const newAutoSet = initAutoWordSet(filteredWords);
 
   await updateAutoWordSet({
     autoWordSet: newAutoSet.map(w => w.wordId),
     userPlatformId: user.userPlatformId,
-    autoConfig: { yearGroups },
+    autoConfig: { yearGroups: config.yearGroups, includeUserWords: config.includeUserWords },
   });
 }
