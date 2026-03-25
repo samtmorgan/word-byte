@@ -120,12 +120,18 @@ export default function MyWordsContent({ initialWords }: MyWordsContentProps) {
         </ul>
       )}
 
-      <Modal open={Boolean(wordToDelete)} setOpen={(open: boolean) => { if (!open) setWordToDelete(null); }} actions={
-        <>
-          <button type="button" onClick={handleDeleteConfirm}>Confirm</button>
-          <button type="button" onClick={() => setWordToDelete(null)}>Cancel</button>
-        </>
-      }>
+      <Modal
+        open={Boolean(wordToDelete)}
+        setOpen={(open: boolean) => {
+          if (!open) setWordToDelete(null);
+        }}
+        actions={
+          <>
+            <button type="button" onClick={handleDeleteConfirm}>Confirm</button>
+            <button type="button" onClick={() => setWordToDelete(null)}>Cancel</button>
+          </>
+        }
+      >
         <p>Are you sure you want to delete &apos;{wordToDelete?.word}&apos;?</p>
       </Modal>
     </div>

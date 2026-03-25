@@ -31,22 +31,26 @@ export default function NavDrawer() {
       )}
 
       <div className={`${styles.drawer} ${isOpen ? styles.drawerOpen : ''}`} aria-label="Navigation drawer">
-        <button
-          type="button"
-          className={styles.closeButton}
-          onClick={() => setIsOpen(false)}
-          aria-label="Close navigation menu"
-        >
-          ❌
-        </button>
-        <nav className={styles.nav}>
-          <Link href={PATHS.ROOT} onClick={() => setIsOpen(false)}>
-            Home
-          </Link>
-          <Link href={PATHS.MY_WORDS} onClick={() => setIsOpen(false)}>
-            My Words
-          </Link>
-        </nav>
+        {isOpen && (
+          <>
+            <button
+              type="button"
+              className={styles.closeButton}
+              onClick={() => setIsOpen(false)}
+              aria-label="Close navigation menu"
+            >
+              ❌
+            </button>
+            <nav className={styles.nav}>
+              <Link href={PATHS.ROOT} onClick={() => setIsOpen(false)}>
+                Home
+              </Link>
+              <Link href={PATHS.MY_WORDS} onClick={() => setIsOpen(false)}>
+                My Words
+              </Link>
+            </nav>
+          </>
+        )}
       </div>
     </SignedIn>
   );
