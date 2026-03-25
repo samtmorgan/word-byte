@@ -123,9 +123,6 @@ export default function WelcomeContent({ user }: { user: User | null }) {
               <Link href={PATHS.TEST} className="button cool-border-with-shadow">
                 ✍️ Start Practice
               </Link>
-              <Link href={PATHS.NEW_WORD_LIST} className="button cool-border-with-shadow">
-                ⛮ Make new word list
-              </Link>
             </>
           )}
         </div>

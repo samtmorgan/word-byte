@@ -67,11 +67,10 @@ describe('WelcomeContent', () => {
     expect(queryByText('Year 5/6')).toBeNull();
   });
 
-  it('shows Start Practice and Make new word list in manual mode', () => {
+  it('shows Start Practice in manual mode', () => {
     const user: User = { ...mockUser, mode: 'manual' };
     const { getByText } = render(<WelcomeContent user={user} />);
     expect(getByText('✍️ Start Practice')).toBeInTheDocument();
-    expect(getByText('⛮ Make new word list')).toBeInTheDocument();
   });
 
   it('Start Practice link has correct href in auto mode', () => {
@@ -86,7 +85,7 @@ describe('WelcomeContent', () => {
     const { getByText, queryByText } = render(<WelcomeContent user={user} />);
     fireEvent.click(getByText('Manual'));
     expect(queryByText('Year 3/4')).toBeNull();
-    expect(getByText('⛮ Make new word list')).toBeInTheDocument();
+    expect(getByText('✍️ Start Practice')).toBeInTheDocument();
   });
 
   it('allows deselecting all year groups and shows error message', () => {
