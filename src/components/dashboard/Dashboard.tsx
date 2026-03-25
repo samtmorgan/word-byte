@@ -13,20 +13,20 @@ export default function Dashboard({ groups }: { groups: GroupStats[] }) {
   const masteryPct = active.total === 0 ? 0 : Math.round((active.mastered / active.total) * 100);
 
   return (
-    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-      <div className={styles.tabRow}>
+    <div className="tabs">
+      <div className="tabList">
         {groups.map((group, i) => (
           <button
             key={group.label}
             type="button"
-            className={i === activeIndex ? styles.activeTab : styles.tab}
+            className={i === activeIndex ? 'tabActive' : ''}
             onClick={() => setActiveIndex(i)}
           >
             {group.label}
           </button>
         ))}
       </div>
-      <div className={styles.statsBlock}>
+      <div className="tabPanel">
         <div className={styles.statRow}>
           <span>Mastered</span>
           <span>
