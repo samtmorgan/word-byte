@@ -49,6 +49,19 @@ export async function initialiseUser(): Promise<User | null> {
       dbUser.dataVersion = DATA_VERSION;
     }
 
+    const existingWordIds = new Set(dbUser.words.map(w => w.wordId));
+    const newWords = defaultWords.filter(w => !existingWordIds.has(w.wordId));
+
+    if (newWords.length > 0) {
+      const updatedWords = [...dbUser.words, ...newWords];
+      await updateUserWordsAndWordSets({
+        words: updatedWords,
+        wordSets: dbUser.wordSets,
+        userPlatformId: dbUser.userPlatformId,
+      });
+      dbUser.words = updatedWords;
+    }
+
     if (!dbUser.mode || !dbUser.autoConfig) {
       const migratedMode = dbUser.mode ?? 'auto';
       const migratedAutoConfig = dbUser.autoConfig ?? { yearGroups: ['year3_4', 'year5_6'] };
