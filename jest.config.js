@@ -4,13 +4,23 @@ module.exports = {
   testEnvironment: 'jsdom',
   coverageThreshold: {
     global: {
-      branches: 50,
-      functions: 50,
-      lines: 50,
-      statements: 50,
+      branches: 80,
+      functions: 80,
+      lines: 80,
+      statements: 80,
     },
   },
-  collectCoverageFrom: ['src/**/*.ts', 'src/**/*.tsx'],
+  collectCoverageFrom: [
+    'src/**/*.ts',
+    'src/**/*.tsx',
+    '!src/**/*.test.ts',
+    '!src/**/*.test.tsx',
+    '!src/testUtils/**',
+    '!src/mockData/**',
+    '!src/types/**',
+    '!src/lib/mongoClient.ts',
+    '!src/middleware.ts',
+  ],
   moduleNameMapper: {
     '\\.module\\.css$': 'identity-obj-proxy',
   },

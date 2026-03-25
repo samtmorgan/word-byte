@@ -4,9 +4,11 @@ import { getUser } from './getUser';
 import { mockAuthUserId, mockDbUser, mockUsername } from '../testUtils/mockData';
 import { createUser } from './createUser';
 import { updateUserWordsAndWordSets } from './updateUserWordsAndWordSets';
+import { updateAutoWordSet } from './updateAutoWordSet';
+import { updateUserMode } from './updateUserMode';
 import { getTimeStamp } from '../utils/getTimeStamp';
-import { User } from './types';
-import { defaultWords } from '../constants';
+import { User, DATA_VERSION } from './types';
+import { defaultWords, defaultWordSets } from '../constants';
 
 jest.mock('@clerk/nextjs/server', () => ({
   auth: jest.fn(),
@@ -48,7 +50,7 @@ describe('initUser', () => {
     mockUpdateUserWordsAndWordSets.mockResolvedValue(undefined);
   });
 
-  it.skip('should return a user when auth and db user are found, syncing new platform words', async () => {
+  it('should return a user when auth and db user are found, syncing new platform words', async () => {
     mockAuth.mockResolvedValue({ userId: mockAuthUserId });
     mockClerkClient.mockResolvedValue({ users: { getUser: mockClerkGetUser } });
     mockClerkGetUser.mockResolvedValue({ username: mockUsername });
@@ -85,7 +87,7 @@ describe('initUser', () => {
     expect(result?.words).toEqual(defaultWords);
   });
 
-  it.skip('should return a user with a word that already exists in platform words and not duplicate it', async () => {
+  it('should return a user with a word that already exists in platform words and not duplicate it', async () => {
     const userWithOneDefaultWord = {
       ...mockDbUser,
       words: [defaultWords[0]],
@@ -134,6 +136,46 @@ describe('initUser', () => {
     expect(mockClerkGetUser).toHaveBeenCalledWith(mockAuthUserId);
     expect(mockGetUser).toHaveBeenCalledWith(mockAuthUserId);
     expect(createUser).toHaveBeenCalledWith(mockAuthUserId);
+  });
+
+  it('should run data migration when dataVersion does not match', async () => {
+    const outdatedUser = { ...mockDbUser, dataVersion: 0, words: [], wordSets: [] };
+    mockAuth.mockResolvedValue({ userId: mockAuthUserId });
+    mockClerkClient.mockResolvedValue({ users: { getUser: mockClerkGetUser } });
+    mockClerkGetUser.mockResolvedValue({ username: mockUsername });
+    mockGetUser.mockResolvedValue(outdatedUser);
+
+    const result = await initialiseUser();
+
+    expect(mockUpdateUserWordsAndWordSets).toHaveBeenCalledWith({
+      words: [...defaultWords],
+      wordSets: [...defaultWordSets],
+      userPlatformId: outdatedUser.userPlatformId,
+    });
+    expect(updateAutoWordSet).toHaveBeenCalledWith({
+      autoWordSet: [],
+      userPlatformId: outdatedUser.userPlatformId,
+      dataVersion: DATA_VERSION,
+    });
+    expect(result?.words).toEqual(defaultWords);
+  });
+
+  it('should migrate mode and autoConfig when they are missing', async () => {
+    const userWithoutModeOrConfig = { ...mockDbUser, mode: undefined, autoConfig: undefined };
+    mockAuth.mockResolvedValue({ userId: mockAuthUserId });
+    mockClerkClient.mockResolvedValue({ users: { getUser: mockClerkGetUser } });
+    mockClerkGetUser.mockResolvedValue({ username: mockUsername });
+    mockGetUser.mockResolvedValue(userWithoutModeOrConfig);
+
+    const result = await initialiseUser();
+
+    expect(updateUserMode).toHaveBeenCalledWith({
+      userPlatformId: userWithoutModeOrConfig.userPlatformId,
+      mode: 'auto',
+      autoConfig: { yearGroups: ['year3_4', 'year5_6'] },
+    });
+    expect(result?.mode).toBe('auto');
+    expect(result?.autoConfig).toEqual({ yearGroups: ['year3_4', 'year5_6'] });
   });
 
   it('should create a new user when no db user is found', async () => {
