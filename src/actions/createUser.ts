@@ -3,7 +3,7 @@ import { getUser } from './getUser';
 import { getMongoDB } from '../lib/mongoDB';
 import { defaultWords, defaultWordSets } from '../constants';
 import { getTimeStamp } from '../utils/getTimeStamp';
-import { DbUser, NewIdDbUser } from './types';
+import { DbUser, NewIdDbUser, DATA_VERSION } from './types';
 
 export async function createUser(userAuthId: string): Promise<DbUser | null> {
   const db = await getMongoDB();
@@ -21,6 +21,7 @@ export async function createUser(userAuthId: string): Promise<DbUser | null> {
     userPlatformId: uuid,
     mode: 'auto',
     autoConfig: { yearGroups: ['year3_4', 'year5_6'] },
+    dataVersion: DATA_VERSION,
   };
 
   newUser.wordSets[0].wordSetId = v4();

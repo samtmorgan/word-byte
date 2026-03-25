@@ -29,6 +29,8 @@ export interface AutoConfig {
   yearGroups: YearGroup[];
 }
 
+export const DATA_VERSION = 1;
+
 export interface DbUser {
   _id: string;
   userAuthId: string;
@@ -39,6 +41,7 @@ export interface DbUser {
   autoWordSet?: string[];
   autoConfig?: AutoConfig;
   mode?: UserMode;
+  dataVersion?: number;
 }
 
 export type AuthUser = {
