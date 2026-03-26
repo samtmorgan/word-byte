@@ -2,9 +2,8 @@
 
 import { initialiseUser } from './initUser';
 import { updateAutoWordSet } from './updateAutoWordSet';
-import { initAutoWordSet } from '../utils/wordSelection';
 import { Word, YearGroup } from './types';
-import { DEFAULT_YEAR_GROUPS, filterWordsByYearGroups } from './autoWordUtils';
+import { DEFAULT_YEAR_GROUPS, buildInitialAutoWordSet } from './autoWordUtils';
 
 export type GetAutoWordsResult = {
   words: Word[];
@@ -17,12 +16,12 @@ export async function getAutoWords(): Promise<GetAutoWordsResult> {
   if (!user) return { words: [], isEmpty: false, yearGroups: DEFAULT_YEAR_GROUPS };
 
   const yearGroups = user.autoConfig?.yearGroups ?? DEFAULT_YEAR_GROUPS;
-  const filteredWords = filterWordsByYearGroups(user.words, yearGroups);
+  const includeUserWords = user.autoConfig?.includeUserWords ?? false;
 
   let autoWordSetIds = user.autoWordSet;
 
   if (!autoWordSetIds || autoWordSetIds.length === 0) {
-    const newAutoSet = initAutoWordSet(filteredWords);
+    const newAutoSet = buildInitialAutoWordSet(user.words, yearGroups, includeUserWords);
     if (newAutoSet.length === 0) {
       return { words: [], isEmpty: true, yearGroups };
     }

@@ -7,10 +7,12 @@ import styles from './Header.module.css';
 
 const Header = (): ReactElement => (
   <header className={styles.header}>
-    <NavDrawer />
-    <nav>
-      <Link href={PATHS.ROOT}>👾 Word Byte</Link>
-    </nav>
+    <div className={styles.headerContent}>
+      <NavDrawer />
+      <nav>
+        <Link href={PATHS.ROOT}>👾 Word Byte</Link>
+      </nav>
+    </div>
     <SignedIn>
       <UserButton />
     </SignedIn>

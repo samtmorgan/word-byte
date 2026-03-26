@@ -2,16 +2,14 @@
 
 import { initialiseUser } from './initUser';
 import { updateAutoWordSet } from './updateAutoWordSet';
-import { initAutoWordSet } from '../utils/wordSelection';
 import { YearGroup } from './types';
-import { filterWordsByYearGroups } from './autoWordUtils';
+import { buildInitialAutoWordSet } from './autoWordUtils';
 
 export async function updateAutoConfig(config: { yearGroups: YearGroup[]; includeUserWords: boolean }): Promise<void> {
   const user = await initialiseUser();
   if (!user) throw new Error("couldn't initialise user");
 
-  const filteredWords = filterWordsByYearGroups(user.words, config.yearGroups, config.includeUserWords);
-  const newAutoSet = initAutoWordSet(filteredWords);
+  const newAutoSet = buildInitialAutoWordSet(user.words, config.yearGroups, config.includeUserWords);
 
   await updateAutoWordSet({
     autoWordSet: newAutoSet.map(w => w.wordId),
