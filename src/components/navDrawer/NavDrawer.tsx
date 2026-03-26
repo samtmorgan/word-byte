@@ -42,6 +42,9 @@ export default function NavDrawer() {
               <Link href={PATHS.MY_WORDS} onClick={() => setIsOpen(false)}>
                 My Words
               </Link>
+              <Link href={PATHS.WORD_LISTS} onClick={() => setIsOpen(false)}>
+                Word Lists
+              </Link>
             </nav>
           </>
         )}
