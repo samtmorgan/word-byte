@@ -56,10 +56,7 @@ export default function MyWordsContent({ initialWords }: MyWordsContentProps) {
       const result = await addUserWord(trimmed);
       if (result.success) {
         // Optimistically add word to list
-        setWords(prev => [
-          ...prev,
-          { word: trimmed, wordId: crypto.randomUUID(), owner: WordOwner.USER, results: [] },
-        ]);
+        setWords(prev => [...prev, { word: trimmed, wordId: crypto.randomUUID(), owner: WordOwner.USER, results: [] }]);
         setNewWord('');
       } else if (result.error === 'duplicate') {
         setFormError('You already have this word');
@@ -95,7 +92,11 @@ export default function MyWordsContent({ initialWords }: MyWordsContentProps) {
             autoComplete="off"
           />
         </label>
-        {formError && <p className={styles.error} role="alert">{formError}</p>}
+        {formError && (
+          <p className={styles.error} role="alert">
+            {formError}
+          </p>
+        )}
         <button type="submit">Add</button>
       </form>
 
@@ -127,8 +128,12 @@ export default function MyWordsContent({ initialWords }: MyWordsContentProps) {
         }}
         actions={
           <>
-            <button type="button" onClick={handleDeleteConfirm}>Confirm</button>
-            <button type="button" onClick={() => setWordToDelete(null)}>Cancel</button>
+            <button type="button" onClick={handleDeleteConfirm}>
+              Confirm
+            </button>
+            <button type="button" onClick={() => setWordToDelete(null)}>
+              Cancel
+            </button>
           </>
         }
       >

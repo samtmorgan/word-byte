@@ -119,11 +119,9 @@ export default function WelcomeContent({ user }: { user: User | null }) {
           )}
 
           {mode === 'manual' && (
-            <>
-              <Link href={PATHS.TEST} className="button cool-border-with-shadow">
-                ✍️ Start Practice
-              </Link>
-            </>
+            <Link href={PATHS.TEST} className="button cool-border-with-shadow">
+              ✍️ Start Practice
+            </Link>
           )}
         </div>
 

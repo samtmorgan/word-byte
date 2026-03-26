@@ -22,13 +22,7 @@ export default function NavDrawer() {
         <span className={styles.hamburgerLine} />
       </button>
 
-      {isOpen && (
-        <div
-          className={styles.overlay}
-          onClick={() => setIsOpen(false)}
-          aria-hidden="true"
-        />
-      )}
+      {isOpen && <div className={styles.overlay} onClick={() => setIsOpen(false)} aria-hidden="true" />}
 
       <div className={`${styles.drawer} ${isOpen ? styles.drawerOpen : ''}`} aria-label="Navigation drawer">
         {isOpen && (
