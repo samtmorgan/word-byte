@@ -33,8 +33,8 @@
   height: 100%;
   width: 260px;
   background-color: #fbeee0;
-  box-shadow: var(--box-shadow);
-  border-right: var(--border);
+  /* box-shadow: var(--box-shadow);
+  border-right: var(--border); */
   z-index: 101;
   transform: translateX(-100%);
   transition: transform 0.25s ease-in-out;
@@ -46,10 +46,12 @@
 
 .drawerOpen {
   transform: translateX(0);
+  box-shadow: var(--box-shadow);
+  border-right: var(--border);
 }
 
 .closeButton {
-  align-self: flex-end;
+  align-self: flex-start;
   background: transparent;
   border: none;
   cursor: pointer;
