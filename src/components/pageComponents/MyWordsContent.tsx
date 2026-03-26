@@ -78,8 +78,6 @@ export default function MyWordsContent({ initialWords }: MyWordsContentProps) {
 
   return (
     <div className="pageContainer">
-      <h1>My Words</h1>
-
       <form className={styles.addForm} onSubmit={handleAdd}>
         <label htmlFor="new-word">
           Add new word

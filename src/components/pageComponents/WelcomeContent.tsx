@@ -53,7 +53,7 @@ export default function WelcomeContent({ user }: { user: User | null }) {
 
   return (
     <div className="pageContainer">
-      <h1>Hello {user.username} 👋</h1>
+      <p>Hello {user.username} 👋</p>
 
       <div className="tabs">
         <h2>Practice time 🚀</h2>

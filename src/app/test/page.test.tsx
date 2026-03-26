@@ -32,7 +32,6 @@ describe('TestWords page renders expected components', () => {
     });
 
     expect(screen.getByText('mock loading')).toBeInTheDocument();
-    expect(screen.getByText('Test time')).toBeInTheDocument();
   });
 
   it('should render error component when getCurrentWords returns an error', async () => {
@@ -145,7 +144,6 @@ describe('TestWords page user interaction', () => {
     const cancelButton = screen.getByRole('button', { name: /Cancel/ });
     await user.click(cancelButton);
 
-    expect(screen.getByText(/Test time/)).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Start/ })).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Cancel/ })).not.toBeInTheDocument();
   });

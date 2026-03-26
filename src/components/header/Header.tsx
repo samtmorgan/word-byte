@@ -3,6 +3,7 @@ import { SignedIn, UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
 import { PATHS } from '../../constants';
 import NavDrawer from '../navDrawer/NavDrawer';
+import { PageTitleDisplay } from '../pageTitle/PageTitleDisplay';
 import styles from './Header.module.css';
 
 const Header = (): ReactElement => (
@@ -12,6 +13,9 @@ const Header = (): ReactElement => (
       <nav>
         <Link href={PATHS.ROOT}>👾 Word Byte</Link>
       </nav>
+    </div>
+    <div className={styles.headerCenter}>
+      <PageTitleDisplay />
     </div>
     <SignedIn>
       <UserButton />

@@ -138,8 +138,6 @@ function CreateListForm({ allWords, onCancel, onCreated }: CreateListFormProps) 
 
   return (
     <div className="pageContainer">
-      <h1>New Word List</h1>
-
       {/* Add a brand-new word */}
       <div className={styles.newWordSection}>
         <form className={styles.newWordForm} onSubmit={handleAddNewWord}>
@@ -285,7 +283,6 @@ export default function WordListsContent({ initialWordSets, initialWords }: Word
   if (wordSets.length === 0) {
     return (
       <div className="pageContainer">
-        <h1>Word Lists</h1>
         <p>No word lists yet.</p>
         <button type="button" onClick={() => setIsCreating(true)}>
           + New List
@@ -296,45 +293,47 @@ export default function WordListsContent({ initialWordSets, initialWords }: Word
 
   return (
     <div className="pageContainer">
-      <h1>Word Lists</h1>
-
-      {/* Navigation row */}
-      <div className={styles.navRow}>
-        <button
-          type="button"
-          onClick={() => setViewIndex(v => v - 1)}
-          disabled={viewIndex === 0}
-          aria-label="Previous list"
-        >
-          ◀
-        </button>
-        <span className={styles.listLabel}>
-          {viewIndex + 1} / {wordSets.length}
-          {viewIndex === 0 && <span className={styles.currentBadge}>Current List</span>}
-        </span>
-        <button
-          type="button"
-          onClick={() => setViewIndex(v => v + 1)}
-          disabled={viewIndex === wordSets.length - 1}
-          aria-label="Next list"
-        >
-          ▶
-        </button>
-      </div>
-
-      {/* Action buttons */}
-      <div className={styles.actionRow}>
-        {viewIndex !== 0 && (
-          <button type="button" onClick={handlePromote}>
-            Make Current
+      <div className={styles.controlsContainer}>
+        {/* Navigation row */}
+        <div className={styles.navRow}>
+          <button
+            type="button"
+            onClick={() => setViewIndex(v => v - 1)}
+            disabled={viewIndex === 0}
+            aria-label="Previous list"
+          >
+            ◀
           </button>
-        )}
-        <button type="button" onClick={() => setListToDelete(currentSet)}>
-          Delete
-        </button>
-        <button type="button" onClick={() => setIsCreating(true)}>
-          + New List
-        </button>
+          {viewIndex + 1} / {wordSets.length}
+          <button
+            type="button"
+            onClick={() => setViewIndex(v => v + 1)}
+            disabled={viewIndex === wordSets.length - 1}
+            aria-label="Next list"
+          >
+            ▶
+          </button>
+        </div>
+
+        {/* Current list indicator */}
+        <div className={styles.actionRow}>
+          {viewIndex !== 0 && (
+            <button type="button" onClick={handlePromote}>
+              Make Current
+            </button>
+          )}
+          {viewIndex === 0 && <span className={styles.currentBadge}>Current List</span>}
+        </div>
+
+        {/* Action buttons */}
+        <div className={styles.actionRow}>
+          <button type="button" onClick={() => setListToDelete(currentSet)}>
+            Delete
+          </button>
+          <button type="button" onClick={() => setIsCreating(true)}>
+            + New List
+          </button>
+        </div>
       </div>
 
       {/* Word list */}

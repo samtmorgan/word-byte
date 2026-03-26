@@ -51,11 +51,6 @@ describe('MyWordsContent', () => {
     (deleteUserWord as jest.Mock).mockResolvedValue(undefined);
   });
 
-  it('renders page title', () => {
-    render(<MyWordsContent initialWords={[]} />);
-    expect(screen.getByText('My Words')).toBeInTheDocument();
-  });
-
   it('shows empty state when no words', () => {
     render(<MyWordsContent initialWords={[]} />);
     expect(screen.getByText('No custom words yet. Add some above!')).toBeInTheDocument();
