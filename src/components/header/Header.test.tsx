@@ -40,7 +40,7 @@ describe('Header component', () => {
   });
 
   it('renders the SignedIn component', () => {
-    expect(screen.getByText('Mocked SignedIn')).toBeInTheDocument();
+    expect(screen.getAllByText('Mocked SignedIn').length).toBeGreaterThan(0);
   });
 
   it('renders the UserButton component when signed in', () => {

@@ -17,12 +17,7 @@ enum TestLifecycle {
   CANCELLED = 'cancelled',
 }
 
-const Wrapper = ({ children }: { children: React.ReactNode }) => (
-  <div className="pageContainer">
-    <h1>Test time</h1>
-    {children}
-  </div>
-);
+const Wrapper = ({ children }: { children: React.ReactNode }) => <div className="pageContainer">{children}</div>;
 
 function TestWordsPageContent() {
   const searchParams = useSearchParams();

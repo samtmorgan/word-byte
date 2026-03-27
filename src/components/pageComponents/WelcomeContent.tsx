@@ -53,7 +53,7 @@ export default function WelcomeContent({ user }: { user: User | null }) {
 
   return (
     <div className="pageContainer">
-      <h1>Hello {user.username} 👋</h1>
+      <h2>Hello {user.username} 👋</h2>
 
       <div className="tabs">
         <h2>Practice time 🚀</h2>
@@ -119,14 +119,9 @@ export default function WelcomeContent({ user }: { user: User | null }) {
           )}
 
           {mode === 'manual' && (
-            <>
-              <Link href={PATHS.TEST} className="button cool-border-with-shadow">
-                ✍️ Start Practice
-              </Link>
-              <Link href={PATHS.NEW_WORD_LIST} className="button cool-border-with-shadow">
-                ⛮ Make new word list
-              </Link>
-            </>
+            <Link href={PATHS.TEST} className="button cool-border-with-shadow">
+              ✍️ Start Practice
+            </Link>
           )}
         </div>
 

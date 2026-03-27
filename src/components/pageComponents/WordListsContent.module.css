@@ -1,0 +1,202 @@
+.navRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  /* padding: 0 3rem; */
+  justify-content: space-between;
+  /* box-sizing: border-box; */
+}
+
+.controlsContainer {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.navRow button {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.listLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  min-width: 0;
+}
+
+.currentBadge {
+  font-size: 0.75rem;
+  background-color: var(--color-main);
+  color: var(--color-main-background);
+  padding: 0rem 0.4rem;
+  border-radius: 2px;
+  white-space: nowrap;
+  /* width: 100%; */
+}
+
+.actionRow {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.wordList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  border: var(--border);
+  box-shadow: var(--box-shadow);
+}
+
+.wordItem {
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--color-main);
+  font-size: 1rem;
+}
+
+.wordItem:last-child {
+  border-bottom: none;
+}
+
+/* ── Create List Form ── */
+
+.newWordSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.newWordForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.newWordForm label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.error {
+  color: #c0392b;
+  font-style: italic;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.pendingList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.pendingItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.25rem 0.75rem;
+  border: var(--border);
+  background-color: rgb(239, 239, 239);
+}
+
+.pendingItem button {
+  box-shadow: none;
+  border: none;
+  background: transparent;
+  padding: 0 0.25rem;
+  height: auto;
+  font-size: 0.85rem;
+}
+
+.existingWordsSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sectionLabel {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.searchInput {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.4rem 0.75rem;
+  border: var(--border);
+  font-size: 1rem;
+}
+
+.wordGroupList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-height: 50vh;
+  overflow-y: auto;
+  border: var(--border);
+  box-shadow: var(--box-shadow);
+  padding: 0.75rem;
+}
+
+.wordGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.wordGroupLabel {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-main);
+  margin: 0 0 0.25rem;
+}
+
+.wordCheckRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.2rem 0;
+}
+
+.wordCheckRow input[type='checkbox'] {
+  width: 1.1rem;
+  height: 1.1rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  box-shadow: none;
+}
+
+.noResults {
+  color: var(--color-main);
+  font-style: italic;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.formActions {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+  justify-content: center;
+  padding-top: 0.5rem;
+}

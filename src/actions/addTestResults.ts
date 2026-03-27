@@ -7,7 +7,7 @@ import { updateUserWords } from './updateUserWords';
 import { updateAutoWordSet } from './updateAutoWordSet';
 import { refreshAutoWordSet } from '../utils/wordSelection';
 import { Word } from './types';
-import { DEFAULT_YEAR_GROUPS, filterWordsByYearGroups } from './autoWordUtils';
+import { DEFAULT_YEAR_GROUPS, buildRefreshWordPool } from './autoWordUtils';
 
 export async function addTestResults(localResults: LocalResults, isAutoMode = false) {
   const user = await initialiseUser();
@@ -24,7 +24,8 @@ export async function addTestResults(localResults: LocalResults, isAutoMode = fa
 
   if (isAutoMode && user.autoWordSet && user.autoWordSet.length > 0) {
     const yearGroups = user.autoConfig?.yearGroups ?? DEFAULT_YEAR_GROUPS;
-    const filteredWords = filterWordsByYearGroups(user.words, yearGroups);
+    const includeUserWords = user.autoConfig?.includeUserWords ?? false;
+    const filteredWords = buildRefreshWordPool(user.words, yearGroups, includeUserWords);
 
     const currentSet = user.autoWordSet
       .map(id => user.words.find(w => w.wordId === id))

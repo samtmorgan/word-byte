@@ -1,0 +1,9 @@
+.mobileHeading {
+  /* visible on mobile — inherits h1 styles from globals.css */
+}
+
+@media (min-width: 768px) {
+  .mobileHeading {
+    display: none;
+  }
+}

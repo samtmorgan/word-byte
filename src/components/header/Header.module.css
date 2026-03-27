@@ -12,6 +12,26 @@
   padding-left: 1rem;
 }
 
+.headerContent {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.headerCenter {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .headerCenter {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
 .header button {
   box-shadow: none;
 }
