@@ -12,7 +12,12 @@ import styles from './WordListsContent.module.css';
 interface WordListsContentProps {
   initialWordSets: WordSet[];
   initialWords: Word[];
+  initialAutoWordSet: string[];
 }
+
+type ListEntry = { type: 'manual'; wordSet: WordSet } | { type: 'auto'; wordIds: string[] };
+
+const getEntryWordIds = (entry: ListEntry): string[] => (entry.type === 'auto' ? entry.wordIds : entry.wordSet.wordIds);
 
 // ─── Create List Form ──────────────────────────────────────────────────────────
 
@@ -222,10 +227,15 @@ function CreateListForm({ allWords, onCancel, onCreated }: CreateListFormProps) 
 
 // ─── Main Component ────────────────────────────────────────────────────────────
 
-export default function WordListsContent({ initialWordSets, initialWords }: WordListsContentProps) {
+export default function WordListsContent({ initialWordSets, initialWords, initialAutoWordSet }: WordListsContentProps) {
   const [wordSets, setWordSets] = useState<WordSet[]>(initialWordSets);
   const [allWords, setAllWords] = useState<Word[]>(initialWords);
   const [viewIndex, setViewIndex] = useState(0);
+
+  const entries: ListEntry[] = [
+    ...(initialAutoWordSet.length > 0 ? [{ type: 'auto' as const, wordIds: initialAutoWordSet }] : []),
+    ...wordSets.map(ws => ({ type: 'manual' as const, wordSet: ws })),
+  ];
   const [listToDelete, setListToDelete] = useState<WordSet | null>(null);
   const [isCreating, setIsCreating] = useState(false);
   const [, startTransition] = useTransition();
@@ -245,20 +255,24 @@ export default function WordListsContent({ initialWordSets, initialWords }: Word
     );
   }
 
-  const currentSet = wordSets[viewIndex];
-  const resolvedWords = currentSet
-    ? currentSet.wordIds.map(id => allWords.find(w => w.wordId === id)).filter((w): w is Word => w !== undefined)
-    : [];
+  const currentEntry = entries[viewIndex];
+  const currentWordIds = currentEntry ? getEntryWordIds(currentEntry) : [];
+  const resolvedWords = currentWordIds
+    .map(id => allWords.find(w => w.wordId === id))
+    .filter((w): w is Word => w !== undefined);
+
+  const firstManualIndex = entries.findIndex(e => e.type === 'manual');
+  const isCurrentManual = currentEntry?.type === 'manual' && viewIndex === firstManualIndex;
 
   const handleDeleteConfirm = () => {
     if (!listToDelete) return;
     const id = listToDelete.wordSetId;
-    const deletedIndex = wordSets.findIndex(ws => ws.wordSetId === id);
+    const entryIndex = entries.findIndex(e => e.type === 'manual' && e.wordSet.wordSetId === id);
     setListToDelete(null);
     setWordSets(prev => prev.filter(ws => ws.wordSetId !== id));
     setViewIndex(prev => {
-      if (deletedIndex < prev) return prev - 1;
-      if (deletedIndex === prev) return Math.max(0, prev - 1);
+      if (entryIndex < prev) return prev - 1;
+      if (entryIndex === prev) return Math.max(0, prev - 1);
       return prev;
     });
     startTransition(async () => {
@@ -267,20 +281,20 @@ export default function WordListsContent({ initialWordSets, initialWords }: Word
   };
 
   const handlePromote = () => {
-    if (!currentSet || viewIndex === 0) return;
-    const id = currentSet.wordSetId;
+    if (!currentEntry || currentEntry.type !== 'manual' || isCurrentManual) return;
+    const id = currentEntry.wordSet.wordSetId;
     setWordSets(prev => {
       const target = prev.find(ws => ws.wordSetId === id)!;
       const rest = prev.filter(ws => ws.wordSetId !== id);
       return [target, ...rest];
     });
-    setViewIndex(0);
+    setViewIndex(firstManualIndex);
     startTransition(async () => {
       await promoteWordList(id);
     });
   };
 
-  if (wordSets.length === 0) {
+  if (entries.length === 0) {
     return (
       <div className="pageContainer">
         <p>No word lists yet.</p>
@@ -304,32 +318,38 @@ export default function WordListsContent({ initialWordSets, initialWords }: Word
           >
             ◀
           </button>
-          {viewIndex + 1} / {wordSets.length}
+          {viewIndex + 1} / {entries.length}
           <button
             type="button"
             onClick={() => setViewIndex(v => v + 1)}
-            disabled={viewIndex === wordSets.length - 1}
+            disabled={viewIndex === entries.length - 1}
             aria-label="Next list"
           >
             ▶
           </button>
         </div>
 
-        {/* Current list indicator */}
+        {/* Type label + current badge */}
         <div className={styles.actionRow}>
-          {viewIndex !== 0 && (
+          <span className={styles.typeBadge}>{currentEntry?.type === 'auto' ? 'Auto' : 'Manual'}</span>
+          {currentEntry?.type === 'auto' && <span className={styles.currentBadge}>Current Auto List</span>}
+          {currentEntry?.type === 'manual' && isCurrentManual && (
+            <span className={styles.currentBadge}>Current Manual List</span>
+          )}
+          {currentEntry?.type === 'manual' && !isCurrentManual && (
             <button type="button" onClick={handlePromote}>
               Make Current
             </button>
           )}
-          {viewIndex === 0 && <span className={styles.currentBadge}>Current List</span>}
         </div>
 
         {/* Action buttons */}
         <div className={styles.actionRow}>
-          <button type="button" onClick={() => setListToDelete(currentSet)}>
-            Delete
-          </button>
+          {currentEntry?.type === 'manual' && (
+            <button type="button" onClick={() => setListToDelete(currentEntry.wordSet)}>
+              Delete
+            </button>
+          )}
           <button type="button" onClick={() => setIsCreating(true)}>
             + New List
           </button>

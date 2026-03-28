@@ -30,6 +30,14 @@
   min-width: 0;
 }
 
+.typeBadge {
+  font-size: 0.75rem;
+  border: var(--border);
+  padding: 0rem 0.4rem;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
 .currentBadge {
   font-size: 0.75rem;
   background-color: var(--color-main);
