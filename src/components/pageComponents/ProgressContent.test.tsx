@@ -5,7 +5,13 @@ import { Word, WordOwner } from '../../actions/types';
 
 const now = Date.now();
 
-const makeWord = (id: string, word: string, owner: WordOwner, yearGroup?: 'year3_4' | 'year5_6', results: { created: number; pass: boolean }[] = []): Word => ({
+const makeWord = (
+  id: string,
+  word: string,
+  owner: WordOwner,
+  yearGroup?: 'year3_4' | 'year5_6',
+  results: { created: number; pass: boolean }[] = [],
+): Word => ({
   word,
   wordId: id,
   owner,
