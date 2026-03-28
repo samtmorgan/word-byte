@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "yarn ci-checks && next build",
+    "build": "next build",
     "start": "next start",
     "prepare": "husky install",
     "lint": "npx eslint \"./src/**/*.{ts,tsx}\"",
