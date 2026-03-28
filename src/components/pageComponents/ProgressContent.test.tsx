@@ -29,9 +29,7 @@ const year34Words: Word[] = [
 ];
 
 const year56Words: Word[] = [
-  makeWord('y56a', 'elephant', WordOwner.PLATFORM, 'year5_6', [
-    { created: now - 1000, pass: false },
-  ]),
+  makeWord('y56a', 'elephant', WordOwner.PLATFORM, 'year5_6', [{ created: now - 1000, pass: false }]),
 ];
 
 const userWords: Word[] = [

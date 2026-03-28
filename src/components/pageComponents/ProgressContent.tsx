@@ -60,10 +60,10 @@ export default function ProgressContent({ initialWords }: ProgressContentProps) 
           <tr>
             <th>Word</th>
             <th>Attempts</th>
-            <th>Passes</th>
-            <th>Fails</th>
+            <th>Pass</th>
+            <th>Fail</th>
             <th>Streak</th>
-            <th>Success %</th>
+            <th>Success</th>
           </tr>
         </thead>
         <tbody>
@@ -76,8 +76,8 @@ export default function ProgressContent({ initialWords }: ProgressContentProps) 
                 <td>{passes}</td>
                 <td>{fails}</td>
                 <td className={styles.streak}>
-                  {recentStreak.map((pass, i) => (
-                    <span key={i}>{pass ? '✅' : '❌'}</span>
+                  {recentStreak.map(pass => (
+                    <span key={`${word.word}-streak-${Math.random()}`}>{pass ? '✅' : '❌'}</span>
                   ))}
                 </td>
                 <td>{successRate === null ? '–' : `${successRate}%`}</td>

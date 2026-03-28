@@ -66,7 +66,7 @@ export default function WelcomeContent({ user }: { user: User | null }) {
             className={mode === 'manual' ? 'tabActive' : ''}
             onClick={() => handleModeToggle('manual')}
           >
-            Manual
+            Custom
           </button>
         </div>
 
@@ -119,9 +119,22 @@ export default function WelcomeContent({ user }: { user: User | null }) {
           )}
 
           {mode === 'manual' && (
-            <Link href={PATHS.TEST} className="button cool-border-with-shadow">
-              ✍️ Start Practice
-            </Link>
+            <>
+              <Link
+                href={PATHS.TEST}
+                className="button cool-border-with-shadow"
+                aria-disabled={user.wordSets.length === 0}
+                onClick={user.wordSets.length === 0 ? e => e.preventDefault() : undefined}
+                style={
+                  user.wordSets.length === 0
+                    ? { opacity: 0.5, cursor: 'not-allowed', pointerEvents: 'none' }
+                    : undefined
+                }
+              >
+                ✍️ Start Practice
+              </Link>
+              {user.wordSets.length === 0 && <p>Create a word list to start manual practice.</p>}
+            </>
           )}
         </div>
 

@@ -6,6 +6,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin: 0;
+  line-height: normal;
 }
 
 @media (min-width: 768px) {
