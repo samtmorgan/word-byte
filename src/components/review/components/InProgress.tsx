@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useCallback } from 'react';
 import { LocalResults } from '../types';
 import styles from './InProgress.module.css';

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { ReactElement } from 'react';
 import { SubmitHandler, useForm, ValidateResult } from 'react-hook-form';
 import styles from './AddWordForm.module.css';

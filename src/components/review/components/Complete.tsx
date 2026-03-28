@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useMemo, JSX } from 'react';
 import dynamic from 'next/dynamic';
 import { LocalResults } from '../types';
