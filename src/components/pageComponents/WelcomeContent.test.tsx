@@ -3,6 +3,8 @@ import { render, fireEvent } from '@testing-library/react';
 import WelcomeContent from './WelcomeContent';
 import { User, WordOwner } from '../../actions/types';
 import { mockUser } from '../../testUtils/mockData';
+import { updateUserMode } from '../../actions/updateUserMode';
+import { updateAutoConfig } from '../../actions/updateAutoConfig';
 
 jest.mock('../../actions/updateUserMode', () => ({
   updateUserMode: jest.fn().mockResolvedValue(undefined),
@@ -10,6 +12,15 @@ jest.mock('../../actions/updateUserMode', () => ({
 
 jest.mock('../../actions/updateAutoConfig', () => ({
   updateAutoConfig: jest.fn().mockResolvedValue(undefined),
+}));
+
+jest.mock('../../utils/dashboardStats', () => ({
+  buildDashboardStats: jest.fn().mockReturnValue([]),
+}));
+
+jest.mock('../dashboard/Dashboard', () => ({
+  __esModule: true,
+  default: () => <div data-testid="dashboard" />,
 }));
 
 describe('WelcomeContent', () => {
@@ -102,5 +113,64 @@ describe('WelcomeContent', () => {
     fireEvent.click(getByText('Year 3/4'));
     const link = getByText('✍️ Start Practice');
     expect(link.closest('a')).toHaveAttribute('aria-disabled', 'true');
+  });
+
+  it('calls updateUserMode when toggling mode', () => {
+    const user: User = { ...mockUser, mode: 'auto' };
+    const { getByText } = render(<WelcomeContent user={user} />);
+    fireEvent.click(getByText('Custom'));
+    expect(updateUserMode).toHaveBeenCalledWith({ userPlatformId: user.userPlatformId, mode: 'manual' });
+  });
+
+  it('calls updateAutoConfig when toggling year group', () => {
+    const user: User = { ...mockUser, mode: 'auto', autoConfig: { yearGroups: ['year3_4', 'year5_6'] } };
+    const { getByText } = render(<WelcomeContent user={user} />);
+    fireEvent.click(getByText('Year 3/4'));
+    expect(updateAutoConfig).toHaveBeenCalledWith({ yearGroups: ['year5_6'], includeUserWords: false });
+  });
+
+  it('calls updateAutoConfig when toggling includeUserWords', () => {
+    const userWord = { word: 'myword', wordId: 'myWordId', owner: WordOwner.USER, results: [] };
+    const user: User = { ...mockUser, mode: 'auto', words: [...mockUser.words, userWord] };
+    const { getByText } = render(<WelcomeContent user={user} />);
+    fireEvent.click(getByText('My words'));
+    expect(updateAutoConfig).toHaveBeenCalledWith({
+      yearGroups: ['year3_4', 'year5_6'],
+      includeUserWords: true,
+    });
+  });
+
+  it('marks Start Practice as aria-disabled in manual mode with no word sets', () => {
+    const user: User = { ...mockUser, mode: 'manual', wordSets: [] };
+    const { getByText } = render(<WelcomeContent user={user} />);
+    const link = getByText('✍️ Start Practice');
+    expect(link.closest('a')).toHaveAttribute('aria-disabled', 'true');
+  });
+
+  it('shows message when no word sets in manual mode', () => {
+    const user: User = { ...mockUser, mode: 'manual', wordSets: [] };
+    const { getByText } = render(<WelcomeContent user={user} />);
+    expect(getByText('Create a word list to start manual practice.')).toBeInTheDocument();
+  });
+
+  it('Start Practice link has correct href in manual mode', () => {
+    const user: User = { ...mockUser, mode: 'manual' };
+    const { getByText } = render(<WelcomeContent user={user} />);
+    const link = getByText('✍️ Start Practice');
+    expect(link.closest('a')).toHaveAttribute('href', '/test');
+  });
+
+  it('renders the Dashboard component', () => {
+    const user: User = mockUser;
+    const { getByTestId } = render(<WelcomeContent user={user} />);
+    expect(getByTestId('dashboard')).toBeInTheDocument();
+  });
+
+  it('toggles from manual back to auto mode', () => {
+    const user: User = { ...mockUser, mode: 'manual' };
+    const { getByText } = render(<WelcomeContent user={user} />);
+    fireEvent.click(getByText('Word Byte Auto'));
+    expect(updateUserMode).toHaveBeenCalledWith({ userPlatformId: user.userPlatformId, mode: 'auto' });
+    expect(getByText('Year 3/4')).toBeInTheDocument();
   });
 });

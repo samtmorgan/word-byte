@@ -53,4 +53,32 @@ describe('NavDrawer', () => {
     fireEvent.click(overlay!);
     expect(screen.queryByRole('button', { name: /close navigation menu/i })).not.toBeInTheDocument();
   });
+
+  it('shows all four navigation links when open', () => {
+    render(<NavDrawer />);
+    fireEvent.click(screen.getByRole('button', { name: /open navigation menu/i }));
+    expect(screen.getByRole('link', { name: /home/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /my words/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /progress/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /word lists/i })).toBeInTheDocument();
+  });
+
+  it('Progress link has correct href', () => {
+    render(<NavDrawer />);
+    fireEvent.click(screen.getByRole('button', { name: /open navigation menu/i }));
+    expect(screen.getByRole('link', { name: /progress/i })).toHaveAttribute('href', '/progress');
+  });
+
+  it('Word Lists link has correct href', () => {
+    render(<NavDrawer />);
+    fireEvent.click(screen.getByRole('button', { name: /open navigation menu/i }));
+    expect(screen.getByRole('link', { name: /word lists/i })).toHaveAttribute('href', '/word-lists');
+  });
+
+  it('closes drawer when a navigation link is clicked', () => {
+    render(<NavDrawer />);
+    fireEvent.click(screen.getByRole('button', { name: /open navigation menu/i }));
+    fireEvent.click(screen.getByRole('link', { name: /progress/i }));
+    expect(screen.queryByRole('button', { name: /close navigation menu/i })).not.toBeInTheDocument();
+  });
 });
