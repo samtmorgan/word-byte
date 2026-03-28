@@ -28,7 +28,7 @@ describe('WelcomeContent', () => {
     const user: User = mockUser;
     const { getByText } = render(<WelcomeContent user={user} />);
     expect(getByText('Word Byte Auto')).toBeInTheDocument();
-    expect(getByText('Manual')).toBeInTheDocument();
+    expect(getByText('Custom')).toBeInTheDocument();
   });
 
   it('shows year group toggles and Start Practice in auto mode', () => {
@@ -83,7 +83,7 @@ describe('WelcomeContent', () => {
   it('toggles from auto to manual mode on button click', () => {
     const user: User = { ...mockUser, mode: 'auto' };
     const { getByText, queryByText } = render(<WelcomeContent user={user} />);
-    fireEvent.click(getByText('Manual'));
+    fireEvent.click(getByText('Custom'));
     expect(queryByText('Year 3/4')).toBeNull();
     expect(getByText('✍️ Start Practice')).toBeInTheDocument();
   });

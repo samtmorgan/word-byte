@@ -261,8 +261,8 @@ export default function WordListsContent({ initialWordSets, initialWords, initia
     .map(id => allWords.find(w => w.wordId === id))
     .filter((w): w is Word => w !== undefined);
 
-  const firstManualIndex = entries.findIndex(e => e.type === 'manual');
-  const isCurrentManual = currentEntry?.type === 'manual' && viewIndex === firstManualIndex;
+  const firstCustomIndex = entries.findIndex(e => e.type === 'manual');
+  const isCurrentCustom = currentEntry?.type === 'manual' && viewIndex === firstCustomIndex;
 
   const handleDeleteConfirm = () => {
     if (!listToDelete) return;
@@ -281,14 +281,14 @@ export default function WordListsContent({ initialWordSets, initialWords, initia
   };
 
   const handlePromote = () => {
-    if (!currentEntry || currentEntry.type !== 'manual' || isCurrentManual) return;
+    if (!currentEntry || currentEntry.type !== 'manual' || isCurrentCustom) return;
     const id = currentEntry.wordSet.wordSetId;
     setWordSets(prev => {
       const target = prev.find(ws => ws.wordSetId === id)!;
       const rest = prev.filter(ws => ws.wordSetId !== id);
       return [target, ...rest];
     });
-    setViewIndex(firstManualIndex);
+    setViewIndex(firstCustomIndex);
     startTransition(async () => {
       await promoteWordList(id);
     });
@@ -331,12 +331,12 @@ export default function WordListsContent({ initialWordSets, initialWords, initia
 
         {/* Type label + current badge */}
         <div className={styles.actionRow}>
-          <span className={styles.typeBadge}>{currentEntry?.type === 'auto' ? 'Auto' : 'Manual'}</span>
+          <span className={styles.typeBadge}>{currentEntry?.type === 'auto' ? 'Auto' : 'Custom'}</span>
           {currentEntry?.type === 'auto' && <span className={styles.currentBadge}>Current Auto List</span>}
-          {currentEntry?.type === 'manual' && isCurrentManual && (
-            <span className={styles.currentBadge}>Current Manual List</span>
+          {currentEntry?.type === 'manual' && isCurrentCustom && (
+            <span className={styles.currentBadge}>Current Custom List</span>
           )}
-          {currentEntry?.type === 'manual' && !isCurrentManual && (
+          {currentEntry?.type === 'manual' && !isCurrentCustom && (
             <button type="button" onClick={handlePromote}>
               Make Current
             </button>

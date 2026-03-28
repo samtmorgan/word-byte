@@ -66,7 +66,7 @@ export default function WelcomeContent({ user }: { user: User | null }) {
             className={mode === 'manual' ? 'tabActive' : ''}
             onClick={() => handleModeToggle('manual')}
           >
-            Manual
+            Custom
           </button>
         </div>
 
