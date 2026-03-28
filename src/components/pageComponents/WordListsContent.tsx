@@ -332,26 +332,25 @@ export default function WordListsContent({ initialWordSets, initialWords, initia
         {/* Type label + current badge */}
         <div className={styles.actionRow}>
           <span className={styles.typeBadge}>{currentEntry?.type === 'auto' ? 'Auto' : 'Custom'}</span>
-          {currentEntry?.type === 'auto' && <span className={styles.currentBadge}>Current Auto List</span>}
           {currentEntry?.type === 'manual' && isCurrentCustom && (
             <span className={styles.currentBadge}>Current Custom List</span>
-          )}
-          {currentEntry?.type === 'manual' && !isCurrentCustom && (
-            <button type="button" onClick={handlePromote}>
-              Make Current
-            </button>
           )}
         </div>
 
         {/* Action buttons */}
         <div className={styles.actionRow}>
-          {currentEntry?.type === 'manual' && (
-            <button type="button" onClick={() => setListToDelete(currentEntry.wordSet)}>
-              Delete
-            </button>
-          )}
+          <button
+            type="button"
+            disabled={currentEntry?.type !== 'manual'}
+            onClick={() => currentEntry?.type === 'manual' && setListToDelete(currentEntry.wordSet)}
+          >
+            🗑️
+          </button>
           <button type="button" onClick={() => setIsCreating(true)}>
-            + New List
+            ➕
+          </button>
+          <button type="button" disabled={isCurrentCustom || currentEntry?.type !== 'manual'} onClick={handlePromote}>
+            ⭐️
           </button>
         </div>
       </div>
