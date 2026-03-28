@@ -330,7 +330,7 @@ export default function WordListsContent({ initialWordSets, initialWords, initia
         </div>
 
         {/* Type label + current badge */}
-        <div className={styles.actionRow}>
+        <div className={styles.labelRow}>
           <span className={styles.typeBadge}>{currentEntry?.type === 'auto' ? 'Auto' : 'Custom'}</span>
           {currentEntry?.type === 'manual' && isCurrentCustom && (
             <span className={styles.currentBadge}>Current Custom List</span>
