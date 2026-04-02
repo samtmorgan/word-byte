@@ -22,7 +22,7 @@ jest.mock('../../actions/getAutoWords', () => ({
   getAutoWords: jest.fn(),
 }));
 jest.mock('../../utils/sayTestWord', () => ({
-  sayTestWord: jest.fn(),
+  sayTestWord: jest.fn().mockResolvedValue(undefined),
 }));
 
 describe('TestWords page renders expected components', () => {
@@ -131,8 +131,37 @@ describe('TestWords page user interaction', () => {
     const user = userEvent.setup();
     await user.click(screen.getByRole('button', { name: /Start/ }));
 
+    jest.clearAllMocks();
     const sayWordButton = screen.getByRole('button', { name: /Say word/ });
     await user.click(sayWordButton);
+
+    expect(sayTestWord).toHaveBeenCalled();
+  });
+
+  it('should automatically speak when the test starts', async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole('button', { name: /Start/ }));
+
+    expect(sayTestWord).toHaveBeenCalled();
+  });
+
+  it('should automatically speak when navigating to the next word', async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole('button', { name: /Start/ }));
+
+    jest.clearAllMocks();
+    await user.click(screen.getByRole('button', { name: /Next/ }));
+
+    expect(sayTestWord).toHaveBeenCalled();
+  });
+
+  it('should automatically speak when navigating to the previous word', async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole('button', { name: /Start/ }));
+    await user.click(screen.getByRole('button', { name: /Next/ }));
+
+    jest.clearAllMocks();
+    await user.click(screen.getByRole('button', { name: /Previous/ }));
 
     expect(sayTestWord).toHaveBeenCalled();
   });
