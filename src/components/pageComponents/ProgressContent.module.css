@@ -18,11 +18,17 @@
   font-weight: 600;
 }
 
+.tableContainer {
+  max-height: 70vh;
+  overflow-y: auto;
+  width: 100%;
+  border: var(--border);
+  box-shadow: var(--box-shadow);
+}
+
 .table {
   width: 100%;
   border-collapse: collapse;
-  border: var(--border);
-  box-shadow: var(--box-shadow);
 }
 
 .table th,
@@ -34,6 +40,10 @@
 }
 
 .table th {
+  position: sticky;
+  top: 0;
+  background-color: var(--color-main-background);
+  z-index: 1;
   font-weight: 700;
   font-size: 0.8rem;
   text-transform: uppercase;

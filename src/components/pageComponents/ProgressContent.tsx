@@ -55,11 +55,12 @@ export default function ProgressContent({ initialWords }: ProgressContentProps) 
         </button>
       </div>
 
+      <div className={styles.tableContainer}>
       <table className={styles.table}>
         <thead>
           <tr>
             <th>Word</th>
-            <th>Attempts</th>
+            <th>Tried</th>
             <th>Pass</th>
             <th>Fail</th>
             <th>Streak</th>
@@ -86,6 +87,7 @@ export default function ProgressContent({ initialWords }: ProgressContentProps) 
           })}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }
