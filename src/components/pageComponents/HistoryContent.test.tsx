@@ -40,7 +40,8 @@ describe('HistoryContent', () => {
     ];
     render(<HistoryContent initialWords={words} />);
     expect(screen.getByText('Day')).toBeInTheDocument();
-    expect(screen.getByText('Word list')).toBeInTheDocument();
+    expect(screen.getByText('Date')).toBeInTheDocument();
+    expect(screen.getByText('Words')).toBeInTheDocument();
     expect(screen.getByText('Result')).toBeInTheDocument();
   });
 
@@ -54,14 +55,14 @@ describe('HistoryContent', () => {
     expect(screen.getByText('1/2')).toBeInTheDocument();
   });
 
-  it('shows "auto" word list type for platform words', () => {
+  it('renders comma-separated words in the session row', () => {
     const ts = getThisWeekMonday().getTime();
     const words = [
       makeWord('w1', 'apple', [{ created: ts, pass: true }]),
       makeWord('w2', 'banana', [{ created: ts + 500, pass: false }]),
     ];
     render(<HistoryContent initialWords={words} />);
-    expect(screen.getByText('auto')).toBeInTheDocument();
+    expect(screen.getByText('apple, banana')).toBeInTheDocument();
   });
 
   it('forward (next week) button is disabled on the current week', () => {

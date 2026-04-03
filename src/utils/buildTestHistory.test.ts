@@ -1,15 +1,10 @@
 import { Word, WordOwner } from '../actions/types';
 import { buildTestHistory } from './buildTestHistory';
 
-const makeWord = (
-  id: string,
-  word: string,
-  results: { created: number; pass: boolean }[],
-  owner = WordOwner.PLATFORM,
-): Word => ({
+const makeWord = (id: string, word: string, results: { created: number; pass: boolean }[]): Word => ({
   word,
   wordId: id,
-  owner,
+  owner: WordOwner.PLATFORM,
   results,
 });
 
@@ -99,23 +94,5 @@ describe('buildTestHistory', () => {
     const sessions = buildTestHistory(words);
     expect(sessions[0].score).toBe(0);
     expect(sessions[0].total).toBe(2);
-  });
-
-  it('sets wordListType to "auto" when all words are platform-owned', () => {
-    const words = [
-      makeWord('w1', 'apple', [{ created: now, pass: true }]),
-      makeWord('w2', 'banana', [{ created: now + 500, pass: false }]),
-    ];
-    const sessions = buildTestHistory(words);
-    expect(sessions[0].wordListType).toBe('auto');
-  });
-
-  it('sets wordListType to "custom" when any word is user-owned', () => {
-    const words = [
-      makeWord('w1', 'apple', [{ created: now, pass: true }]),
-      makeWord('w2', 'banana', [{ created: now + 500, pass: false }], WordOwner.USER),
-    ];
-    const sessions = buildTestHistory(words);
-    expect(sessions[0].wordListType).toBe('custom');
   });
 });

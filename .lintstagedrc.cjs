@@ -3,6 +3,6 @@ module.exports = {
   '**/*.{ts,tsx}': filenames => {
     const nonTest = filenames.filter(f => !f.endsWith('.test.ts') && !f.endsWith('.test.tsx'));
     if (nonTest.length === 0) return [];
-    return [`tsc-files --noEmit ${nonTest.join(' ')} index.d.ts`];
+    return [`tsc-files --noEmit ${nonTest.join(' ')}`];
   },
 };

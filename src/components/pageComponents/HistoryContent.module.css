@@ -45,6 +45,13 @@
   border-bottom: none;
 }
 
+.words {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .emptyMessage {
   font-style: italic;
   color: var(--color-main);

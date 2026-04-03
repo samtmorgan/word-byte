@@ -35,6 +35,10 @@ function formatDay(ts: number): string {
   return new Date(ts).toLocaleDateString('en-GB', { weekday: 'short' });
 }
 
+function formatDate(ts: number): string {
+  return new Date(ts).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+}
+
 export default function HistoryContent({ initialWords }: HistoryContentProps) {
   const [weekOffset, setWeekOffset] = useState(0);
 
@@ -68,7 +72,8 @@ export default function HistoryContent({ initialWords }: HistoryContentProps) {
           <thead>
             <tr>
               <th>Day</th>
-              <th>Word list</th>
+              <th>Date</th>
+              <th>Words</th>
               <th>Result</th>
             </tr>
           </thead>
@@ -76,7 +81,8 @@ export default function HistoryContent({ initialWords }: HistoryContentProps) {
             {weekSessions.map(session => (
               <tr key={session.timestamp}>
                 <td>{formatDay(session.timestamp)}</td>
-                <td>{session.wordListType}</td>
+                <td>{formatDate(session.timestamp)}</td>
+                <td className={styles.words}>{session.words.map(w => w.word).join(', ')}</td>
                 <td>{`${session.score}/${session.total}`}</td>
               </tr>
             ))}

@@ -1,9 +1,8 @@
-import { Word, WordOwner } from '../actions/types';
+import { Word } from '../actions/types';
 
 export interface TestSession {
   timestamp: number;
   words: { word: string; wordId: string; pass: boolean }[];
-  wordListType: 'auto' | 'custom';
   score: number;
   total: number;
 }
@@ -15,7 +14,6 @@ export function buildTestHistory(words: Word[]): TestSession[] {
     w.results.map(r => ({
       wordId: w.wordId,
       word: w.word,
-      owner: w.owner,
       created: r.created,
       pass: r.pass,
     })),
@@ -36,11 +34,9 @@ export function buildTestHistory(words: Word[]): TestSession[] {
 
     const sessionWords = group.map(r => ({ word: r.word, wordId: r.wordId, pass: r.pass }));
     const score = sessionWords.filter(w => w.pass).length;
-    const wordListType = group.some(r => r.owner === WordOwner.USER) ? 'custom' : 'auto';
     sessions.push({
       timestamp: group[0].created,
       words: sessionWords,
-      wordListType,
       score,
       total: sessionWords.length,
     });
