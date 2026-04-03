@@ -30,6 +30,7 @@ function TestWordsPageContent() {
   const [hasSeenAllWords, setHasSeenAllWords] = useState<boolean>(false);
   const [testIndex, setTestIndex] = useState<number>(0);
   const [testLifecycle, setTestLifecycle] = useState<TestLifecycle>(TestLifecycle.NOT_STARTED);
+  const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
 
   useEffect(() => {
     const loadWords = async () => {
@@ -58,8 +59,13 @@ function TestWordsPageContent() {
 
   const sessionWordsCount = useMemo(() => currentWords?.length || 0, [currentWords]);
 
-  const handleSpeak = useCallback(() => {
-    sayTestWord(currentWords, testIndex);
+  const handleSpeak = useCallback(async () => {
+    setIsSpeaking(true);
+    try {
+      await sayTestWord(currentWords, testIndex);
+    } finally {
+      setIsSpeaking(false);
+    }
   }, [currentWords, testIndex]);
 
   const handleIndexChange = useCallback(
@@ -79,6 +85,12 @@ function TestWordsPageContent() {
       setHasSeenAllWords(true);
     }
   }, [testIndex, sessionWordsCount]);
+
+  useEffect(() => {
+    if (testLifecycle === TestLifecycle.TEST) {
+      handleSpeak();
+    }
+  }, [testIndex, testLifecycle, handleSpeak]);
 
   if (error)
     return (
@@ -126,8 +138,8 @@ function TestWordsPageContent() {
     <Wrapper>
       <span className="cool-border-with-shadow">{`${testIndex + 1} of ${sessionWordsCount} words`}</span>
 
-      <button disabled={testIndex === sessionWordsCount} type="button" onClick={handleSpeak}>
-        Say word 🔈
+      <button disabled={isSpeaking} type="button" onClick={handleSpeak}>
+        {isSpeaking ? <Loader /> : 'Say word 🔈'}
       </button>
       <div style={{ gap: '1rem' }}>
         <button disabled={testIndex === 0} onClick={() => handleIndexChange('decrement')} type="button">
