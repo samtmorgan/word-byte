@@ -36,7 +36,11 @@ function formatDay(ts: number): string {
 }
 
 function formatDate(ts: number): string {
-  return new Date(ts).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+  const d = new Date(ts);
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const year = d.getFullYear();
+  return `${day}/${month}/${year}`;
 }
 
 export default function HistoryContent({ initialWords }: HistoryContentProps) {
