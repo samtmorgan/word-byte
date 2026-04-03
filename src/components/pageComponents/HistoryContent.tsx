@@ -22,8 +22,7 @@ function getWeekBounds(weekOffset: number): { start: number; end: number; label:
   sunday.setDate(monday.getDate() + 6);
   sunday.setHours(23, 59, 59, 999);
 
-  const fmt = (d: Date) =>
-    d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+  const fmt = (d: Date) => d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
 
   return {
     start: monday.getTime(),
@@ -52,11 +51,7 @@ export default function HistoryContent({ initialWords }: HistoryContentProps) {
   return (
     <div className="pageContainer">
       <div className={styles.navRow}>
-        <button
-          type="button"
-          onClick={() => setWeekOffset(o => o - 1)}
-          aria-label="Previous week"
-        >
+        <button type="button" onClick={() => setWeekOffset(o => o - 1)} aria-label="Previous week">
           ◀
         </button>
         <span className={styles.weekLabel}>{label}</span>
