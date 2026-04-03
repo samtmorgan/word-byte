@@ -56,37 +56,37 @@ export default function ProgressContent({ initialWords }: ProgressContentProps) 
       </div>
 
       <div className={styles.tableContainer}>
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Word</th>
-            <th>Tried</th>
-            <th>Pass</th>
-            <th>Fail</th>
-            <th>Streak</th>
-            <th>Success</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentGroup.words.map(word => {
-            const { attempts, passes, fails, successRate, recentStreak } = getWordProgress(word);
-            return (
-              <tr key={word.wordId}>
-                <td>{word.word}</td>
-                <td>{attempts}</td>
-                <td>{passes}</td>
-                <td>{fails}</td>
-                <td className={styles.streak}>
-                  {recentStreak.map(pass => (
-                    <span key={`${word.word}-streak-${Math.random()}`}>{pass ? '✅' : '❌'}</span>
-                  ))}
-                </td>
-                <td>{successRate === null ? '–' : `${successRate}%`}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th>Word</th>
+              <th>Tried</th>
+              <th>Pass</th>
+              <th>Fail</th>
+              <th>Streak</th>
+              <th>Success</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentGroup.words.map(word => {
+              const { attempts, passes, fails, successRate, recentStreak } = getWordProgress(word);
+              return (
+                <tr key={word.wordId}>
+                  <td>{word.word}</td>
+                  <td>{attempts}</td>
+                  <td>{passes}</td>
+                  <td>{fails}</td>
+                  <td className={styles.streak}>
+                    {recentStreak.map(pass => (
+                      <span key={`${word.word}-streak-${Math.random()}`}>{pass ? '✅' : '❌'}</span>
+                    ))}
+                  </td>
+                  <td>{successRate === null ? '–' : `${successRate}%`}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
   );
