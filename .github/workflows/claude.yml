@@ -23,12 +23,21 @@ jobs:
       pull-requests: write
       issues: write
       id-token: write
-      actions: read # Required for Claude to read CI results on PRs
+      actions: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
 
       - name: Run Claude Code
         id: claude
@@ -36,7 +45,6 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
 
-          # Allow Claude to write code, commit, push branches, and open PRs
           allowed_tools: |
             Bash(git add:*)
             Bash(git commit:*)
@@ -46,11 +54,21 @@ jobs:
             Bash(gh pr create:*)
             Bash(gh pr list:*)
             Bash(gh pr view:*)
+            Bash(gh pr edit:*)
             Bash(gh issue comment:*)
-            Bash(npm run:*)
-            Bash(npm test:*)
+            Bash(yarn lint:*)
+            Bash(yarn test:*)
+            Bash(yarn type-check:*)
+            Bash(npx jest:*)
 
-          # This is an optional setting that allows Claude to read CI results on PRs
+          custom_instructions: |
+            After implementing changes, you MUST verify all quality checks pass before opening a PR:
+            1. Run `yarn lint` — fix any lint errors
+            2. Run `yarn type-check` — fix any type errors
+            3. Run `yarn test` — fix any test failures (coverage threshold is 80%)
+            If any check fails, fix the issues and re-run until all three pass.
+            Only then open a PR and request review from samtmorgan.
+
           additional_permissions: |
             actions: read
 
