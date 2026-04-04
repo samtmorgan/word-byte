@@ -240,7 +240,7 @@ input {
 
 @media (min-width: 400px) {
   .pageContainer {
-    width: 400px;
+    width: auto;
   }
 
   .modal {
