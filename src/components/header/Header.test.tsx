@@ -1,23 +1,22 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import { RenderResult, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import Header from './Header';
-
-/**
- * Renders the Header component
- * @returns {RenderResult} the render result
- */
-function renderHeader(): RenderResult {
-  return render(<Header />);
-}
 
 jest.mock('@clerk/nextjs', () => ({
   SignedIn: ({ children }: { children: React.ReactNode }) => <div>Mocked SignedIn{children}</div>,
   UserButton: () => <div>Mocked UserButton</div>,
 }));
 
+jest.mock('@clerk/nextjs/server', () => ({
+  auth: jest.fn().mockResolvedValue({ userId: 'test-user-id' }),
+}));
+
 describe('Header component', () => {
-  beforeEach(() => renderHeader());
+  beforeEach(async () => {
+    const element = await Header();
+    render(element);
+  });
 
   it('renders a <header /> element', () => {
     expect(screen.getByRole('banner')).toBeInTheDocument();
