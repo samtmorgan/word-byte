@@ -6,4 +6,5 @@ export enum PATHS {
   MY_WORDS = '/my-words',
   WORD_LISTS = '/word-lists',
   PROGRESS = '/progress',
+  HISTORY = '/history',
 }
