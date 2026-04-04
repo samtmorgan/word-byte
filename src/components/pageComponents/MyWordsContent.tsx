@@ -91,7 +91,7 @@ export default function MyWordsContent({ initialWords }: MyWordsContentProps) {
           />
         </label>
         {formError && (
-          <p className={styles.error} role="alert">
+          <p className="error" role="alert">
             {formError}
           </p>
         )}

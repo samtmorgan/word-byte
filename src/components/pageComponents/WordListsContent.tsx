@@ -159,7 +159,7 @@ function CreateListForm({ allWords, onCancel, onCreated }: CreateListFormProps) 
             />
           </label>
           {newWordError && (
-            <p className={styles.error} role="alert">
+            <p className="error" role="alert">
               {newWordError}
             </p>
           )}
@@ -208,7 +208,7 @@ function CreateListForm({ allWords, onCancel, onCreated }: CreateListFormProps) 
       </div>
 
       {submitError && (
-        <p className={styles.error} role="alert">
+        <p className="error" role="alert">
           {submitError}
         </p>
       )}
@@ -309,7 +309,7 @@ export default function WordListsContent({ initialWordSets, initialWords, initia
     <div className="pageContainer">
       <div className={styles.controlsContainer}>
         {/* Navigation row */}
-        <div className={styles.navRow}>
+        <div className="navRow">
           <button
             type="button"
             onClick={() => setViewIndex(v => v - 1)}
