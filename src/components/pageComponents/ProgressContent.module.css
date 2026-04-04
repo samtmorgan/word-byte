@@ -1,23 +1,3 @@
-.navRow {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.navRow button {
-  width: 2.5rem;
-  height: 2.5rem;
-  padding: 0;
-  flex-shrink: 0;
-}
-
-.groupLabel {
-  font-size: 1rem;
-  font-weight: 600;
-}
-
 .tableContainer {
   max-height: 70vh;
   overflow-y: auto;
@@ -26,40 +6,13 @@
   box-shadow: var(--box-shadow);
 }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.table th,
-.table td {
-  padding: 0.5rem 0.75rem;
-  text-align: left;
-  border-bottom: 1px solid var(--color-main);
-  font-size: 0.9rem;
-}
-
-.table th {
+.tableContainer th {
   position: sticky;
   top: 0;
   background-color: var(--color-main-background);
   z-index: 1;
-  font-weight: 700;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--color-main);
-}
-
-.table tr:last-child td {
-  border-bottom: none;
 }
 
 .streak {
   white-space: nowrap;
-}
-
-.emptyMessage {
-  font-style: italic;
-  color: var(--color-main);
 }

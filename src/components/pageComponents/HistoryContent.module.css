@@ -1,48 +1,7 @@
-.navRow {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+.tableContainer {
   width: 100%;
-  justify-content: space-between;
-}
-
-.navRow button {
-  width: 2.5rem;
-  height: 2.5rem;
-  padding: 0;
-  flex-shrink: 0;
-}
-
-.weekLabel {
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
   border: var(--border);
   box-shadow: var(--box-shadow);
-}
-
-.table th,
-.table td {
-  padding: 0.5rem 0.75rem;
-  text-align: left;
-  border-bottom: 1px solid var(--color-main);
-  font-size: 0.9rem;
-}
-
-.table th {
-  font-weight: 700;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--color-main);
-}
-
-.table tr:last-child td {
-  border-bottom: none;
 }
 
 .words {
@@ -50,9 +9,4 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.emptyMessage {
-  font-style: italic;
-  color: var(--color-main);
 }

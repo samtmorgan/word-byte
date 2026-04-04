@@ -54,11 +54,11 @@ export default function HistoryContent({ initialWords }: HistoryContentProps) {
 
   return (
     <div className="pageContainer">
-      <div className={styles.navRow}>
+      <div className="navRow">
         <button type="button" onClick={() => setWeekOffset(o => o - 1)} aria-label="Previous week">
           ◀
         </button>
-        <span className={styles.weekLabel}>{label}</span>
+        <span className="navLabel">{label}</span>
         <button
           type="button"
           onClick={() => setWeekOffset(o => o + 1)}
@@ -70,28 +70,30 @@ export default function HistoryContent({ initialWords }: HistoryContentProps) {
       </div>
 
       {weekSessions.length === 0 ? (
-        <p className={styles.emptyMessage}>No tests this week</p>
+        <p className="emptyMessage">No tests this week</p>
       ) : (
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>Day</th>
-              <th>Date</th>
-              <th>Words</th>
-              <th>Result</th>
-            </tr>
-          </thead>
-          <tbody>
-            {weekSessions.map(session => (
-              <tr key={session.timestamp}>
-                <td>{formatDay(session.timestamp)}</td>
-                <td>{formatDate(session.timestamp)}</td>
-                <td className={styles.words}>{session.words.map(w => w.word).join(', ')}</td>
-                <td>{`${session.score}/${session.total}`}</td>
+        <div className={styles.tableContainer}>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>Date</th>
+                <th>Words</th>
+                <th>Result</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {weekSessions.map(session => (
+                <tr key={session.timestamp}>
+                  <td>{formatDay(session.timestamp)}</td>
+                  <td>{formatDate(session.timestamp)}</td>
+                  <td className={styles.words}>{session.words.map(w => w.word).join(', ')}</td>
+                  <td>{`${session.score}/${session.total}`}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

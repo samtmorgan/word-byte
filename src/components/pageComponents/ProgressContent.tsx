@@ -26,7 +26,7 @@ export default function ProgressContent({ initialWords }: ProgressContentProps) 
   if (allGroups.length === 0) {
     return (
       <div className="pageContainer">
-        <p className={styles.emptyMessage}>No words yet.</p>
+        <p className="emptyMessage">No words yet.</p>
       </div>
     );
   }
@@ -35,7 +35,7 @@ export default function ProgressContent({ initialWords }: ProgressContentProps) 
 
   return (
     <div className="pageContainer">
-      <div className={styles.navRow}>
+      <div className="navRow">
         <button
           type="button"
           onClick={() => setViewIndex(v => v - 1)}
@@ -44,7 +44,7 @@ export default function ProgressContent({ initialWords }: ProgressContentProps) 
         >
           ◀
         </button>
-        <span className={styles.groupLabel}>{currentGroup.label}</span>
+        <span className="navLabel">{currentGroup.label}</span>
         <button
           type="button"
           onClick={() => setViewIndex(v => v + 1)}
@@ -56,7 +56,7 @@ export default function ProgressContent({ initialWords }: ProgressContentProps) 
       </div>
 
       <div className={styles.tableContainer}>
-        <table className={styles.table}>
+        <table className="table">
           <thead>
             <tr>
               <th>Word</th>
