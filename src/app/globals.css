@@ -241,6 +241,7 @@ input {
 @media (min-width: 400px) {
   .pageContainer {
     width: auto;
+    min-width: 400px;
   }
 
   .modal {
