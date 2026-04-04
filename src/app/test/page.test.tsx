@@ -22,7 +22,7 @@ jest.mock('../../actions/getAutoWords', () => ({
   getAutoWords: jest.fn(),
 }));
 jest.mock('../../utils/sayTestWord', () => ({
-  sayTestWord: jest.fn(),
+  sayTestWord: jest.fn().mockResolvedValue(undefined),
 }));
 
 describe('TestWords page renders expected components', () => {
@@ -67,6 +67,7 @@ describe('TestWords page renders expected components', () => {
 describe('TestWords page user interaction', () => {
   beforeEach(async () => {
     (getCurrentWords as jest.Mock).mockResolvedValue(mockCurrentWords);
+    (sayTestWord as jest.Mock).mockResolvedValue(undefined);
 
     await act(async () => {
       render(<TestWordsPage />);
@@ -131,10 +132,45 @@ describe('TestWords page user interaction', () => {
     const user = userEvent.setup();
     await user.click(screen.getByRole('button', { name: /Start/ }));
 
+    jest.clearAllMocks();
+    (sayTestWord as jest.Mock).mockResolvedValue(undefined);
+
     const sayWordButton = screen.getByRole('button', { name: /Say word/ });
     await user.click(sayWordButton);
 
     expect(sayTestWord).toHaveBeenCalled();
+  });
+
+  it('should speak automatically when the test starts', async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole('button', { name: /Start/ }));
+
+    expect(sayTestWord).toHaveBeenCalledWith(mockCurrentWords, 0);
+  });
+
+  it('should speak automatically when navigating to the next word', async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole('button', { name: /Start/ }));
+
+    jest.clearAllMocks();
+    (sayTestWord as jest.Mock).mockResolvedValue(undefined);
+
+    await user.click(screen.getByRole('button', { name: /Next/ }));
+
+    expect(sayTestWord).toHaveBeenCalledWith(mockCurrentWords, 1);
+  });
+
+  it('should speak automatically when navigating to the previous word', async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole('button', { name: /Start/ }));
+    await user.click(screen.getByRole('button', { name: /Next/ }));
+
+    jest.clearAllMocks();
+    (sayTestWord as jest.Mock).mockResolvedValue(undefined);
+
+    await user.click(screen.getByRole('button', { name: /Previous/ }));
+
+    expect(sayTestWord).toHaveBeenCalledWith(mockCurrentWords, 0);
   });
 
   it('should render the expected controls when the test is cancelled', async () => {
