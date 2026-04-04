@@ -2,15 +2,20 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { SignedIn } from '@clerk/nextjs';
 import { PATHS } from '../../constants';
 import styles from './NavDrawer.module.css';
 
-export default function NavDrawer() {
+interface NavDrawerProps {
+  isSignedIn: boolean;
+}
+
+export default function NavDrawer({ isSignedIn }: NavDrawerProps) {
   const [isOpen, setIsOpen] = useState(false);
 
+  if (!isSignedIn) return null;
+
   return (
-    <SignedIn>
+    <>
       <button
         type="button"
         className={styles.hamburger}
@@ -55,6 +60,6 @@ export default function NavDrawer() {
           </>
         )}
       </div>
-    </SignedIn>
+    </>
   );
 }
