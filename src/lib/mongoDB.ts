@@ -1,6 +1,7 @@
+import { Db } from 'mongodb';
 import client from './mongoClient';
 
-export async function getMongoDB(): Promise<any> {
+export async function getMongoDB(): Promise<Db> {
   if (!process.env.MONGODB_DB) {
     throw new Error('Invalid/Missing environment variable: "MONGODB_DB"');
   }
