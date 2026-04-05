@@ -285,6 +285,13 @@ input {
   border-bottom: none;
 }
 
+.loaderSlot {
+  width: 100%;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+}
+
 /* ── Utility ── */
 .emptyMessage {
   font-style: italic;
