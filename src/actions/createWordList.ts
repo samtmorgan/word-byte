@@ -5,8 +5,18 @@ import { initialiseUser } from './initUser';
 import { updateUserWordsAndWordSets } from './updateUserWordsAndWordSets';
 import { Word, WordOwner, WordSet } from './types';
 import { getTimeStamp } from '../utils/getTimeStamp';
+import { validateUUIDList, validateWordList } from '../utils/validation';
 
 export async function createWordList(selectedWordIds: string[], newWordTexts: string[]): Promise<void> {
+  if (!validateUUIDList(selectedWordIds)) {
+    throw new Error('Invalid word IDs');
+  }
+  if (newWordTexts.length > 0 && !validateWordList(newWordTexts)) {
+    throw new Error('Invalid new words');
+  }
+  if (selectedWordIds.length === 0 && newWordTexts.length === 0) {
+    throw new Error('At least one word or existing word ID is required');
+  }
   const user = await initialiseUser();
   if (!user) throw new Error("couldn't initialise user");
 

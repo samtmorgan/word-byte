@@ -4,10 +4,14 @@ import { v4 } from 'uuid';
 import { initialiseUser } from './initUser';
 import { Word, WordOwner } from './types';
 import { updateUserWordsAndWordSets } from './updateUserWordsAndWordSets';
+import { validateWord } from '../utils/validation';
 
-export type AddUserWordResult = { success: boolean; error?: 'duplicate' | 'init_failed' };
+export type AddUserWordResult = { success: boolean; error?: 'duplicate' | 'init_failed' | 'invalid' };
 
 export async function addUserWord(word: string): Promise<AddUserWordResult> {
+  if (!validateWord(word)) {
+    return { success: false, error: 'invalid' as const };
+  }
   const user = await initialiseUser();
   if (!user) {
     return { success: false, error: 'init_failed' };

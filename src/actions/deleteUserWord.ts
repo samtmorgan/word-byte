@@ -2,8 +2,12 @@
 
 import { initialiseUser } from './initUser';
 import { updateUserWordsAndWordSets } from './updateUserWordsAndWordSets';
+import { validateUUID } from '../utils/validation';
 
 export async function deleteUserWord(wordId: string): Promise<void> {
+  if (!validateUUID(wordId)) {
+    throw new Error('Invalid word ID');
+  }
   const user = await initialiseUser();
   if (!user) {
     throw new Error("couldn't initialise user");

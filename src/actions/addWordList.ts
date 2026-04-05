@@ -5,8 +5,12 @@ import { initialiseUser } from './initUser';
 import { Word, WordOwner, WordSet } from './types';
 import { updateUserWordsAndWordSets } from './updateUserWordsAndWordSets';
 import { getTimeStamp } from '../utils/getTimeStamp';
+import { validateWordList } from '../utils/validation';
 
 export async function addWordList(newWords: string[]) {
+  if (!validateWordList(newWords)) {
+    throw new Error('Invalid word list: words must be alphabetic, 1–45 characters, max 50 words');
+  }
   const user = await initialiseUser();
   if (!user) {
     throw new Error("couldn't initialise user");

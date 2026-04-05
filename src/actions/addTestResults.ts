@@ -8,8 +8,15 @@ import { updateAutoWordSet } from './updateAutoWordSet';
 import { refreshAutoWordSet } from '../utils/wordSelection';
 import { Word } from './types';
 import { DEFAULT_YEAR_GROUPS, buildRefreshWordPool } from './autoWordUtils';
+import { validateLocalResults } from '../utils/validation';
 
 export async function addTestResults(localResults: LocalResults, isAutoMode = false) {
+  if (!validateLocalResults(localResults)) {
+    throw new Error('Invalid test results');
+  }
+  if (typeof isAutoMode !== 'boolean') {
+    throw new Error('Invalid isAutoMode value');
+  }
   const user = await initialiseUser();
   if (!user) {
     throw new Error("couldn't initialise user");

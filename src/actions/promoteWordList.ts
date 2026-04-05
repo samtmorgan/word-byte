@@ -2,8 +2,12 @@
 
 import { initialiseUser } from './initUser';
 import { updateUserWordsAndWordSets } from './updateUserWordsAndWordSets';
+import { validateUUID } from '../utils/validation';
 
 export async function promoteWordList(wordSetId: string): Promise<void> {
+  if (!validateUUID(wordSetId)) {
+    throw new Error('Invalid word set ID');
+  }
   const user = await initialiseUser();
   if (!user) throw new Error("couldn't initialise user");
 
