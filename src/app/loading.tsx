@@ -2,5 +2,9 @@ import React from 'react';
 import { Loader } from '../components';
 
 export default function Loading() {
-  return <Loader />;
+  return (
+    <div className="pageContainer">
+      <Loader />
+    </div>
+  );
 }
