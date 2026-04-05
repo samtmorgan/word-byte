@@ -11,6 +11,11 @@ jest.mock('./updateUserWordsAndWordSets', () => ({
   updateUserWordsAndWordSets: jest.fn(),
 }));
 
+const VALID_UUID_DELETE = '11111111-1111-1111-1111-111111111111';
+const VALID_UUID_KEEP = '22222222-2222-2222-2222-222222222222';
+const VALID_UUID_WS = '33333333-3333-3333-3333-333333333333';
+const VALID_UUID_WS2 = '44444444-4444-4444-4444-444444444444';
+
 describe('deleteUserWord', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -19,48 +24,48 @@ describe('deleteUserWord', () => {
   it('throws when user cannot be initialized', async () => {
     (initialiseUser as jest.Mock).mockResolvedValue(null);
 
-    await expect(deleteUserWord('some-id')).rejects.toThrow("couldn't initialise user");
+    await expect(deleteUserWord(VALID_UUID_DELETE)).rejects.toThrow("couldn't initialise user");
     expect(updateUserWordsAndWordSets).not.toHaveBeenCalled();
   });
 
   it('removes the word with matching wordId', async () => {
-    const wordToDelete = { word: 'deleteMe', wordId: 'delete-id', owner: WordOwner.USER, results: [] };
-    const keepWord = { word: 'keepMe', wordId: 'keep-id', owner: WordOwner.PLATFORM, results: [] };
+    const wordToDelete = { word: 'deleteMe', wordId: VALID_UUID_DELETE, owner: WordOwner.USER, results: [] };
+    const keepWord = { word: 'keepMe', wordId: VALID_UUID_KEEP, owner: WordOwner.PLATFORM, results: [] };
     const user = {
       ...mockUser,
       words: [wordToDelete, keepWord],
-      wordSets: [{ wordSetId: 'ws1', createdAt: 123, wordIds: ['delete-id', 'keep-id'] }],
+      wordSets: [{ wordSetId: VALID_UUID_WS, createdAt: 123, wordIds: [VALID_UUID_DELETE, VALID_UUID_KEEP] }],
     };
     (initialiseUser as jest.Mock).mockResolvedValue(user);
 
-    await deleteUserWord('delete-id');
+    await deleteUserWord(VALID_UUID_DELETE);
 
     expect(updateUserWordsAndWordSets).toHaveBeenCalledWith({
       words: [keepWord],
-      wordSets: [{ wordSetId: 'ws1', createdAt: 123, wordIds: ['keep-id'] }],
+      wordSets: [{ wordSetId: VALID_UUID_WS, createdAt: 123, wordIds: [VALID_UUID_KEEP] }],
       userPlatformId: user.userPlatformId,
     });
   });
 
   it('removes wordId from all wordSets', async () => {
-    const wordToDelete = { word: 'deleteMe', wordId: 'delete-id', owner: WordOwner.USER, results: [] };
+    const wordToDelete = { word: 'deleteMe', wordId: VALID_UUID_DELETE, owner: WordOwner.USER, results: [] };
     const user = {
       ...mockUser,
       words: [wordToDelete],
       wordSets: [
-        { wordSetId: 'ws1', createdAt: 123, wordIds: ['delete-id'] },
-        { wordSetId: 'ws2', createdAt: 456, wordIds: ['delete-id', 'other-id'] },
+        { wordSetId: VALID_UUID_WS, createdAt: 123, wordIds: [VALID_UUID_DELETE] },
+        { wordSetId: VALID_UUID_WS2, createdAt: 456, wordIds: [VALID_UUID_DELETE, VALID_UUID_KEEP] },
       ],
     };
     (initialiseUser as jest.Mock).mockResolvedValue(user);
 
-    await deleteUserWord('delete-id');
+    await deleteUserWord(VALID_UUID_DELETE);
 
     expect(updateUserWordsAndWordSets).toHaveBeenCalledWith({
       words: [],
       wordSets: [
-        { wordSetId: 'ws1', createdAt: 123, wordIds: [] },
-        { wordSetId: 'ws2', createdAt: 456, wordIds: ['other-id'] },
+        { wordSetId: VALID_UUID_WS, createdAt: 123, wordIds: [] },
+        { wordSetId: VALID_UUID_WS2, createdAt: 456, wordIds: [VALID_UUID_KEEP] },
       ],
       userPlatformId: user.userPlatformId,
     });

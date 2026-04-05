@@ -6,6 +6,8 @@ import { WordOwner } from './types';
 import { mockUser } from '../testUtils/mockData';
 import { getTimeStamp } from '../utils/getTimeStamp';
 
+const VALID_UUID_1 = '123e4567-e89b-12d3-a456-426614174000';
+
 jest.mock('./initUser.ts', () => ({
   initialiseUser: jest.fn(),
 }));
@@ -67,12 +69,12 @@ describe('createWordList', () => {
     const user = { ...mockUser, words: [], wordSets: [] };
     (initialiseUser as jest.Mock).mockResolvedValue(user);
 
-    await createWordList(['selected-id'], ['newword']);
+    await createWordList([VALID_UUID_1], ['newword']);
 
     expect(updateUserWordsAndWordSets).toHaveBeenCalledWith(
       expect.objectContaining({
         wordSets: expect.arrayContaining([
-          expect.objectContaining({ wordIds: expect.arrayContaining(['selected-id', 'generated-id']) }),
+          expect.objectContaining({ wordIds: expect.arrayContaining([VALID_UUID_1, 'generated-id']) }),
         ]),
       }),
     );
@@ -82,23 +84,15 @@ describe('createWordList', () => {
     const user = { ...mockUser };
     (initialiseUser as jest.Mock).mockResolvedValue(user);
 
-    await createWordList(['selected-id'], []);
+    await createWordList([VALID_UUID_1], []);
 
     const call = (updateUserWordsAndWordSets as jest.Mock).mock.calls[0][0];
     expect(call.wordSets[0].wordSetId).toBe('generated-id');
     expect(call.wordSets.length).toBe(user.wordSets.length + 1);
   });
 
-  it('handles empty selectedWordIds and newWordTexts', async () => {
-    const user = { ...mockUser, words: [], wordSets: [] };
-    (initialiseUser as jest.Mock).mockResolvedValue(user);
-
-    await createWordList([], []);
-
-    expect(updateUserWordsAndWordSets).toHaveBeenCalledWith(
-      expect.objectContaining({
-        wordSets: expect.arrayContaining([expect.objectContaining({ wordIds: [] })]),
-      }),
-    );
+  it('throws error when both selectedWordIds and newWordTexts are empty', async () => {
+    await expect(createWordList([], [])).rejects.toThrow('At least one word or existing word ID is required');
+    expect(updateUserWordsAndWordSets).not.toHaveBeenCalled();
   });
 });

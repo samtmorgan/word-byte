@@ -1,9 +1,13 @@
-import { mockLocalResults } from '../testUtils/mockData';
 import { mapResultsToUserWords } from '../utils/mapResultsToUserWords';
 import { addTestResults } from './addTestResults';
 import { initialiseUser } from './initUser';
 import { WordOwner } from './types';
 import { updateUserWords } from './updateUserWords';
+
+const validLocalResults = [
+  { word: 'testword', wordId: '12345678-1234-1234-1234-123456789012', pass: true as const },
+  { word: 'another', wordId: 'abcdefab-cdef-1234-5678-abcdefabcdef', pass: null },
+];
 
 jest.mock('./updateUserWords.ts', () => ({
   updateUserWords: jest.fn(),
@@ -46,7 +50,7 @@ describe('addTestResults', () => {
     ]);
 
     // act
-    await addTestResults(mockLocalResults);
+    await addTestResults(validLocalResults);
 
     // assert
     expect(updateUserWords).toHaveBeenCalledWith({
@@ -67,7 +71,7 @@ describe('addTestResults', () => {
     });
     expect(initialiseUser).toHaveBeenCalled();
     expect(mapResultsToUserWords).toHaveBeenCalledWith({
-      localResults: mockLocalResults,
+      localResults: validLocalResults,
       userWords: [],
     });
   });
@@ -77,7 +81,7 @@ describe('addTestResults', () => {
     (initialiseUser as jest.Mock).mockResolvedValue(null);
 
     // act
-    await expect(addTestResults(mockLocalResults)).rejects.toThrow("couldn't initialise user");
+    await expect(addTestResults(validLocalResults)).rejects.toThrow("couldn't initialise user");
 
     // assert
     expect(initialiseUser).toHaveBeenCalled();

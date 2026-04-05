@@ -10,6 +10,10 @@ jest.mock('./updateUserWordsAndWordSets', () => ({
   updateUserWordsAndWordSets: jest.fn(),
 }));
 
+const VALID_UUID_WS1 = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
+const VALID_UUID_WS2 = 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb';
+const VALID_UUID_NONEXISTENT = 'cccccccc-cccc-cccc-cccc-cccccccccccc';
+
 describe('deleteWordList', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -18,7 +22,7 @@ describe('deleteWordList', () => {
   it('throws error when user cannot be initialized', async () => {
     (initialiseUser as jest.Mock).mockResolvedValue(null);
 
-    await expect(deleteWordList('ws-1')).rejects.toThrow("couldn't initialise user");
+    await expect(deleteWordList(VALID_UUID_WS1)).rejects.toThrow("couldn't initialise user");
     expect(updateUserWordsAndWordSets).not.toHaveBeenCalled();
   });
 
@@ -26,17 +30,17 @@ describe('deleteWordList', () => {
     const user = {
       ...mockUser,
       wordSets: [
-        { wordSetId: 'ws-1', createdAt: 1, wordIds: ['a'] },
-        { wordSetId: 'ws-2', createdAt: 2, wordIds: ['b'] },
+        { wordSetId: VALID_UUID_WS1, createdAt: 1, wordIds: ['a'] },
+        { wordSetId: VALID_UUID_WS2, createdAt: 2, wordIds: ['b'] },
       ],
     };
     (initialiseUser as jest.Mock).mockResolvedValue(user);
 
-    await deleteWordList('ws-1');
+    await deleteWordList(VALID_UUID_WS1);
 
     expect(updateUserWordsAndWordSets).toHaveBeenCalledWith({
       words: user.words,
-      wordSets: [{ wordSetId: 'ws-2', createdAt: 2, wordIds: ['b'] }],
+      wordSets: [{ wordSetId: VALID_UUID_WS2, createdAt: 2, wordIds: ['b'] }],
       userPlatformId: user.userPlatformId,
     });
   });
@@ -44,11 +48,11 @@ describe('deleteWordList', () => {
   it('preserves all word sets when ID does not match', async () => {
     const user = {
       ...mockUser,
-      wordSets: [{ wordSetId: 'ws-1', createdAt: 1, wordIds: ['a'] }],
+      wordSets: [{ wordSetId: VALID_UUID_WS1, createdAt: 1, wordIds: ['a'] }],
     };
     (initialiseUser as jest.Mock).mockResolvedValue(user);
 
-    await deleteWordList('nonexistent');
+    await deleteWordList(VALID_UUID_NONEXISTENT);
 
     expect(updateUserWordsAndWordSets).toHaveBeenCalledWith({
       words: user.words,
