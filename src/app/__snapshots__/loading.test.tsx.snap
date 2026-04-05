@@ -2,8 +2,12 @@
 
 exports[`loading page should return the loading component 1`] = `
 <div>
-  <div>
-    mock loading component
+  <div
+    class="pageContainer"
+  >
+    <div>
+      mock loading component
+    </div>
   </div>
 </div>
 `;
