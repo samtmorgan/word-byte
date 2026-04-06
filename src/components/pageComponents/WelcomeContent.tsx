@@ -114,7 +114,7 @@ export default function WelcomeContent({ user }: { user: User | null }) {
               >
                 ✍️ Start Practice
               </Link>
-              {!canStart && <p>Please select at least one option to start practice.</p>}
+              {!canStart && <p>Please select at least one option.</p>}
             </>
           )}
 
