@@ -10,15 +10,15 @@ interface NavRowProps {
   nextAriaLabel: string;
 }
 
-const ChevronLeft = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-    <path d="M10 12L6 8L10 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+const TriangleLeft = () => (
+  <svg width="32" height="32" viewBox="0 0 16 16" aria-hidden="true">
+    <path d="M11 3L4 8L11 13Z" fill="currentColor" />
   </svg>
 );
 
-const ChevronRight = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-    <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+const TriangleRight = () => (
+  <svg width="32" height="32" viewBox="0 0 16 16" aria-hidden="true">
+    <path d="M5 3L12 8L5 13Z" fill="currentColor" />
   </svg>
 );
 
@@ -34,11 +34,11 @@ export function NavRow({
   return (
     <div className="navRow">
       <button type="button" disabled={prevDisabled} onClick={onPrev} aria-label={prevAriaLabel}>
-        <ChevronLeft />
+        <TriangleLeft />
       </button>
       <span className="navLabel">{label}</span>
       <button type="button" disabled={nextDisabled} onClick={onNext} aria-label={nextAriaLabel}>
-        <ChevronRight />
+        <TriangleRight />
       </button>
     </div>
   );
