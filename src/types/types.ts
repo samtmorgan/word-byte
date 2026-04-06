@@ -28,27 +28,12 @@ export type ContextType = {
   user: UserType;
   setUser: (user: UserType) => void;
   testWords: string[];
-  //   sessionWords: SessionWordType[] | null;
-  //   setSessionWords: (sessionWords: SessionWordType[] | null) => void;
-  //   sessionWords: string[] | null;
-  //   setSessionWords: (sessionWords: string[] | null) => void;
-  //   testLifecycle: string | null;
-  //   setTestLifecycle: (testLifecycle: TestLifecycleType | null) => void;
 };
 
 export type UserWordType = {
   word: string;
   uuid: string;
-  //   owner: 'platform' | 'user';
   owner: string;
-
-  //   current: boolean;
-  //   attempts:
-  //     | {
-  //         timestamp: number;
-  //         pass: boolean;
-  //       }[]
-  //     | null;
 };
 
 export interface SessionWordType extends UserWordType {
