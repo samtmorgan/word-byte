@@ -139,23 +139,32 @@ function TestWordsPageContent() {
   return (
     <Wrapper>
       <div className="loader-wrapper">{isSpeaking && <Loader />}</div>
-      <span className="cool-border-with-shadow">{`${testIndex + 1} of ${sessionWordsCount} words`}</span>
+      {/*  */}
 
-      <button disabled={isSpeaking} type="button" onClick={handleSpeak}>
-        Say word 🔈
-      </button>
-      <div style={{ gap: '1rem' }}>
-        <button disabled={testIndex === 0 || isSpeaking} onClick={() => handleIndexChange('decrement')} type="button">
-          👈 Previous
+      <div className="navRow">
+        <button
+          disabled={testIndex === 0 || isSpeaking}
+          onClick={() => handleIndexChange('decrement')}
+          type="button"
+          aria-label="Previous week"
+        >
+          ◀
         </button>
+        <span className="navLabel">{`${testIndex + 1} of ${sessionWordsCount} words`}</span>
         <button
           disabled={testIndex + 1 === sessionWordsCount || isSpeaking}
           onClick={() => handleIndexChange('increment')}
           type="button"
+          aria-label="Next week"
         >
-          Next 👉
+          ▶
         </button>
       </div>
+
+      <button disabled={isSpeaking} type="button" onClick={handleSpeak}>
+        Say word 🔈
+      </button>
+
       <button disabled={!hasSeenAllWords} type="button" onClick={() => setTestLifecycle(TestLifecycle.REVIEW)}>
         Check Answers ✔
       </button>
