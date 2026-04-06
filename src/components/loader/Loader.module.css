@@ -1,0 +1,30 @@
+.loader {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+  height: 20px;
+}
+
+.inline {
+  display: inline-flex;
+  width: auto;
+}
+
+.square {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  background-color: var(--color-main);
+  opacity: 0;
+  animation: fadeIn 0.75s ease-in-out infinite alternate;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}

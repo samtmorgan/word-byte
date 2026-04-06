@@ -109,7 +109,7 @@ function TestWordsPageContent() {
   if (isAutoMode && isEmptyAutoSet)
     return (
       <Wrapper>
-        <p>🎉 Amazing! You have mastered all your words. Check back later for more!</p>
+        <p>🎉 Amazing! You got all words correct!</p>
       </Wrapper>
     );
 
@@ -136,6 +136,7 @@ function TestWordsPageContent() {
 
   return (
     <Wrapper>
+      <div className="loader-wrapper">{isSpeaking && <Loader />}</div>
       <span className="cool-border-with-shadow">{`${testIndex + 1} of ${sessionWordsCount} words`}</span>
 
       <button disabled={isSpeaking} type="button" onClick={handleSpeak}>
