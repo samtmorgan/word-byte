@@ -27,7 +27,7 @@ const ReviewButtons = ({ reviewLifecycle, setReviewLifecycle }: ReviewButtonsPro
         </button>
       ) : (
         <Link className={styles.finishButton} href={PATHS.ROOT}>
-          🏠 Go to home
+          Done
         </Link>
       )}
     </div>

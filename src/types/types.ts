@@ -18,7 +18,7 @@ export type MockUserType = {
   };
 };
 
-export type TestLifecycleType = 'notStarted' | 'test' | 'review' | 'revise' | 'finished' | 'cancelled';
+export type TestLifecycleType = 'notStarted' | 'test' | 'review' | 'revise' | 'finished';
 
 export type ContextType = {
   loading: boolean;

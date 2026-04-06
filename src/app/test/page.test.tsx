@@ -7,8 +7,10 @@ import { mockCurrentWords } from '../../testUtils/mockData';
 import { getCurrentWords } from '../../actions/getCurrentWords';
 import { sayTestWord } from '../../utils/sayTestWord';
 
+const mockPush = jest.fn();
 jest.mock('next/navigation', () => ({
   useSearchParams: () => ({ get: () => null }),
+  useRouter: () => ({ push: mockPush }),
 }));
 jest.mock('../../components', () => ({
   Loader: () => <div>mock loading</div>,
@@ -20,6 +22,15 @@ jest.mock('../../actions/getCurrentWords', () => ({
 }));
 jest.mock('../../actions/getAutoWords', () => ({
   getAutoWords: jest.fn(),
+}));
+jest.mock('../../components/modal/Modal', () => ({
+  Modal: ({ open, children, actions }: { open: boolean; children: React.ReactNode; actions: React.ReactNode }) =>
+    open ? (
+      <div>
+        {children}
+        {actions}
+      </div>
+    ) : null,
 }));
 jest.mock('../../utils/sayTestWord', () => ({
   sayTestWord: jest.fn().mockResolvedValue(undefined),
@@ -173,14 +184,35 @@ describe('TestWords page user interaction', () => {
     expect(sayTestWord).toHaveBeenCalledWith(mockCurrentWords, 0);
   });
 
-  it('should render the expected controls when the test is cancelled', async () => {
+  it('should open a confirmation modal when cancel is clicked', async () => {
     const user = userEvent.setup();
     await user.click(screen.getByRole('button', { name: /Start/ }));
 
-    const cancelButton = screen.getByRole('button', { name: /Cancel/ });
-    await user.click(cancelButton);
+    await user.click(screen.getByRole('button', { name: /Cancel/ }));
 
-    expect(screen.queryByRole('button', { name: /Start/ })).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /Cancel/ })).not.toBeInTheDocument();
+    expect(screen.getByText(/Are you sure you want to cancel the test\?/)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Yes, cancel/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Keep going/ })).toBeInTheDocument();
+  });
+
+  it('should navigate to home when cancel is confirmed', async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole('button', { name: /Start/ }));
+    await user.click(screen.getByRole('button', { name: /Cancel/ }));
+
+    await user.click(screen.getByRole('button', { name: /Yes, cancel/ }));
+
+    expect(mockPush).toHaveBeenCalledWith('/');
+  });
+
+  it('should close the modal when keep going is clicked', async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole('button', { name: /Start/ }));
+    await user.click(screen.getByRole('button', { name: /Cancel/ }));
+
+    await user.click(screen.getByRole('button', { name: /Keep going/ }));
+
+    expect(screen.queryByText(/Are you sure you want to cancel the test\?/)).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Cancel/ })).toBeInTheDocument();
   });
 });

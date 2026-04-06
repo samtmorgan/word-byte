@@ -1,8 +1,9 @@
 'use client';
 
 import React, { Suspense, useCallback, useEffect, useMemo, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Review, ErrorPage, Loader } from '../../components';
+import { Modal } from '../../components/modal/Modal';
 import { getCurrentWords } from '../../actions/getCurrentWords';
 import { getAutoWords } from '../../actions/getAutoWords';
 import { Word } from '../../actions/types';
@@ -14,7 +15,6 @@ enum TestLifecycle {
   REVIEW = 'review',
   REVISE = 'revise',
   FINISHED = 'finished',
-  CANCELLED = 'cancelled',
 }
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => <div className="pageContainer">{children}</div>;
@@ -31,6 +31,8 @@ function TestWordsPageContent() {
   const [testIndex, setTestIndex] = useState<number>(0);
   const [testLifecycle, setTestLifecycle] = useState<TestLifecycle>(TestLifecycle.NOT_STARTED);
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
+  const [showCancelModal, setShowCancelModal] = useState<boolean>(false);
+  const router = useRouter();
 
   useEffect(() => {
     const loadWords = async () => {
@@ -120,7 +122,7 @@ function TestWordsPageContent() {
       </Wrapper>
     );
 
-  if (testLifecycle === 'notStarted' || testLifecycle === 'finished' || testLifecycle === 'cancelled') {
+  if (testLifecycle === 'notStarted' || testLifecycle === 'finished') {
     return (
       <Wrapper>
         <button type="button" onClick={() => setTestLifecycle(TestLifecycle.TEST)}>
@@ -157,9 +159,25 @@ function TestWordsPageContent() {
       <button disabled={!hasSeenAllWords} type="button" onClick={() => setTestLifecycle(TestLifecycle.REVIEW)}>
         Check Answers ✔
       </button>
-      <button type="button" onClick={() => setTestLifecycle(TestLifecycle.CANCELLED)}>
+      <button type="button" onClick={() => setShowCancelModal(true)}>
         Cancel 🔴
       </button>
+      <Modal
+        open={showCancelModal}
+        setOpen={setShowCancelModal}
+        actions={
+          <>
+            <button type="button" onClick={() => router.push('/')}>
+              Yes, cancel
+            </button>
+            <button type="button" onClick={() => setShowCancelModal(false)}>
+              Keep going
+            </button>
+          </>
+        }
+      >
+        <p>Are you sure you want to cancel the test?</p>
+      </Modal>
     </Wrapper>
   );
 }
