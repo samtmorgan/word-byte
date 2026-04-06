@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Word } from '../../actions/types';
 import { buildTestHistory, TestSession } from '../../utils/buildTestHistory';
+import { NavRow } from '../navRow/NavRow';
 import styles from './HistoryContent.module.css';
 
 interface HistoryContentProps {
@@ -54,20 +55,14 @@ export default function HistoryContent({ initialWords }: HistoryContentProps) {
 
   return (
     <div className="pageContainer">
-      <div className="navRow">
-        <button type="button" onClick={() => setWeekOffset(o => o - 1)} aria-label="Previous week">
-          ◀
-        </button>
-        <span className="navLabel">{label}</span>
-        <button
-          type="button"
-          onClick={() => setWeekOffset(o => o + 1)}
-          disabled={weekOffset === 0}
-          aria-label="Next week"
-        >
-          ▶
-        </button>
-      </div>
+      <NavRow
+        label={label}
+        onPrev={() => setWeekOffset(o => o - 1)}
+        onNext={() => setWeekOffset(o => o + 1)}
+        nextDisabled={weekOffset === 0}
+        prevAriaLabel="Previous week"
+        nextAriaLabel="Next week"
+      />
 
       {weekSessions.length === 0 ? (
         <p className="emptyMessage">No tests this week</p>

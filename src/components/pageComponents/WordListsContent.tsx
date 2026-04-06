@@ -7,6 +7,7 @@ import { promoteWordList } from '../../actions/promoteWordList';
 import { createWordList } from '../../actions/createWordList';
 import { checkSpelling } from '../../utils/spellCheck';
 import { Modal } from '../modal/Modal';
+import { NavRow } from '../navRow/NavRow';
 import styles from './WordListsContent.module.css';
 
 interface WordListsContentProps {
@@ -309,25 +310,15 @@ export default function WordListsContent({ initialWordSets, initialWords, initia
     <div className="pageContainer">
       <div className={styles.controlsContainer}>
         {/* Navigation row */}
-        <div className="navRow">
-          <button
-            type="button"
-            onClick={() => setViewIndex(v => v - 1)}
-            disabled={viewIndex === 0}
-            aria-label="Previous list"
-          >
-            ◀
-          </button>
-          {viewIndex + 1} / {entries.length}
-          <button
-            type="button"
-            onClick={() => setViewIndex(v => v + 1)}
-            disabled={viewIndex === entries.length - 1}
-            aria-label="Next list"
-          >
-            ▶
-          </button>
-        </div>
+        <NavRow
+          label={`${viewIndex + 1} / ${entries.length}`}
+          onPrev={() => setViewIndex(v => v - 1)}
+          onNext={() => setViewIndex(v => v + 1)}
+          prevDisabled={viewIndex === 0}
+          nextDisabled={viewIndex === entries.length - 1}
+          prevAriaLabel="Previous list"
+          nextAriaLabel="Next list"
+        />
 
         {/* Type label + current badge */}
         <div className={styles.labelRow}>

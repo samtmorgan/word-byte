@@ -3,6 +3,7 @@
 import React, { Suspense, useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Review, ErrorPage, Loader } from '../../components';
+import { NavRow } from '../../components/navRow/NavRow';
 import { Modal } from '../../components/modal/Modal';
 import { getCurrentWords } from '../../actions/getCurrentWords';
 import { getAutoWords } from '../../actions/getAutoWords';
@@ -141,25 +142,15 @@ function TestWordsPageContent() {
       <div className="loader-wrapper">{isSpeaking && <Loader />}</div>
       {/*  */}
 
-      <div className="navRow">
-        <button
-          disabled={testIndex === 0 || isSpeaking}
-          onClick={() => handleIndexChange('decrement')}
-          type="button"
-          aria-label="Previous week"
-        >
-          ◀
-        </button>
-        <span className="navLabel">{`${testIndex + 1} of ${sessionWordsCount} words`}</span>
-        <button
-          disabled={testIndex + 1 === sessionWordsCount || isSpeaking}
-          onClick={() => handleIndexChange('increment')}
-          type="button"
-          aria-label="Next week"
-        >
-          ▶
-        </button>
-      </div>
+      <NavRow
+        label={`${testIndex + 1} of ${sessionWordsCount} words`}
+        onPrev={() => handleIndexChange('decrement')}
+        onNext={() => handleIndexChange('increment')}
+        prevDisabled={testIndex === 0 || isSpeaking}
+        nextDisabled={testIndex + 1 === sessionWordsCount || isSpeaking}
+        prevAriaLabel="Previous"
+        nextAriaLabel="Next"
+      />
 
       <button disabled={isSpeaking} type="button" onClick={handleSpeak}>
         Say word 🔈

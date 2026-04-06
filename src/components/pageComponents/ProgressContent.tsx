@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Word, WordOwner } from '../../actions/types';
 import { getWordProgress } from '../../utils/progressStats';
+import { NavRow } from '../navRow/NavRow';
 import styles from './ProgressContent.module.css';
 
 interface ProgressContentProps {
@@ -35,25 +36,15 @@ export default function ProgressContent({ initialWords }: ProgressContentProps) 
 
   return (
     <div className="pageContainer">
-      <div className="navRow">
-        <button
-          type="button"
-          onClick={() => setViewIndex(v => v - 1)}
-          disabled={viewIndex === 0}
-          aria-label="Previous group"
-        >
-          ◀
-        </button>
-        <span className="navLabel">{currentGroup.label}</span>
-        <button
-          type="button"
-          onClick={() => setViewIndex(v => v + 1)}
-          disabled={viewIndex === allGroups.length - 1}
-          aria-label="Next group"
-        >
-          ▶
-        </button>
-      </div>
+      <NavRow
+        label={currentGroup.label}
+        onPrev={() => setViewIndex(v => v - 1)}
+        onNext={() => setViewIndex(v => v + 1)}
+        prevDisabled={viewIndex === 0}
+        nextDisabled={viewIndex === allGroups.length - 1}
+        prevAriaLabel="Previous group"
+        nextAriaLabel="Next group"
+      />
 
       <div className={styles.tableContainer}>
         <table className="table">
