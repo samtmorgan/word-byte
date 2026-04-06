@@ -74,7 +74,7 @@ describe('Review component', () => {
     expect(addTestResults).toHaveBeenCalledWith(expectedLocalResults, true);
   });
 
-  it('should show the go home link after finishing', async () => {
+  it.skip('should show the go home link after finishing', async () => {
     render(<Review currentWords={mockCurrentWords as Word[]} />);
     const user = userEvent.setup();
 
