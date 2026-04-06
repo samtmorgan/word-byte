@@ -139,7 +139,7 @@ function TestWordsPageContent() {
       <span className="cool-border-with-shadow">{`${testIndex + 1} of ${sessionWordsCount} words`}</span>
 
       <button disabled={isSpeaking} type="button" onClick={handleSpeak}>
-        {isSpeaking ? <Loader inline /> : 'Say word 🔈'}
+        Say word 🔈
       </button>
       <div style={{ gap: '1rem' }}>
         <button disabled={testIndex === 0 || isSpeaking} onClick={() => handleIndexChange('decrement')} type="button">
