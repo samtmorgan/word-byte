@@ -48,11 +48,12 @@ describe('initUser', () => {
     mockUpdateUserWordsAndWordSets.mockResolvedValue(undefined);
   });
 
-  it.skip('should return a user when auth and db user are found, syncing new platform words', async () => {
+  it('should return a user when auth and db user are found, syncing new platform words', async () => {
+    const originalWords = [...mockDbUser.words];
     mockAuth.mockResolvedValue({ userId: mockAuthUserId });
     mockClerkClient.mockResolvedValue({ users: { getUser: mockClerkGetUser } });
     mockClerkGetUser.mockResolvedValue({ username: mockUsername });
-    mockGetUser.mockResolvedValue(mockDbUser);
+    mockGetUser.mockResolvedValue(JSON.parse(JSON.stringify(mockDbUser)));
 
     const result = await initialiseUser();
 
@@ -61,12 +62,12 @@ describe('initUser', () => {
     expect(mockClerkGetUser).toHaveBeenCalledWith(mockAuthUserId);
     // mockDbUser has one word with 'mockWordId' — all defaultWords are new
     expect(mockUpdateUserWordsAndWordSets).toHaveBeenCalledWith({
-      words: [...mockDbUser.words, ...defaultWords],
+      words: [...originalWords, ...defaultWords],
       wordSets: mockDbUser.wordSets,
       userPlatformId: mockDbUser.userPlatformId,
     });
     expect(result?.username).toBe(mockUsername);
-    expect(result?.words).toEqual([...mockDbUser.words, ...defaultWords]);
+    expect(result?.words).toEqual([...originalWords, ...defaultWords]);
   });
 
   it('should not call updateUserWordsAndWordSets when user already has all platform words', async () => {
@@ -85,7 +86,7 @@ describe('initUser', () => {
     expect(result?.words).toEqual(defaultWords);
   });
 
-  it.skip('should return a user with a word that already exists in platform words and not duplicate it', async () => {
+  it('should return a user with a word that already exists in platform words and not duplicate it', async () => {
     const userWithOneDefaultWord = {
       ...mockDbUser,
       words: [defaultWords[0]],
@@ -93,12 +94,11 @@ describe('initUser', () => {
     mockAuth.mockResolvedValue({ userId: mockAuthUserId });
     mockClerkClient.mockResolvedValue({ users: { getUser: mockClerkGetUser } });
     mockClerkGetUser.mockResolvedValue({ username: mockUsername });
-    mockGetUser.mockResolvedValue(userWithOneDefaultWord);
+    mockGetUser.mockResolvedValue(JSON.parse(JSON.stringify(userWithOneDefaultWord)));
 
     const result = await initialiseUser();
 
-    const expectedWords = [...userWithOneDefaultWord.words, ...defaultWords.slice(1)];
-    expect(result?.words).toEqual(expectedWords);
+    expect(result?.words).toEqual([...defaultWords]);
     expect(result?.words.filter(w => w.wordId === defaultWords[0].wordId)).toHaveLength(1);
   });
 

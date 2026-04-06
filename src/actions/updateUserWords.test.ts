@@ -1,28 +1,29 @@
-import client from '../lib/mongoClient';
+import { getMongoDB } from '../lib/mongoDB';
 import { mockUserWords } from '../testUtils/mockData';
 import { updateUserWords } from './updateUserWords';
 
-jest.mock('../lib/mongoClient', () => ({
-  connect: jest.fn(),
+jest.mock('../lib/mongoDB', () => ({
+  getMongoDB: jest.fn(),
 }));
 
-describe.skip('updateUserWords', () => {
-  let mockConnect: jest.Mock, mockDb: jest.Mock, mockCollection: jest.Mock, mockUpdateOne: jest.Mock;
+describe('updateUserWords', () => {
+  let mockUpdateOne: jest.Mock;
 
   beforeEach(() => {
     mockUpdateOne = jest.fn();
-    mockCollection = jest.fn(() => ({ updateOne: mockUpdateOne }));
-    mockDb = jest.fn(() => ({ collection: mockCollection }));
-    mockConnect = jest.fn(() => ({ db: mockDb }));
-    (client.connect as jest.Mock) = mockConnect;
+    (getMongoDB as jest.Mock).mockResolvedValue({
+      collection: jest.fn(() => ({ updateOne: mockUpdateOne })),
+    });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should update user words', async () => {
     const mockUserPlatformId = 'mockUserPlatformId';
     await updateUserWords({ words: mockUserWords, userPlatformId: mockUserPlatformId });
-    expect(client.connect).toHaveBeenCalled();
-    expect(mockDb).toHaveBeenCalledWith('wordByteTest');
-    expect(mockCollection).toHaveBeenCalledWith('users');
+    expect(getMongoDB).toHaveBeenCalled();
     expect(mockUpdateOne).toHaveBeenCalledWith(
       { userPlatformId: mockUserPlatformId },
       { $set: { words: mockUserWords } },

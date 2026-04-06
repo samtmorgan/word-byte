@@ -1,28 +1,26 @@
 import { getUser } from './getUser';
-import client from '../lib/mongoClient';
+import { getMongoDB } from '../lib/mongoDB';
 import { DbUser } from './types';
 
-jest.mock('../lib/mongoClient', () => ({
-  connect: jest.fn(),
+jest.mock('../lib/mongoDB', () => ({
+  getMongoDB: jest.fn(),
 }));
 
-describe.skip('getUser', () => {
-  let mockConnect: jest.Mock, mockDb: jest.Mock, mockCollection: jest.Mock, mockFindOne: jest.Mock;
+describe('getUser', () => {
+  let mockFindOne: jest.Mock;
 
   beforeEach(() => {
     mockFindOne = jest.fn();
-    mockCollection = jest.fn(() => ({ findOne: mockFindOne }));
-    mockDb = jest.fn(() => ({ collection: mockCollection }));
-    mockConnect = jest.fn(() => ({ db: mockDb }));
-    (client.connect as jest.Mock) = mockConnect;
-    jest.spyOn(console, 'error').mockImplementation(() => {});
+    (getMongoDB as jest.Mock).mockResolvedValue({
+      collection: jest.fn(() => ({ findOne: mockFindOne })),
+    });
   });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should return the user and when found', async () => {
+  it('should return the user when found', async () => {
     const mockUser: DbUser = {
       _id: '1',
       userAuthId: 'auth123',
@@ -35,21 +33,17 @@ describe.skip('getUser', () => {
 
     const result = await getUser('auth123');
 
-    expect(client.connect).toHaveBeenCalled();
-    expect(mockDb).toHaveBeenCalledWith('wordByteTest');
-    expect(mockCollection).toHaveBeenCalledWith('users');
+    expect(getMongoDB).toHaveBeenCalled();
     expect(mockFindOne).toHaveBeenCalledWith({ userAuthId: 'auth123' });
     expect(result).toEqual(mockUser);
   });
 
-  it('should return null and status ok when user is not found', async () => {
+  it('should return null when user is not found', async () => {
     mockFindOne.mockResolvedValue(null);
 
     const result = await getUser('auth123');
 
-    expect(client.connect).toHaveBeenCalled();
-    expect(mockDb).toHaveBeenCalledWith('wordByteTest');
-    expect(mockCollection).toHaveBeenCalledWith('users');
+    expect(getMongoDB).toHaveBeenCalled();
     expect(mockFindOne).toHaveBeenCalledWith({ userAuthId: 'auth123' });
     expect(result).toEqual(null);
   });

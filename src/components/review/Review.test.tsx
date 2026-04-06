@@ -74,13 +74,13 @@ describe('Review component', () => {
     expect(addTestResults).toHaveBeenCalledWith(expectedLocalResults, true);
   });
 
-  it.skip('should show the go home link after finishing', async () => {
+  it('should show the done link after finishing', async () => {
     render(<Review currentWords={mockCurrentWords as Word[]} />);
     const user = userEvent.setup();
 
     await user.click(screen.getByRole('button', { name: '🏁 Finish' }));
 
-    expect(screen.getByRole('link', { name: '🏠 Go to home' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Done' })).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: '🏁 Finish' })).not.toBeInTheDocument();
   });
 

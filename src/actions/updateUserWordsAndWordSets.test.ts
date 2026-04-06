@@ -1,20 +1,19 @@
 import { updateUserWordsAndWordSets } from './updateUserWordsAndWordSets';
-import client from '../lib/mongoClient';
+import { getMongoDB } from '../lib/mongoDB';
 import { Word, WordOwner, WordSet } from './types';
 
-jest.mock('../lib/mongoClient', () => ({
-  connect: jest.fn(),
+jest.mock('../lib/mongoDB', () => ({
+  getMongoDB: jest.fn(),
 }));
 
-describe.skip('updateUserWords', () => {
-  let mockConnect: jest.Mock, mockDb: jest.Mock, mockCollection: jest.Mock, mockUpdateOne: jest.Mock;
+describe('updateUserWordsAndWordSets', () => {
+  let mockUpdateOne: jest.Mock;
 
   beforeEach(() => {
     mockUpdateOne = jest.fn();
-    mockCollection = jest.fn(() => ({ updateOne: mockUpdateOne }));
-    mockDb = jest.fn(() => ({ collection: mockCollection }));
-    mockConnect = jest.fn(() => ({ db: mockDb }));
-    (client.connect as jest.Mock) = mockConnect;
+    (getMongoDB as jest.Mock).mockResolvedValue({
+      collection: jest.fn(() => ({ updateOne: mockUpdateOne })),
+    });
   });
 
   afterEach(() => {
@@ -28,17 +27,8 @@ describe.skip('updateUserWords', () => {
 
     await updateUserWordsAndWordSets({ words, wordSets, userPlatformId });
 
-    expect(mockDb).toHaveBeenCalledWith('wordByteTest');
-    expect(mockCollection).toHaveBeenCalledWith('users');
-    expect(mockUpdateOne).toHaveBeenCalledWith(
-      { userPlatformId },
-      {
-        $set: {
-          words,
-          wordSets,
-        },
-      },
-    );
+    expect(getMongoDB).toHaveBeenCalled();
+    expect(mockUpdateOne).toHaveBeenCalledWith({ userPlatformId }, { $set: { words, wordSets } });
   });
 
   it('should handle empty words and word sets', async () => {
@@ -48,21 +38,12 @@ describe.skip('updateUserWords', () => {
 
     await updateUserWordsAndWordSets({ words, wordSets, userPlatformId });
 
-    expect(mockDb).toHaveBeenCalledWith('wordByteTest');
-    expect(mockCollection).toHaveBeenCalledWith('users');
-    expect(mockUpdateOne).toHaveBeenCalledWith(
-      { userPlatformId },
-      {
-        $set: {
-          words,
-          wordSets,
-        },
-      },
-    );
+    expect(getMongoDB).toHaveBeenCalled();
+    expect(mockUpdateOne).toHaveBeenCalledWith({ userPlatformId }, { $set: { words, wordSets } });
   });
 
   it('should throw an error if the database connection fails', async () => {
-    (client.connect as jest.Mock).mockRejectedValue(new Error('Database connection failed'));
+    (getMongoDB as jest.Mock).mockRejectedValue(new Error('Database connection failed'));
 
     const words: Word[] = [{ wordId: '1', word: 'hello', results: [], owner: WordOwner.USER }];
     const wordSets: WordSet[] = [{ wordSetId: '1', createdAt: 123, wordIds: ['hello'] }];

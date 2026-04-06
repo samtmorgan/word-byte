@@ -99,11 +99,11 @@ describe('WelcomeContent', () => {
     expect(getByText('✍️ Start Practice')).toBeInTheDocument();
   });
 
-  it.skip('allows deselecting all year groups and shows error message', () => {
+  it('allows deselecting all year groups and shows error message', () => {
     const user: User = { ...mockUser, mode: 'auto', autoConfig: { yearGroups: ['year3_4'] } };
     const { getByText, queryByText } = render(<WelcomeContent user={user} />);
     fireEvent.click(getByText('Year 3/4'));
-    expect(getByText('Please select at least one option to start practice.')).toBeInTheDocument();
+    expect(getByText('Please select at least one option.')).toBeInTheDocument();
     expect(queryByText('✍️ Start Practice')).toBeInTheDocument();
   });
 

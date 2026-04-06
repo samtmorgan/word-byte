@@ -140,7 +140,6 @@ function TestWordsPageContent() {
   return (
     <Wrapper>
       <div className="loader-wrapper">{isSpeaking && <Loader />}</div>
-      {/*  */}
 
       <NavRow
         label={`${testIndex + 1} of ${sessionWordsCount} words`}
