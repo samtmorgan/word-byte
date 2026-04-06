@@ -1,218 +1,92 @@
-import React, { act } from 'react';
+import React from 'react';
 import '@testing-library/jest-dom';
-import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import TestWordsPage from './page';
-import { mockCurrentWords } from '../../testUtils/mockData';
 import { getCurrentWords } from '../../actions/getCurrentWords';
-import { sayTestWord } from '../../utils/sayTestWord';
+import { getAutoWords } from '../../actions/getAutoWords';
+import { mockCurrentWords } from '../../testUtils/mockData';
 
-const mockPush = jest.fn();
-jest.mock('next/navigation', () => ({
-  useSearchParams: () => ({ get: () => null }),
-  useRouter: () => ({ push: mockPush }),
-}));
-jest.mock('../../components', () => ({
-  Loader: () => <div>mock loading</div>,
-  ErrorPage: () => <div>mock error</div>,
-  Review: () => <div>mock review</div>,
-}));
 jest.mock('../../actions/getCurrentWords', () => ({
   getCurrentWords: jest.fn(),
 }));
 jest.mock('../../actions/getAutoWords', () => ({
   getAutoWords: jest.fn(),
 }));
-jest.mock('../../components/modal/Modal', () => ({
-  Modal: ({ open, children, actions }: { open: boolean; children: React.ReactNode; actions: React.ReactNode }) =>
-    open ? (
-      <div>
-        {children}
-        {actions}
-      </div>
-    ) : null,
+jest.mock('../../components', () => ({
+  ErrorPage: () => <div>mock error</div>,
 }));
-jest.mock('../../utils/sayTestWord', () => ({
-  sayTestWord: jest.fn().mockResolvedValue(undefined),
+jest.mock('../../components/pageComponents/TestContent', () => ({
+  __esModule: true,
+  default: ({ initialWords, isAutoMode }: { initialWords: unknown[]; isAutoMode: boolean }) => (
+    <div data-testid="test-content" data-auto-mode={isAutoMode} data-word-count={initialWords.length} />
+  ),
 }));
 
-describe('TestWords page renders expected components', () => {
-  it('should render loading text before the test words are loaded', async () => {
-    await act(async () => {
-      render(<TestWordsPage />);
-    });
+describe('TestWordsPage', () => {
+  it('should render error component when getCurrentWords throws', async () => {
+    (getCurrentWords as jest.Mock).mockRejectedValue(new Error('fail'));
 
-    expect(screen.getByText('mock loading')).toBeInTheDocument();
-  });
-
-  it('should render error component when getCurrentWords returns an error', async () => {
-    (getCurrentWords as jest.Mock).mockRejectedValue(new Error('mock error'));
-
-    await act(async () => {
-      render(<TestWordsPage />);
-    });
+    const page = await TestWordsPage({ searchParams: Promise.resolve({}) });
+    render(page);
 
     expect(screen.getByText('mock error')).toBeInTheDocument();
   });
 
-  it('should render button "Start" when we have session words and the test is not started', async () => {
-    (getCurrentWords as jest.Mock).mockResolvedValue(mockCurrentWords);
-
-    await act(async () => {
-      render(<TestWordsPage />);
-    });
-    expect(screen.getByRole('button', { name: /Start/ })).toBeInTheDocument();
-  });
-
-  it('should render message when there are no words in the set', async () => {
+  it('should render empty message when manual mode returns no words', async () => {
     (getCurrentWords as jest.Mock).mockResolvedValue([]);
 
-    await act(async () => {
-      render(<TestWordsPage />);
-    });
+    const page = await TestWordsPage({ searchParams: Promise.resolve({}) });
+    render(page);
 
-    expect(screen.getByText(/🙁 No words here yet/)).toBeInTheDocument();
+    expect(screen.getByText(/No words here yet/)).toBeInTheDocument();
   });
-});
 
-describe('TestWords page user interaction', () => {
-  beforeEach(async () => {
+  it('should render empty message when manual mode returns null', async () => {
+    (getCurrentWords as jest.Mock).mockResolvedValue(null);
+
+    const page = await TestWordsPage({ searchParams: Promise.resolve({}) });
+    render(page);
+
+    expect(screen.getByText(/No words here yet/)).toBeInTheDocument();
+  });
+
+  it('should render TestContent with words in manual mode', async () => {
     (getCurrentWords as jest.Mock).mockResolvedValue(mockCurrentWords);
-    (sayTestWord as jest.Mock).mockResolvedValue(undefined);
 
-    await act(async () => {
-      render(<TestWordsPage />);
-    });
+    const page = await TestWordsPage({ searchParams: Promise.resolve({}) });
+    render(page);
+
+    const content = screen.getByTestId('test-content');
+    expect(content).toHaveAttribute('data-auto-mode', 'false');
+    expect(content).toHaveAttribute('data-word-count', '2');
   });
 
-  afterEach(() => {
-    jest.resetAllMocks();
+  it('should render all-correct message when auto mode returns empty set', async () => {
+    (getAutoWords as jest.Mock).mockResolvedValue({ words: [], isEmpty: true, yearGroups: [] });
+
+    const page = await TestWordsPage({ searchParams: Promise.resolve({ mode: 'auto' }) });
+    render(page);
+
+    expect(screen.getByText(/Amazing! You got all words correct!/)).toBeInTheDocument();
   });
 
-  it('should render the start button in enabled state', async () => {
-    const startButton = screen.getByRole('button', { name: /Start/ });
+  it('should render TestContent with words in auto mode', async () => {
+    (getAutoWords as jest.Mock).mockResolvedValue({ words: mockCurrentWords, isEmpty: false, yearGroups: [] });
 
-    expect(startButton).toBeEnabled();
+    const page = await TestWordsPage({ searchParams: Promise.resolve({ mode: 'auto' }) });
+    render(page);
+
+    const content = screen.getByTestId('test-content');
+    expect(content).toHaveAttribute('data-auto-mode', 'true');
+    expect(content).toHaveAttribute('data-word-count', '2');
   });
 
-  it('should render the expected controls when the test is started', async () => {
-    const user = userEvent.setup();
-    await user.click(screen.getByRole('button', { name: /Start/ }));
+  it('should render error component when auto mode throws', async () => {
+    (getAutoWords as jest.Mock).mockRejectedValue(new Error('fail'));
 
-    const checkButton = screen.getByRole('button', { name: /Check Answers/ });
-    const previousButton = screen.getByRole('button', { name: /Previous/ });
-    const nextButton = screen.getByRole('button', { name: /Next/ });
-    const sayWordButton = screen.getByRole('button', { name: /Say word/ });
-    const cancelButton = screen.getByRole('button', { name: /Cancel/ });
+    const page = await TestWordsPage({ searchParams: Promise.resolve({ mode: 'auto' }) });
+    render(page);
 
-    expect(checkButton).toBeDisabled();
-    expect(previousButton).toBeDisabled();
-    expect(nextButton).toBeEnabled();
-    expect(sayWordButton).toBeEnabled();
-    expect(cancelButton).toBeEnabled();
-    expect(screen.getByText(`1 of ${mockCurrentWords.length} words`)).toBeInTheDocument();
-  });
-
-  it('should cycle through the words in the test', async () => {
-    const user = userEvent.setup();
-    await user.click(screen.getByRole('button', { name: /Start/ }));
-
-    const previousButton = screen.getByRole('button', { name: /Previous/ });
-    const nextButton = screen.getByRole('button', { name: /Next/ });
-
-    expect(screen.getByText(`1 of ${mockCurrentWords.length} words`)).toBeInTheDocument();
-
-    await user.click(nextButton);
-    expect(screen.getByText(`2 of ${mockCurrentWords.length} words`)).toBeInTheDocument();
-
-    await user.click(previousButton);
-    expect(screen.getByText(`1 of ${mockCurrentWords.length} words`)).toBeInTheDocument();
-
-    await user.click(nextButton);
-    expect(screen.getByText(`2 of ${mockCurrentWords.length} words`)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Next/ })).toBeDisabled();
-
-    const reviewButton = screen.getByRole('button', { name: /Check Answers/ });
-    expect(reviewButton).toBeEnabled();
-
-    await user.click(reviewButton);
-    expect(screen.getByText(/mock review/)).toBeInTheDocument();
-  });
-
-  it('should call the speak function when the say word button is clicked', async () => {
-    const user = userEvent.setup();
-    await user.click(screen.getByRole('button', { name: /Start/ }));
-
-    jest.clearAllMocks();
-    (sayTestWord as jest.Mock).mockResolvedValue(undefined);
-
-    const sayWordButton = screen.getByRole('button', { name: /Say word/ });
-    await user.click(sayWordButton);
-
-    expect(sayTestWord).toHaveBeenCalled();
-  });
-
-  it('should speak automatically when the test starts', async () => {
-    const user = userEvent.setup();
-    await user.click(screen.getByRole('button', { name: /Start/ }));
-
-    expect(sayTestWord).toHaveBeenCalledWith(mockCurrentWords, 0);
-  });
-
-  it('should speak automatically when navigating to the next word', async () => {
-    const user = userEvent.setup();
-    await user.click(screen.getByRole('button', { name: /Start/ }));
-
-    jest.clearAllMocks();
-    (sayTestWord as jest.Mock).mockResolvedValue(undefined);
-
-    await user.click(screen.getByRole('button', { name: /Next/ }));
-
-    expect(sayTestWord).toHaveBeenCalledWith(mockCurrentWords, 1);
-  });
-
-  it('should speak automatically when navigating to the previous word', async () => {
-    const user = userEvent.setup();
-    await user.click(screen.getByRole('button', { name: /Start/ }));
-    await user.click(screen.getByRole('button', { name: /Next/ }));
-
-    jest.clearAllMocks();
-    (sayTestWord as jest.Mock).mockResolvedValue(undefined);
-
-    await user.click(screen.getByRole('button', { name: /Previous/ }));
-
-    expect(sayTestWord).toHaveBeenCalledWith(mockCurrentWords, 0);
-  });
-
-  it('should open a confirmation modal when cancel is clicked', async () => {
-    const user = userEvent.setup();
-    await user.click(screen.getByRole('button', { name: /Start/ }));
-
-    await user.click(screen.getByRole('button', { name: /Cancel/ }));
-
-    expect(screen.getByText(/Are you sure you want to cancel the test\?/)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Yes, cancel/ })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Keep going/ })).toBeInTheDocument();
-  });
-
-  it('should navigate to home when cancel is confirmed', async () => {
-    const user = userEvent.setup();
-    await user.click(screen.getByRole('button', { name: /Start/ }));
-    await user.click(screen.getByRole('button', { name: /Cancel/ }));
-
-    await user.click(screen.getByRole('button', { name: /Yes, cancel/ }));
-
-    expect(mockPush).toHaveBeenCalledWith('/');
-  });
-
-  it('should close the modal when keep going is clicked', async () => {
-    const user = userEvent.setup();
-    await user.click(screen.getByRole('button', { name: /Start/ }));
-    await user.click(screen.getByRole('button', { name: /Cancel/ }));
-
-    await user.click(screen.getByRole('button', { name: /Keep going/ }));
-
-    expect(screen.queryByText(/Are you sure you want to cancel the test\?/)).not.toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Cancel/ })).toBeInTheDocument();
+    expect(screen.getByText('mock error')).toBeInTheDocument();
   });
 });

@@ -1,190 +1,46 @@
-'use client';
-
-import React, { Suspense, useCallback, useEffect, useMemo, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { Review, ErrorPage, Loader } from '../../components';
-import { NavRow } from '../../components/navRow/NavRow';
-import { Modal } from '../../components/modal/Modal';
+import React from 'react';
 import { getCurrentWords } from '../../actions/getCurrentWords';
 import { getAutoWords } from '../../actions/getAutoWords';
-import { Word } from '../../actions/types';
-import { sayTestWord } from '../../utils/sayTestWord';
-
-enum TestLifecycle {
-  NOT_STARTED = 'notStarted',
-  TEST = 'test',
-  REVIEW = 'review',
-  REVISE = 'revise',
-  FINISHED = 'finished',
-}
+import { ErrorPage } from '../../components';
+import TestContent from '../../components/pageComponents/TestContent';
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => <div className="pageContainer">{children}</div>;
 
-function TestWordsPageContent() {
-  const searchParams = useSearchParams();
-  const isAutoMode = searchParams.get('mode') === 'auto';
+export default async function TestWordsPage({ searchParams }: { searchParams: Promise<{ mode?: string }> }) {
+  const { mode } = await searchParams;
+  const isAutoMode = mode === 'auto';
 
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<boolean | string>(false);
-  const [currentWords, setCurrentWords] = useState<Word[] | null>(null);
-  const [isEmptyAutoSet, setIsEmptyAutoSet] = useState<boolean>(false);
-  const [hasSeenAllWords, setHasSeenAllWords] = useState<boolean>(false);
-  const [testIndex, setTestIndex] = useState<number>(0);
-  const [testLifecycle, setTestLifecycle] = useState<TestLifecycle>(TestLifecycle.NOT_STARTED);
-  const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
-  const [showCancelModal, setShowCancelModal] = useState<boolean>(false);
-  const router = useRouter();
+  try {
+    if (isAutoMode) {
+      const result = await getAutoWords();
 
-  useEffect(() => {
-    const loadWords = async () => {
-      try {
-        if (isAutoMode) {
-          const result = await getAutoWords();
-          if (result.isEmpty) {
-            setIsEmptyAutoSet(true);
-            setCurrentWords([]);
-          } else {
-            setCurrentWords(result.words);
-          }
-        } else {
-          const words: Word[] | null = await getCurrentWords();
-          setCurrentWords(words);
-        }
-        setLoading(false);
-      } catch {
-        setError(true);
-        setLoading(false);
+      if (result.isEmpty) {
+        return (
+          <Wrapper>
+            <p>🎉 Amazing! You got all words correct!</p>
+          </Wrapper>
+        );
       }
-    };
 
-    loadWords();
-  }, [isAutoMode]);
-
-  const sessionWordsCount = useMemo(() => currentWords?.length || 0, [currentWords]);
-
-  const handleSpeak = useCallback(async () => {
-    setIsSpeaking(true);
-    try {
-      await sayTestWord(currentWords, testIndex);
-    } finally {
-      setIsSpeaking(false);
+      return <TestContent initialWords={result.words} isAutoMode />;
     }
-  }, [currentWords, testIndex]);
 
-  const handleIndexChange = useCallback(
-    (direction: 'increment' | 'decrement') => {
-      if (direction === 'increment') {
-        setTestIndex(testIndex + 1);
-      }
-      if (direction === 'decrement') {
-        setTestIndex(testIndex - 1);
-      }
-    },
-    [testIndex],
-  );
+    const words = await getCurrentWords();
 
-  useEffect(() => {
-    if (testIndex + 1 === sessionWordsCount) {
-      setHasSeenAllWords(true);
+    if (!words || words.length === 0) {
+      return (
+        <Wrapper>
+          <p>🙁 No words here yet</p>
+        </Wrapper>
+      );
     }
-  }, [testIndex, sessionWordsCount]);
 
-  useEffect(() => {
-    if (testLifecycle === TestLifecycle.TEST) {
-      handleSpeak();
-    }
-  }, [testIndex, testLifecycle, handleSpeak]);
-
-  if (error)
+    return <TestContent initialWords={words} isAutoMode={false} />;
+  } catch {
     return (
       <Wrapper>
         <ErrorPage />
       </Wrapper>
     );
-
-  if (loading || !currentWords)
-    return (
-      <Wrapper>
-        <Loader />
-      </Wrapper>
-    );
-
-  if (isAutoMode && isEmptyAutoSet)
-    return (
-      <Wrapper>
-        <p>🎉 Amazing! You got all words correct!</p>
-      </Wrapper>
-    );
-
-  if (!isAutoMode && currentWords.length === 0)
-    return (
-      <Wrapper>
-        <p>🙁 No words here yet</p>
-      </Wrapper>
-    );
-
-  if (testLifecycle === 'notStarted' || testLifecycle === 'finished') {
-    return (
-      <Wrapper>
-        <button type="button" onClick={() => setTestLifecycle(TestLifecycle.TEST)}>
-          Start 🟢
-        </button>
-      </Wrapper>
-    );
   }
-
-  if (testLifecycle === 'review') {
-    return <Review currentWords={currentWords} isAutoMode={isAutoMode} />;
-  }
-
-  return (
-    <Wrapper>
-      <div className="loader-wrapper">{isSpeaking && <Loader />}</div>
-
-      <NavRow
-        label={`${testIndex + 1} of ${sessionWordsCount} words`}
-        onPrev={() => handleIndexChange('decrement')}
-        onNext={() => handleIndexChange('increment')}
-        prevDisabled={testIndex === 0 || isSpeaking}
-        nextDisabled={testIndex + 1 === sessionWordsCount || isSpeaking}
-        prevAriaLabel="Previous"
-        nextAriaLabel="Next"
-      />
-
-      <button disabled={isSpeaking} type="button" onClick={handleSpeak}>
-        Say word 🔈
-      </button>
-
-      <button disabled={!hasSeenAllWords} type="button" onClick={() => setTestLifecycle(TestLifecycle.REVIEW)}>
-        Check Answers ✔
-      </button>
-      <button type="button" onClick={() => setShowCancelModal(true)}>
-        Cancel 🔴
-      </button>
-      <Modal
-        open={showCancelModal}
-        setOpen={setShowCancelModal}
-        actions={
-          <>
-            <button type="button" onClick={() => router.push('/')}>
-              Yes, cancel
-            </button>
-            <button type="button" onClick={() => setShowCancelModal(false)}>
-              Keep going
-            </button>
-          </>
-        }
-      >
-        <p>Are you sure you want to cancel the test?</p>
-      </Modal>
-    </Wrapper>
-  );
-}
-
-export default function TestWordsPage() {
-  return (
-    <Suspense>
-      <TestWordsPageContent />
-    </Suspense>
-  );
 }

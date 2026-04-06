@@ -10,7 +10,7 @@ const mockPush = jest.fn();
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: mockPush }),
 }));
-jest.mock('../../components', () => ({
+jest.mock('..', () => ({
   Loader: () => <div>mock loading</div>,
   Review: () => <div>mock review</div>,
 }));
