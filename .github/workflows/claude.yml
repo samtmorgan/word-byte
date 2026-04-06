@@ -39,36 +39,19 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
+      - name: Setup Husky
+        run: yarn prepare
+
       - name: Run Claude Code
         id: claude
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-
-          allowed_tools: |
-            Bash(git add:*)
-            Bash(git commit:*)
-            Bash(git push:*)
-            Bash(git checkout:*)
-            Bash(git branch:*)
-            Bash(gh pr create:*)
-            Bash(gh pr list:*)
-            Bash(gh pr view:*)
-            Bash(gh pr edit:*)
-            Bash(gh issue comment:*)
-            Bash(yarn lint:*)
-            Bash(yarn test:*)
-            Bash(yarn type-check:*)
-            Bash(npx jest:*)
-
-          custom_instructions: |
+          prompt: |
             After implementing changes, you MUST verify all quality checks pass before opening a PR:
             1. Run `yarn lint` — fix any lint errors
             2. Run `yarn type-check` — fix any type errors
             3. Run `yarn test` — fix any test failures (coverage threshold is 80%)
             If any check fails, fix the issues and re-run until all three pass.
             Only then open a PR and request review from samtmorgan.
-
-          additional_permissions: |
-            actions: read
 
