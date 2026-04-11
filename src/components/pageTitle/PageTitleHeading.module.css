@@ -1,9 +1,7 @@
-.mobileHeading {
-  /* visible on mobile — inherits h1 styles from globals.css */
-}
-
-@media (min-width: 768px) {
-  .mobileHeading {
-    display: none;
-  }
+.pageTitleHeading {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  padding-left: 2rem;
+  color: var(--text-primary);
 }

@@ -6,7 +6,7 @@
   --color-main-background: #fbeee0;
   --box-shadow: var(--color-main) 4px 4px 0 0;
   --border: 2px solid var(--color-main);
-  --header-height: 5rem;
+  --header-height: 4rem;
   --button-hover-background-color: #fff;
   --button-height: 2rem;
 }

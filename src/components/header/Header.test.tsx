@@ -22,20 +22,16 @@ describe('Header component', () => {
     expect(screen.getByRole('banner')).toBeInTheDocument();
   });
 
-  it('renders a <nav /> element', () => {
-    expect(screen.getByRole('navigation')).toBeInTheDocument();
+  it('renders the app logo image', () => {
+    expect(screen.getByAltText('Word Byte Logo')).toBeInTheDocument();
   });
 
-  it('renders a <a /> tag', () => {
-    expect(screen.getByRole('link')).toBeInTheDocument();
+  it('renders the app name', () => {
+    expect(screen.getByText('Word Byte')).toBeInTheDocument();
   });
 
-  it('renders the correct label for the link', () => {
-    expect(screen.getByText('👾 Word Byte')).toBeInTheDocument();
-  });
-
-  it('renders the correct href for the link', () => {
-    expect(screen.getByText('👾 Word Byte')).toHaveAttribute('href', '/');
+  it('renders the NavDrawer hamburger button when signed in', () => {
+    expect(screen.getByRole('button', { name: 'Open navigation menu' })).toBeInTheDocument();
   });
 
   it('renders the SignedIn component', () => {

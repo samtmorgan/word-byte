@@ -9,5 +9,5 @@ export function PageTitleHeading() {
   const pathname = usePathname();
   const title = PAGE_TITLES[pathname];
   if (!title) return null;
-  return <h1 className={styles.mobileHeading}>{title}</h1>;
+  return <p className={styles.pageTitleHeading}>/ {title}</p>;
 }
