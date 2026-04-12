@@ -101,22 +101,35 @@ export default function MyWordsContent({ initialWords }: MyWordsContentProps) {
       {words.length === 0 ? (
         <p>No custom words yet. Add some above!</p>
       ) : (
-        <ul className={styles.wordList}>
-          {words.map(word => (
-            <li key={word.wordId} className={styles.wordItem}>
-              <span className={styles.wordText}>{word.word}</span>
-              <span className={styles.successRate}>{getSuccessRate(word)}</span>
-              <button
-                type="button"
-                className={styles.deleteButton}
-                onClick={() => setWordToDelete(word)}
-                aria-label={`Delete ${word.word}`}
-              >
-                🗑️
-              </button>
-            </li>
-          ))}
-        </ul>
+        <div className={styles.tableContainer}>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Word</th>
+                <th>Result</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {words.map(word => (
+                <tr key={word.wordId}>
+                  <td>{word.word}</td>
+                  <td>{getSuccessRate(word)}</td>
+                  <td>
+                    <button
+                      type="button"
+                      className={styles.deleteButton}
+                      onClick={() => setWordToDelete(word)}
+                      aria-label={`Delete ${word.word}`}
+                    >
+                      🗑️
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
 
       <Modal
