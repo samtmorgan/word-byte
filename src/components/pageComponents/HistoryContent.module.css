@@ -1,5 +1,6 @@
 .tableContainer {
   width: 100%;
+  overflow-x: auto;
   border: var(--border);
   box-shadow: var(--box-shadow);
 }

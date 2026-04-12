@@ -1,6 +1,6 @@
 .tableContainer {
   max-height: 70vh;
-  overflow-y: auto;
+  overflow: auto;
   width: 100%;
   border: var(--border);
   box-shadow: var(--box-shadow);
