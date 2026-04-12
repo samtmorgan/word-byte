@@ -20,16 +20,30 @@ describe('addUserWord', () => {
     jest.clearAllMocks();
   });
 
-  it('returns init_failed error when user cannot be initialized', async () => {
+  it('returns INIT_FAILED when user cannot be initialized', async () => {
     (initialiseUser as jest.Mock).mockResolvedValue(null);
 
     const result = await addUserWord('newword');
 
-    expect(result).toEqual({ success: false, error: 'init_failed' });
+    expect(result).toEqual({ success: false, code: 'INIT_FAILED', error: expect.any(String) });
     expect(updateUserWordsAndWordSets).not.toHaveBeenCalled();
   });
 
-  it('returns duplicate error when user word already exists (case-insensitive)', async () => {
+  it('returns VALIDATION_ERROR for empty word', async () => {
+    const result = await addUserWord('');
+
+    expect(result).toEqual({ success: false, code: 'VALIDATION_ERROR', error: expect.any(String) });
+    expect(initialiseUser).not.toHaveBeenCalled();
+  });
+
+  it('returns VALIDATION_ERROR for whitespace-only word', async () => {
+    const result = await addUserWord('   ');
+
+    expect(result).toEqual({ success: false, code: 'VALIDATION_ERROR', error: expect.any(String) });
+    expect(initialiseUser).not.toHaveBeenCalled();
+  });
+
+  it('returns DUPLICATE when user word already exists (case-insensitive)', async () => {
     const user = {
       ...mockUser,
       words: [{ word: 'mockWord', wordId: 'mockWordId', owner: WordOwner.USER, results: [] }],
@@ -38,7 +52,7 @@ describe('addUserWord', () => {
 
     const result = await addUserWord('MOCKWORD');
 
-    expect(result).toEqual({ success: false, error: 'duplicate' });
+    expect(result).toEqual({ success: false, code: 'DUPLICATE', error: expect.any(String) });
     expect(updateUserWordsAndWordSets).not.toHaveBeenCalled();
   });
 
@@ -50,7 +64,7 @@ describe('addUserWord', () => {
 
     const result = await addUserWord('fascinate');
 
-    expect(result).toEqual({ success: true });
+    expect(result).toEqual({ success: true, data: undefined });
     expect(updateUserWordsAndWordSets).toHaveBeenCalledWith(
       expect.objectContaining({
         words: [platformWord, { word: 'fascinate', wordId: 'new-word-id', owner: WordOwner.USER, results: [] }],
@@ -65,7 +79,7 @@ describe('addUserWord', () => {
 
     const result = await addUserWord('newword');
 
-    expect(result).toEqual({ success: true });
+    expect(result).toEqual({ success: true, data: undefined });
     expect(updateUserWordsAndWordSets).toHaveBeenCalledWith({
       words: [{ word: 'newword', wordId: 'new-word-id', owner: WordOwner.USER, results: [] }],
       wordSets: [],

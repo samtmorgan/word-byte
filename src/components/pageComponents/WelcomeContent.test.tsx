@@ -7,11 +7,11 @@ import { updateUserMode } from '../../actions/updateUserMode';
 import { updateAutoConfig } from '../../actions/updateAutoConfig';
 
 jest.mock('../../actions/updateUserMode', () => ({
-  updateUserMode: jest.fn().mockResolvedValue(undefined),
+  updateUserMode: jest.fn().mockResolvedValue({ success: true, data: undefined }),
 }));
 
 jest.mock('../../actions/updateAutoConfig', () => ({
-  updateAutoConfig: jest.fn().mockResolvedValue(undefined),
+  updateAutoConfig: jest.fn().mockResolvedValue({ success: true, data: undefined }),
 }));
 
 jest.mock('../../utils/dashboardStats', () => ({

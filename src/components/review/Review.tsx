@@ -40,7 +40,7 @@ export default function Review({ currentWords, isAutoMode = false }: ReviewProps
 
   useEffect(() => {
     if (reviewLifecycle === ReviewLifecycle.COMPLETE) {
-      addTestResults(results, isAutoMode);
+      addTestResults({ localResults: results, isAutoMode });
     }
   }, [reviewLifecycle, results, isAutoMode]);
 

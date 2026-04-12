@@ -55,3 +55,11 @@ export interface User extends DbUser {
 }
 
 export type NewIdDbUser = Omit<DbUser, '_id'>;
+
+export type LocalResultItem = {
+  pass: boolean | null;
+  wordId: string;
+  word: string;
+};
+
+export type LocalResults = LocalResultItem[];

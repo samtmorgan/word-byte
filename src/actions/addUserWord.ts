@@ -4,31 +4,33 @@ import { v4 } from 'uuid';
 import { initialiseUser } from './initUser';
 import { Word, WordOwner } from './types';
 import { updateUserWordsAndWordSets } from './updateUserWordsAndWordSets';
+import { ActionResult, fail, ok, safeAction } from './actionResult';
+import { addUserWordSchema } from './schemas';
 
-export type AddUserWordResult = { success: boolean; error?: 'duplicate' | 'init_failed' };
+export async function addUserWord(word: string): Promise<ActionResult> {
+  return safeAction(addUserWordSchema, word, async validWord => {
+    const user = await initialiseUser();
+    if (!user) return fail('INIT_FAILED', "Couldn't initialise user");
 
-export async function addUserWord(word: string): Promise<AddUserWordResult> {
-  const user = await initialiseUser();
-  if (!user) {
-    return { success: false, error: 'init_failed' };
-  }
+    const isDuplicate = user.words.some(
+      w => w.word.toLowerCase() === validWord.toLowerCase() && w.owner === WordOwner.USER,
+    );
 
-  const isDuplicate = user.words.some(w => w.word.toLowerCase() === word.toLowerCase() && w.owner === WordOwner.USER);
+    if (isDuplicate) {
+      return fail('DUPLICATE', 'Word already exists');
+    }
 
-  if (isDuplicate) {
-    return { success: false, error: 'duplicate' };
-  }
+    const newWord: Word = {
+      word: validWord,
+      wordId: v4(),
+      owner: WordOwner.USER,
+      results: [],
+    };
 
-  const newWord: Word = {
-    word,
-    wordId: v4(),
-    owner: WordOwner.USER,
-    results: [],
-  };
+    const words: Word[] = [...user.words, newWord];
 
-  const words: Word[] = [...user.words, newWord];
+    await updateUserWordsAndWordSets({ words, wordSets: user.wordSets, userPlatformId: user.userPlatformId });
 
-  await updateUserWordsAndWordSets({ words, wordSets: user.wordSets, userPlatformId: user.userPlatformId });
-
-  return { success: true };
+    return ok();
+  });
 }

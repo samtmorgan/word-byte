@@ -48,9 +48,9 @@ describe('WordListsContent', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     (checkSpelling as jest.Mock).mockResolvedValue({ valid: true });
-    (createWordList as jest.Mock).mockResolvedValue(undefined);
-    (deleteWordList as jest.Mock).mockResolvedValue(undefined);
-    (promoteWordList as jest.Mock).mockResolvedValue(undefined);
+    (createWordList as jest.Mock).mockResolvedValue({ success: true, data: undefined });
+    (deleteWordList as jest.Mock).mockResolvedValue({ success: true, data: undefined });
+    (promoteWordList as jest.Mock).mockResolvedValue({ success: true, data: undefined });
   });
 
   describe('empty state', () => {
