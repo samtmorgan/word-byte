@@ -159,6 +159,13 @@ input {
   text-align: left;
 }
 
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 100;
+}
+
 .modal {
   position: absolute;
   inset: 40px;
