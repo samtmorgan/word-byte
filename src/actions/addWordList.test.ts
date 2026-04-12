@@ -22,25 +22,42 @@ describe('addWordList', () => {
     jest.clearAllMocks();
   });
 
-  it('should throw an error if user cannot be initialized', async () => {
+  it('returns INIT_FAILED when user cannot be initialized', async () => {
     (initialiseUser as jest.Mock).mockResolvedValue(null);
 
-    await expect(addWordList(['test'])).rejects.toThrow("couldn't initialise user");
+    const result = await addWordList(['test']);
+
+    expect(result).toEqual({ success: false, code: 'INIT_FAILED', error: expect.any(String) });
+  });
+
+  it('returns VALIDATION_ERROR for empty array', async () => {
+    const result = await addWordList([]);
+
+    expect(result).toEqual({ success: false, code: 'VALIDATION_ERROR', error: expect.any(String) });
+    expect(initialiseUser).not.toHaveBeenCalled();
+  });
+
+  it('returns VALIDATION_ERROR for array with empty string', async () => {
+    const result = await addWordList(['']);
+
+    expect(result).toEqual({ success: false, code: 'VALIDATION_ERROR', error: expect.any(String) });
+    expect(initialiseUser).not.toHaveBeenCalled();
   });
 
   it('should add new words to the user', async () => {
-    const mockUser = {
+    const mockUserData = {
       words: [{ word: 'existingWord', wordId: 'existing-word-id', owner: WordOwner.USER, results: [] }],
       wordSets: [],
       userPlatformId: 'user1',
     };
-    (initialiseUser as jest.Mock).mockResolvedValue(mockUser);
+    (initialiseUser as jest.Mock).mockResolvedValue(mockUserData);
     (uuidv4 as jest.Mock).mockReturnValueOnce('new-word-id').mockReturnValueOnce('new-word-set-id');
 
-    await addWordList(['newWord']);
+    const result = await addWordList(['newWord']);
 
+    expect(result).toEqual({ success: true, data: undefined });
     expect(updateUserWordsAndWordSets).toHaveBeenCalledWith({
-      words: [...mockUser.words, { word: 'newWord', wordId: 'new-word-id', owner: WordOwner.USER, results: [] }],
+      words: [...mockUserData.words, { word: 'newWord', wordId: 'new-word-id', owner: WordOwner.USER, results: [] }],
       wordSets: [
         {
           wordSetId: 'new-word-set-id',
@@ -53,18 +70,19 @@ describe('addWordList', () => {
   });
 
   it('should not add duplicate words', async () => {
-    const mockUser = {
+    const mockUserData = {
       words: [{ word: 'existingWord', wordId: 'existing-word-id', owner: WordOwner.USER, results: [] }],
       wordSets: [],
       userPlatformId: 'user1',
     };
-    (initialiseUser as jest.Mock).mockResolvedValue(mockUser);
+    (initialiseUser as jest.Mock).mockResolvedValue(mockUserData);
     (uuidv4 as jest.Mock).mockReturnValueOnce('new-word-set-id');
 
-    await addWordList(['existingWord']);
+    const result = await addWordList(['existingWord']);
 
+    expect(result).toEqual({ success: true, data: undefined });
     expect(updateUserWordsAndWordSets).toHaveBeenCalledWith({
-      words: mockUser.words,
+      words: mockUserData.words,
       wordSets: [
         {
           wordSetId: 'new-word-set-id',
@@ -77,18 +95,19 @@ describe('addWordList', () => {
   });
 
   it('should handle a mix of new and existing words', async () => {
-    const mockUser = {
+    const mockUserData = {
       words: [{ word: 'existingWord', wordId: 'existing-word-id', owner: WordOwner.USER, results: [] }],
       wordSets: [],
       userPlatformId: 'user1',
     };
-    (initialiseUser as jest.Mock).mockResolvedValue(mockUser);
+    (initialiseUser as jest.Mock).mockResolvedValue(mockUserData);
     (uuidv4 as jest.Mock).mockReturnValueOnce('new-word-id').mockReturnValueOnce('new-word-set-id');
 
-    await addWordList(['existingWord', 'newWord']);
+    const result = await addWordList(['existingWord', 'newWord']);
 
+    expect(result).toEqual({ success: true, data: undefined });
     expect(updateUserWordsAndWordSets).toHaveBeenCalledWith({
-      words: [...mockUser.words, { word: 'newWord', wordId: 'new-word-id', owner: WordOwner.USER, results: [] }],
+      words: [...mockUserData.words, { word: 'newWord', wordId: 'new-word-id', owner: WordOwner.USER, results: [] }],
       wordSets: [
         {
           wordSetId: 'new-word-set-id',

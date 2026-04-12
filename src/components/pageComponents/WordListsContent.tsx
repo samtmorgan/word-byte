@@ -120,7 +120,7 @@ function CreateListForm({ allWords, onCancel, onCreated }: CreateListFormProps) 
     onCreated(optimisticWordSet, newWords);
 
     startTransition(async () => {
-      await createWordList(Array.from(selectedIds), pendingNewWords);
+      await createWordList({ selectedWordIds: Array.from(selectedIds), newWordTexts: pendingNewWords });
     });
   };
 

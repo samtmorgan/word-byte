@@ -20,13 +20,26 @@ describe('updateAutoConfig', () => {
     jest.clearAllMocks();
   });
 
-  it('throws error when user cannot be initialized', async () => {
+  it('returns INIT_FAILED when user cannot be initialized', async () => {
     (initialiseUser as jest.Mock).mockResolvedValue(null);
 
-    await expect(updateAutoConfig({ yearGroups: ['year3_4'], includeUserWords: false })).rejects.toThrow(
-      "couldn't initialise user",
-    );
+    const result = await updateAutoConfig({ yearGroups: ['year3_4'], includeUserWords: false });
+
+    expect(result).toEqual({ success: false, code: 'INIT_FAILED', error: expect.any(String) });
     expect(updateAutoWordSet).not.toHaveBeenCalled();
+  });
+
+  it('returns VALIDATION_ERROR for empty yearGroups', async () => {
+    const result = await updateAutoConfig({ yearGroups: [], includeUserWords: false });
+
+    expect(result).toEqual({ success: false, code: 'VALIDATION_ERROR', error: expect.any(String) });
+    expect(initialiseUser).not.toHaveBeenCalled();
+  });
+
+  it('returns VALIDATION_ERROR for invalid yearGroup value', async () => {
+    const result = await updateAutoConfig({ yearGroups: ['year7_8' as 'year3_4'], includeUserWords: false });
+
+    expect(result).toEqual({ success: false, code: 'VALIDATION_ERROR', error: expect.any(String) });
   });
 
   it('rebuilds auto word set with new config', async () => {
@@ -34,8 +47,9 @@ describe('updateAutoConfig', () => {
     (initialiseUser as jest.Mock).mockResolvedValue({ ...mockUser, words: mockWords });
     (buildInitialAutoWordSet as jest.Mock).mockReturnValue(mockWords);
 
-    await updateAutoConfig({ yearGroups: ['year3_4'], includeUserWords: true });
+    const result = await updateAutoConfig({ yearGroups: ['year3_4'], includeUserWords: true });
 
+    expect(result).toEqual({ success: true, data: undefined });
     expect(buildInitialAutoWordSet).toHaveBeenCalledWith(mockWords, ['year3_4'], true);
     expect(updateAutoWordSet).toHaveBeenCalledWith({
       autoWordSet: ['w1'],

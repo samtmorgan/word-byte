@@ -1,5 +1,4 @@
-import { DbUser, Word, WordOwner, DATA_VERSION } from '../actions/types';
-import { LocalResults } from '../components/review/types';
+import { DbUser, Word, WordOwner, DATA_VERSION, LocalResults } from '../actions/types';
 
 // ~~~~ current below \/
 

@@ -62,7 +62,7 @@ describe('Review component', () => {
 
     await user.click(screen.getByRole('button', { name: '🏁 Finish' }));
 
-    expect(addTestResults).toHaveBeenCalledWith(expectedLocalResults, false);
+    expect(addTestResults).toHaveBeenCalledWith({ localResults: expectedLocalResults, isAutoMode: false });
   });
 
   it('should call addTestResults with isAutoMode=true when prop is set', async () => {
@@ -71,7 +71,7 @@ describe('Review component', () => {
 
     await user.click(screen.getByRole('button', { name: '🏁 Finish' }));
 
-    expect(addTestResults).toHaveBeenCalledWith(expectedLocalResults, true);
+    expect(addTestResults).toHaveBeenCalledWith({ localResults: expectedLocalResults, isAutoMode: true });
   });
 
   it('should show the done link after finishing', async () => {

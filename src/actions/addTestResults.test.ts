@@ -1,8 +1,7 @@
-import { mockLocalResults } from '../testUtils/mockData';
 import { mapResultsToUserWords } from '../utils/mapResultsToUserWords';
 import { addTestResults } from './addTestResults';
 import { initialiseUser } from './initUser';
-import { WordOwner } from './types';
+import { WordOwner, LocalResults } from './types';
 import { updateUserWords } from './updateUserWords';
 
 jest.mock('./updateUserWords.ts', () => ({
@@ -21,12 +20,20 @@ jest.mock('../utils/wordSelection.ts', () => ({
   refreshAutoWordSet: jest.fn(),
 }));
 
+const WORD_UUID_1 = '00000000-0000-4000-8000-000000000001';
+const WORD_UUID_2 = '00000000-0000-4000-8000-000000000002';
+
+const validLocalResults: LocalResults = [
+  { word: 'testWord1', wordId: WORD_UUID_1, pass: true },
+  { word: 'testWord2', wordId: WORD_UUID_2, pass: null },
+];
+
 describe('addTestResults', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
+
   it('should call functions as expected', async () => {
-    // arrange
     (initialiseUser as jest.Mock).mockResolvedValue({
       userPlatformId: 'platform123',
       words: [],
@@ -34,54 +41,56 @@ describe('addTestResults', () => {
     (mapResultsToUserWords as jest.Mock).mockReturnValue([
       {
         word: 'testWord1',
-        wordId: 'testWordId1',
+        wordId: WORD_UUID_1,
         owner: WordOwner.PLATFORM,
-        results: [
-          {
-            created: 123,
-            pass: true,
-          },
-        ],
+        results: [{ created: 123, pass: true }],
       },
     ]);
 
-    // act
-    await addTestResults(mockLocalResults);
+    const result = await addTestResults({ localResults: validLocalResults });
 
-    // assert
+    expect(result).toEqual({ success: true, data: undefined });
     expect(updateUserWords).toHaveBeenCalledWith({
       words: [
         {
           word: 'testWord1',
-          wordId: 'testWordId1',
+          wordId: WORD_UUID_1,
           owner: WordOwner.PLATFORM,
-          results: [
-            {
-              created: 123,
-              pass: true,
-            },
-          ],
+          results: [{ created: 123, pass: true }],
         },
       ],
       userPlatformId: 'platform123',
     });
     expect(initialiseUser).toHaveBeenCalled();
     expect(mapResultsToUserWords).toHaveBeenCalledWith({
-      localResults: mockLocalResults,
+      localResults: validLocalResults,
       userWords: [],
     });
   });
 
-  it('should throw an error if initialiseUser fails', async () => {
-    // arrange
+  it('returns INIT_FAILED when initialiseUser returns null', async () => {
     (initialiseUser as jest.Mock).mockResolvedValue(null);
 
-    // act
-    await expect(addTestResults(mockLocalResults)).rejects.toThrow("couldn't initialise user");
+    const result = await addTestResults({ localResults: validLocalResults });
 
-    // assert
-    expect(initialiseUser).toHaveBeenCalled();
+    expect(result).toEqual({ success: false, code: 'INIT_FAILED', error: expect.any(String) });
     expect(updateUserWords).not.toHaveBeenCalled();
     expect(mapResultsToUserWords).not.toHaveBeenCalled();
+  });
+
+  it('returns VALIDATION_ERROR for empty results', async () => {
+    const result = await addTestResults({ localResults: [] });
+
+    expect(result).toEqual({ success: false, code: 'VALIDATION_ERROR', error: expect.any(String) });
+    expect(initialiseUser).not.toHaveBeenCalled();
+  });
+
+  it('returns VALIDATION_ERROR for invalid result items', async () => {
+    const result = await addTestResults({
+      localResults: [{ pass: true, wordId: 'not-a-uuid', word: 'test' }],
+    });
+
+    expect(result).toEqual({ success: false, code: 'VALIDATION_ERROR', error: expect.any(String) });
+    expect(initialiseUser).not.toHaveBeenCalled();
   });
 });

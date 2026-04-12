@@ -58,7 +58,7 @@ export default function MyWordsContent({ initialWords }: MyWordsContentProps) {
         // Optimistically add word to list
         setWords(prev => [...prev, { word: trimmed, wordId: crypto.randomUUID(), owner: WordOwner.USER, results: [] }]);
         setNewWord('');
-      } else if (result.error === 'duplicate') {
+      } else if (result.code === 'DUPLICATE') {
         setFormError('You already have this word');
       } else {
         setFormError('Failed to add word, please try again');

@@ -47,8 +47,8 @@ describe('MyWordsContent', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     (checkSpelling as jest.Mock).mockResolvedValue({ valid: true });
-    (addUserWord as jest.Mock).mockResolvedValue({ success: true });
-    (deleteUserWord as jest.Mock).mockResolvedValue(undefined);
+    (addUserWord as jest.Mock).mockResolvedValue({ success: true, data: undefined });
+    (deleteUserWord as jest.Mock).mockResolvedValue({ success: true, data: undefined });
   });
 
   it('shows empty state when no words', () => {
@@ -144,7 +144,7 @@ describe('MyWordsContent', () => {
   });
 
   it('shows server duplicate error from addUserWord', async () => {
-    (addUserWord as jest.Mock).mockResolvedValue({ success: false, error: 'duplicate' });
+    (addUserWord as jest.Mock).mockResolvedValue({ success: false, code: 'DUPLICATE', error: 'Word already exists' });
     render(<MyWordsContent initialWords={[]} />);
     fireEvent.change(screen.getByLabelText(/add new word/i), { target: { value: 'newword' } });
     await act(async () => {

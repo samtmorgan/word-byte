@@ -1,16 +1,12 @@
 import React from 'react';
 import { Word } from '../../actions/types';
 
+export type { LocalResults } from '../../actions/types';
+
 type ReviewProps = {
   currentWords: Word[];
   isAutoMode?: boolean;
 };
-
-type LocalResults = {
-  pass: boolean | null;
-  wordId: string;
-  word: string;
-}[];
 
 enum ReviewLifecycle {
   IN_PROGRESS = 'inProgress',
@@ -23,4 +19,4 @@ type ReviewButtonsProps = {
 };
 
 export { ReviewLifecycle };
-export type { ReviewProps, LocalResults, ReviewButtonsProps };
+export type { ReviewProps, ReviewButtonsProps };
