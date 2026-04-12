@@ -20,9 +20,11 @@ const Header = async () => {
           Word Byte
         </Link>
       </div>
-      <SignedIn>
-        <UserButton />
-      </SignedIn>
+      <div className={styles.headerUser}>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
+      </div>
     </header>
   );
 };

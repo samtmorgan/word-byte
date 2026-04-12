@@ -19,6 +19,12 @@
   gap: 1rem;
 }
 
+.headerUser {
+  display: flex;
+  align-items: center;
+  width: 28px;
+}
+
 .appLogo {
   display: flex;
   align-items: center;
