@@ -9,19 +9,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-right: 1rem;
-  padding-left: 1rem;
+  padding: 0 1.5rem;
   border-bottom: 1px solid var(--color-main);
 }
 
-.headerContent {
+.headerNav {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
 .appLogo {
-  margin-left: 1rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -29,8 +27,18 @@
   font-weight: 100;
   font-size: xx-large;
   color: rgb(96, 0, 137);
+  box-shadow: none;
+  background: transparent;
+  border: none;
 }
 
 .header button {
   box-shadow: none;
+}
+
+.headerCenter a:active,
+.headerCenter a:hover {
+  box-shadow: none;
+  transform: none;
+  background-color: transparent;
 }

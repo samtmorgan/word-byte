@@ -29,12 +29,6 @@ describe('WelcomeContent', () => {
     expect(container.firstChild).toBeNull();
   });
 
-  it('renders welcome message when user is provided', () => {
-    const user: User = mockUser;
-    const { getByText } = render(<WelcomeContent user={user} />);
-    expect(getByText('Hello testUser 👋')).toBeInTheDocument();
-  });
-
   it('renders mode toggle buttons', () => {
     const user: User = mockUser;
     const { getByText } = render(<WelcomeContent user={user} />);

@@ -34,11 +34,12 @@ export default function NavDrawer({ isSignedIn }: NavDrawerProps) {
           <>
             <button
               type="button"
-              className={styles.closeButton}
+              className={`${styles.hamburger} ${styles.hamburgerX}`}
               onClick={() => setIsOpen(false)}
               aria-label="Close navigation menu"
             >
-              ❌
+              <span className={styles.hamburgerLine} />
+              <span className={styles.hamburgerLine} />
             </button>
             <nav className={styles.nav}>
               <Link href={PATHS.ROOT} onClick={() => setIsOpen(false)}>

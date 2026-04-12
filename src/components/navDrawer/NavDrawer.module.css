@@ -11,12 +11,27 @@
   box-shadow: none;
 }
 
+.hamburger:hover,
+.hamburger:active {
+  background-color: transparent;
+  transform: none;
+}
+
 .hamburgerLine {
   display: block;
   width: 100%;
   height: 2px;
   background-color: var(--color-main);
   border-radius: 2px;
+  transition: transform 0.25s ease-in-out;
+}
+
+.hamburgerX .hamburgerLine:first-child {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburgerX .hamburgerLine:last-child {
+  transform: translateY(-8px) rotate(-45deg);
 }
 
 .overlay {
@@ -33,14 +48,12 @@
   height: 100%;
   width: 260px;
   background-color: #fbeee0;
-  /* box-shadow: var(--box-shadow);
-  border-right: var(--border); */
   z-index: 101;
   transform: translateX(-100%);
   transition: transform 0.25s ease-in-out;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 24px;
   gap: 1rem;
 }
 
