@@ -7,8 +7,11 @@
   margin-top: calc(var(--header-height) + 1rem);
 }
 
-.breadcrumbs a:hover {
+.breadcrumbs a:hover,
+.breadcrumbs a:focus {
   background-color: transparent;
+  transform: none;
+  box-shadow: none;
 }
 
 .homeLink {
