@@ -22,28 +22,29 @@ const allFailedResults: LocalResults = [
 ];
 
 describe('Complete component', () => {
-  it('should render the completion heading', () => {
+  it('should render a perfect score message when all words passed', () => {
     render(<Complete results={allPassedResults} />);
 
-    expect(screen.getByText('You did it!')).toBeInTheDocument();
+    expect(screen.getByText('Perfect score!')).toBeInTheDocument();
+    expect(screen.getByText('You spelled all 2 words correctly. Amazing work!')).toBeInTheDocument();
   });
 
-  it('should display the correct score when all words passed', () => {
-    render(<Complete results={allPassedResults} />);
-
-    expect(screen.getByText('You got 2 out of 2 words right.')).toBeInTheDocument();
-  });
-
-  it('should display the correct score with mixed results', () => {
+  it('should render an encouraging message with mixed results', () => {
     render(<Complete results={mixedResults} />);
 
-    expect(screen.getByText('You got 1 out of 2 words right.')).toBeInTheDocument();
+    expect(screen.getByText('Good going!')).toBeInTheDocument();
+    expect(
+      screen.getByText("You got 1 out of 2 right. Keep practising and you'll get even more next time."),
+    ).toBeInTheDocument();
   });
 
-  it('should display the correct score when no words passed', () => {
+  it('should render a supportive message when no words passed', () => {
     render(<Complete results={allFailedResults} />);
 
-    expect(screen.getByText('You got 0 out of 2 words right.')).toBeInTheDocument();
+    expect(screen.getByText('Keep going!')).toBeInTheDocument();
+    expect(
+      screen.getByText('These are tricky words. Practising them a few times will make a big difference.'),
+    ).toBeInTheDocument();
   });
 
   it('should show confetti when all words are correct', () => {
