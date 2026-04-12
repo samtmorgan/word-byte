@@ -5,7 +5,7 @@ import { Inter } from 'next/font/google';
 import { ClerkProvider } from '@clerk/nextjs';
 
 import Header from '../components/header/Header';
-import { PageTitleHeading } from '../components/pageTitle/PageTitleHeading';
+import { Breadcrumbs } from '../components/breadcrumbs/Breadcrumbs';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <html lang="en">
         <body className={inter.className}>
           <Header />
-          <PageTitleHeading />
+          <Breadcrumbs />
           <main>{children}</main>
         </body>
       </html>

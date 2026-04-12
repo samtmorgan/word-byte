@@ -1,4 +1,4 @@
-.pageTitleHeading {
+.breadcrumbs {
   display: flex;
   align-items: flex-start;
   width: 100%;
@@ -7,8 +7,17 @@
   margin-top: calc(var(--header-height) + 1rem);
 }
 
+.breadcrumbs a:hover {
+  background-color: transparent;
+}
+
+.homeLink {
+  all: unset;
+  cursor: pointer;
+}
+
 @media (max-width: 667px) {
-  .pageTitleHeading {
+  .breadcrumbs {
     padding-left: 0.5rem;
     margin-top: calc(var(--header-height) + 0.5rem);
   }
