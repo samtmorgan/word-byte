@@ -94,7 +94,7 @@ describe('createUser', () => {
       userPlatformId: 'mock-uuid',
       mode: 'auto',
       autoConfig: { yearGroups: ['year3_4', 'year5_6'] },
-      dataVersion: 1,
+      dataVersion: 2,
     });
     expect(getUser).toHaveBeenCalledWith(mockUserAuthId);
     expect(result).toEqual(mockDbUser);
@@ -134,7 +134,7 @@ describe('createUser', () => {
       userPlatformId: 'mock-uuid',
       mode: 'auto',
       autoConfig: { yearGroups: ['year3_4', 'year5_6'] },
-      dataVersion: 1,
+      dataVersion: 2,
     });
     expect(getUser).toHaveBeenCalledWith(mockUserAuthId);
     expect(result).toBeNull();

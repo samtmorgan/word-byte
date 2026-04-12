@@ -30,7 +30,7 @@ export interface AutoConfig {
   includeUserWords?: boolean;
 }
 
-export const DATA_VERSION = 1;
+export const DATA_VERSION = 2;
 
 export interface DbUser {
   _id: string;

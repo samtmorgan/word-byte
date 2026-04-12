@@ -13,7 +13,8 @@ export async function addUserWord(word: string): Promise<AddUserWordResult> {
     return { success: false, error: 'init_failed' };
   }
 
-  const isDuplicate = user.words.some(w => w.word.toLowerCase() === word.toLowerCase());
+  const isDuplicate = user.words.some(w => w.word.toLowerCase() === word.toLowerCase() && w.owner === WordOwner.USER);
+
   if (isDuplicate) {
     return { success: false, error: 'duplicate' };
   }

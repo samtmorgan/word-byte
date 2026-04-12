@@ -29,10 +29,10 @@ describe('addUserWord', () => {
     expect(updateUserWordsAndWordSets).not.toHaveBeenCalled();
   });
 
-  it('returns duplicate error when word already exists (case-insensitive)', async () => {
+  it('returns duplicate error when user word already exists (case-insensitive)', async () => {
     const user = {
       ...mockUser,
-      words: [{ word: 'mockWord', wordId: 'mockWordId', owner: WordOwner.PLATFORM, results: [] }],
+      words: [{ word: 'mockWord', wordId: 'mockWordId', owner: WordOwner.USER, results: [] }],
     };
     (initialiseUser as jest.Mock).mockResolvedValue(user);
 
@@ -40,6 +40,22 @@ describe('addUserWord', () => {
 
     expect(result).toEqual({ success: false, error: 'duplicate' });
     expect(updateUserWordsAndWordSets).not.toHaveBeenCalled();
+  });
+
+  it('allows adding a word that exists as a platform word', async () => {
+    const platformWord = { word: 'fascinate', wordId: 'platform-id', owner: WordOwner.PLATFORM, results: [] };
+    const user = { ...mockUser, words: [platformWord], wordSets: [] };
+    (initialiseUser as jest.Mock).mockResolvedValue(user);
+    (uuidv4 as jest.Mock).mockReturnValue('new-word-id');
+
+    const result = await addUserWord('fascinate');
+
+    expect(result).toEqual({ success: true });
+    expect(updateUserWordsAndWordSets).toHaveBeenCalledWith(
+      expect.objectContaining({
+        words: [platformWord, { word: 'fascinate', wordId: 'new-word-id', owner: WordOwner.USER, results: [] }],
+      }),
+    );
   });
 
   it('successfully adds a new word', async () => {

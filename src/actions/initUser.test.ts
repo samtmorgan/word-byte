@@ -5,8 +5,9 @@ import { mockAuthUserId, mockDbUser, mockUsername } from '../testUtils/mockData'
 import { createUser } from './createUser';
 import { updateUserWordsAndWordSets } from './updateUserWordsAndWordSets';
 import { getTimeStamp } from '../utils/getTimeStamp';
-import { User } from './types';
+import { User, WordOwner, DATA_VERSION } from './types';
 import { defaultWords } from '../constants';
+import { updateAutoWordSet } from './updateAutoWordSet';
 
 jest.mock('@clerk/nextjs/server', () => ({
   auth: jest.fn(),
@@ -134,6 +135,46 @@ describe('initUser', () => {
     expect(mockClerkGetUser).toHaveBeenCalledWith(mockAuthUserId);
     expect(mockGetUser).toHaveBeenCalledWith(mockAuthUserId);
     expect(createUser).toHaveBeenCalledWith(mockAuthUserId);
+  });
+
+  it('should strip platform words without yearGroup when dataVersion is outdated', async () => {
+    const platformWordWithoutYearGroup = {
+      word: 'oldword',
+      wordId: 'old-word-id',
+      owner: WordOwner.PLATFORM,
+      results: [{ created: 123, pass: true }],
+    };
+    const platformWordWithYearGroup = {
+      word: 'accident',
+      wordId: 'd659c3a4-4ea2-4619-b4da-53b6550d925f',
+      owner: WordOwner.PLATFORM,
+      results: [{ created: 456, pass: false }],
+      yearGroup: 'year3_4' as const,
+    };
+    const userWord = { word: 'myword', wordId: 'user-word-id', owner: WordOwner.USER, results: [] };
+    const outdatedUser = {
+      ...mockDbUser,
+      dataVersion: DATA_VERSION - 1,
+      words: [platformWordWithoutYearGroup, platformWordWithYearGroup, userWord],
+    };
+    mockAuth.mockResolvedValue({ userId: mockAuthUserId });
+    mockClerkClient.mockResolvedValue({ users: { getUser: mockClerkGetUser } });
+    mockClerkGetUser.mockResolvedValue({ username: mockUsername });
+    mockGetUser.mockResolvedValue(JSON.parse(JSON.stringify(outdatedUser)));
+
+    const result = await initialiseUser();
+
+    // Migration should strip platform word without yearGroup, keep the rest
+    const migrationCall = mockUpdateUserWordsAndWordSets.mock.calls[0][0];
+    expect(migrationCall.words).toEqual(
+      expect.not.arrayContaining([expect.objectContaining({ wordId: 'old-word-id' })]),
+    );
+    expect(migrationCall.words).toEqual(expect.arrayContaining([platformWordWithYearGroup, userWord]));
+    expect(updateAutoWordSet).toHaveBeenCalledWith(expect.objectContaining({ dataVersion: DATA_VERSION }));
+
+    // After migration, new platform words are synced
+    expect(result?.words).toEqual(expect.arrayContaining([platformWordWithYearGroup, userWord]));
+    expect(result?.words).toEqual(expect.not.arrayContaining([platformWordWithoutYearGroup]));
   });
 
   it('should create a new user when no db user is found', async () => {

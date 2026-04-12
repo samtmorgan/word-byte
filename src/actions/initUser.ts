@@ -6,8 +6,8 @@ import { createUser } from './createUser';
 import { updateUserWordsAndWordSets } from './updateUserWordsAndWordSets';
 import { updateAutoWordSet } from './updateAutoWordSet';
 import { updateUserMode } from './updateUserMode';
-import { User, DATA_VERSION } from './types';
-import { defaultWords, defaultWordSets } from '../constants';
+import { User, DATA_VERSION, WordOwner } from './types';
+import { defaultWords } from '../constants';
 
 export async function initialiseUser(): Promise<User | null> {
   const { userId: userAuthId } = await auth();
@@ -33,9 +33,11 @@ export async function initialiseUser(): Promise<User | null> {
     }
   } else {
     if (dbUser.dataVersion !== DATA_VERSION) {
+      const migratedWords = dbUser.words.filter(w => w.owner !== WordOwner.PLATFORM || w.yearGroup);
+
       await updateUserWordsAndWordSets({
-        words: [...defaultWords],
-        wordSets: [...defaultWordSets],
+        words: migratedWords,
+        wordSets: dbUser.wordSets,
         userPlatformId: dbUser.userPlatformId,
       });
       await updateAutoWordSet({
@@ -43,8 +45,7 @@ export async function initialiseUser(): Promise<User | null> {
         userPlatformId: dbUser.userPlatformId,
         dataVersion: DATA_VERSION,
       });
-      dbUser.words = [...defaultWords];
-      dbUser.wordSets = [...defaultWordSets];
+      dbUser.words = migratedWords;
       dbUser.autoWordSet = [];
       dbUser.dataVersion = DATA_VERSION;
     }

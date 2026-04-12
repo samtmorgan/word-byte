@@ -1,4 +1,4 @@
-import { DbUser, Word, WordOwner } from '../actions/types';
+import { DbUser, Word, WordOwner, DATA_VERSION } from '../actions/types';
 import { LocalResults } from '../components/review/types';
 
 // ~~~~ current below \/
@@ -20,7 +20,7 @@ export const mockDbUser: DbUser = {
   words: [{ word: 'mockWord', wordId: 'mockWordId', owner: WordOwner.PLATFORM, results: [] }],
   mode: 'auto',
   autoConfig: { yearGroups: ['year3_4', 'year5_6'] },
-  dataVersion: 1,
+  dataVersion: DATA_VERSION,
 };
 
 export const mockUser = {
