@@ -53,6 +53,7 @@ export default function HistoryContent({ initialWords }: HistoryContentProps) {
 
   const weekSessions = allSessions.filter(s => s.timestamp >= start && s.timestamp <= end);
 
+  console.log({ initialWords, allSessions, weekSessions });
   return (
     <div className="pageContainer">
       <NavRow

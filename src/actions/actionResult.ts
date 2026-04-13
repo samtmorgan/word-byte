@@ -27,6 +27,7 @@ export async function safeAction<TInput, TOutput = void>(
 ): Promise<ActionResult<TOutput>> {
   const parsed = schema.safeParse(rawInput);
   if (!parsed.success) {
+    console.error('[safeAction] Validation failed:', parsed.error.issues);
     return fail('VALIDATION_ERROR', parsed.error.issues[0]?.message ?? 'Invalid input');
   }
   try {

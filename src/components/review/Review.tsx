@@ -40,7 +40,11 @@ export default function Review({ currentWords, isAutoMode = false }: ReviewProps
 
   useEffect(() => {
     if (reviewLifecycle === ReviewLifecycle.COMPLETE) {
-      addTestResults({ localResults: results, isAutoMode });
+      addTestResults({ localResults: results, isAutoMode }).then(result => {
+        if (!result.success) {
+          console.error('Failed to save test results:', result.code, result.error);
+        }
+      });
     }
   }, [reviewLifecycle, results, isAutoMode]);
 

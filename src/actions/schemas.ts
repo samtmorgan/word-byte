@@ -29,7 +29,7 @@ export const addWordListSchema = z
 
 const localResultItem = z.object({
   pass: z.boolean().nullable(),
-  wordId: uuidString,
+  wordId: z.string().min(1, 'Word ID cannot be empty'),
   word: z.string().min(1),
 });
 

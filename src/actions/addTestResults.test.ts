@@ -85,9 +85,9 @@ describe('addTestResults', () => {
     expect(initialiseUser).not.toHaveBeenCalled();
   });
 
-  it('returns VALIDATION_ERROR for invalid result items', async () => {
+  it('returns VALIDATION_ERROR for empty wordId', async () => {
     const result = await addTestResults({
-      localResults: [{ pass: true, wordId: 'not-a-uuid', word: 'test' }],
+      localResults: [{ pass: true, wordId: '', word: 'test' }],
     });
 
     expect(result).toEqual({ success: false, code: 'VALIDATION_ERROR', error: expect.any(String) });

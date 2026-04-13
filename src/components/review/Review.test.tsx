@@ -14,7 +14,7 @@ jest.mock('./components/Complete', () => ({
   Complete: () => <div>MockComplete</div>,
 }));
 jest.mock('../../actions/addTestResults', () => ({
-  addTestResults: jest.fn(),
+  addTestResults: jest.fn().mockResolvedValue({ success: true }),
 }));
 
 const expectedLocalResults = [

@@ -89,8 +89,14 @@ describe('schemas', () => {
       expect(addTestResultsSchema.safeParse({ localResults: [] }).success).toBe(false);
     });
 
-    it('rejects invalid wordId', () => {
-      expect(addTestResultsSchema.safeParse({ localResults: [{ ...validResult, wordId: 'bad' }] }).success).toBe(false);
+    it('rejects empty wordId', () => {
+      expect(addTestResultsSchema.safeParse({ localResults: [{ ...validResult, wordId: '' }] }).success).toBe(false);
+    });
+
+    it('accepts non-UUID wordId', () => {
+      expect(addTestResultsSchema.safeParse({ localResults: [{ ...validResult, wordId: 'custom-id' }] }).success).toBe(
+        true,
+      );
     });
 
     it('rejects oversized results', () => {
