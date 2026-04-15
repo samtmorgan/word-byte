@@ -28,6 +28,7 @@ main {
 }
 
 html {
+  overflow-x: hidden;
   line-height: 2rem;
   -webkit-text-size-adjust: 100%;
   -moz-tab-size: 4;
@@ -88,7 +89,7 @@ input:focus {
   padding: 1rem;
   gap: 1rem;
   box-sizing: border-box;
-  width: 100vw;
+  width: 100%;
 }
 
 .icon-button {
